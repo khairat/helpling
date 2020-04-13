@@ -1,0 +1,59 @@
+{
+  "name": "helpling-app",
+  "license": "MIT",
+  "private": true,
+  "author": {
+    "name": "Ali Zahid",
+    "email": "ali.zahid@live.com",
+    "url": "https://alizahid.dev"
+  },
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios --simulator 'iPhone 11 Pro Max'",
+    "start": "react-native start",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "dependencies": {
+    "@invertase/react-native-apple-authentication": "^0.2.0",
+    "@react-native-community/google-signin": "^4.0.0",
+    "@react-native-community/masked-view": "^0.1.8",
+    "@react-native-firebase/app": "^6.4.0",
+    "@react-native-firebase/auth": "^6.4.0",
+    "@react-native-firebase/firestore": "^6.4.0",
+    "@react-native-firebase/functions": "^6.4.0",
+    "@react-native-firebase/messaging": "^6.4.0",
+    "@react-navigation/bottom-tabs": "^5.2.6",
+    "@react-navigation/native": "^5.1.5",
+    "@react-navigation/stack": "^5.2.10",
+    "mitt": "^1.2.0",
+    "react": "16.11.0",
+    "react-native": "0.62.2",
+    "react-native-gesture-handler": "^1.6.1",
+    "react-native-reanimated": "^1.8.0",
+    "react-native-safe-area-context": "^0.7.3",
+    "react-native-screens": "^2.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/runtime": "^7.9.2",
+    "@react-native-community/eslint-config": "^1.0.0",
+    "@react-native-community/eslint-plugin": "^1.0.0",
+    "@types/react-native": "^0.62.2",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^3.0.0",
+    "eslint-plugin-react-native": "^3.8.1",
+    "eslint-plugin-simple-import-sort": "^5.0.2",
+    "eslint-plugin-sort-destructure-keys": "^1.3.3",
+    "eslint-plugin-sort-keys-fix": "^1.1.0",
+    "husky": "^4.2.5",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "prettier": "^2.0.4",
+    "pretty-quick": "^2.0.1",
+    "typescript": "^3.8.3"
+  }
+}
