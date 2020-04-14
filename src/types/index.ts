@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from 'react-native'
+
 // components
 
 export type PickerItemType = {
@@ -9,6 +11,15 @@ export type NotificationType = {
   body: string
   title: string
   type: 'error' | 'notification'
+}
+
+export type MenuItemType = {
+  icon: ImageSourcePropType
+  label: string
+  link?: boolean
+  loading?: boolean
+
+  onPress: () => void
 }
 
 // models

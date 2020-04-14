@@ -1,43 +1,80 @@
+import { RouteProp } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { FlatList } from 'react-native'
 
-import { Button } from '../../components/common'
+import { img_profile } from '../../assets'
+import { Separator } from '../../components/common'
+import { MenuItem, User } from '../../components/profile'
+import { browser, dialog } from '../../lib'
 import { useAuth } from '../../store'
-import { colors, layout, typography } from '../../styles'
+import { MenuItemType } from '../../types'
+import { ProfileParamList } from '.'
 
-export const Profile: FunctionComponent = () => {
+interface Props {
+  navigation: StackNavigationProp<ProfileParamList, 'Profile'>
+  route: RouteProp<ProfileParamList, 'Profile'>
+}
+
+export const Profile: FunctionComponent<Props> = ({
+  navigation: { navigate }
+}) => {
   const [{ unloading, user }, { signOut }] = useAuth()
 
-  const menu = [
+  const menu: MenuItemType[] = [
     {
-      label: 'Sign out'
+      icon: img_profile.requests,
+      label: 'Your requests',
+      onPress: () => navigate('MyRequests')
+    },
+    {
+      icon: img_profile.offers,
+      label: 'Your offers',
+      onPress: () => navigate('MyOffers')
+    },
+    {
+      icon: img_profile.about,
+      label: 'About',
+      link: true,
+      onPress: () => browser.open('https://helpling.app/about')
+    },
+    {
+      icon: img_profile.help,
+      label: 'Help',
+      link: true,
+      onPress: () => browser.open('https://helpling.app/help')
+    },
+    {
+      icon: img_profile.privacy,
+      label: 'Privacy policy',
+      link: true,
+      onPress: () => browser.open('https://helpling.app/privacy')
+    },
+    {
+      icon: img_profile.signOut,
+      label: 'Sign out',
+      loading: unloading,
+      onPress: async () => {
+        const yes = await dialog.confirm(
+          'Are you sure you want to sign out?',
+          'Sign out',
+          false
+        )
+
+        if (yes) {
+          signOut()
+        }
+      }
     }
   ]
 
   return (
-    <View style={styles.main}>
-      <Text style={styles.title}>Hello, {user?.name}</Text>
-      <Button
-        label="Sign out"
-        loading={unloading}
-        onPress={() => signOut()}
-        style={styles.button}
-      />
-    </View>
+    <FlatList
+      data={menu}
+      ItemSeparatorComponent={Separator}
+      keyExtractor={(item) => item.label}
+      ListHeaderComponent={user ? <User user={user} /> : null}
+      renderItem={({ item }) => <MenuItem item={item} />}
+    />
   )
 }
-
-const styles = StyleSheet.create({
-  button: {
-    marginTop: layout.margin
-  },
-  main: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center'
-  },
-  title: {
-    ...typography.title,
-    color: colors.foreground
-  }
-})

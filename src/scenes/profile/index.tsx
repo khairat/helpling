@@ -6,7 +6,11 @@ import { Header } from '../../components/common'
 import { layout } from '../../styles'
 import { Profile } from './profile'
 
-const { Navigator, Screen } = createStackNavigator()
+export type ProfileParamList = {
+  Profile: undefined
+}
+
+const { Navigator, Screen } = createStackNavigator<ProfileParamList>()
 
 export const ProfileNavigator: FunctionComponent = () => {
   const { top } = useSafeArea()

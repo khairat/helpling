@@ -904,10 +904,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/google-signin/-/google-signin-4.0.0.tgz#b839a310ad65f3647b4ecbd75b5a8460700d4185"
   integrity sha512-XC7Gi9y7+zdWrjusiuiEHBHcqBYCXezBl8OPXrPWhI+ocYmUaYXk1d5OMrb6UFMQe6M7/0HtCIEU5mEjxirqzw==
 
-"@react-native-community/masked-view@^0.1.8":
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.8.tgz#05c9c800f258274a34abd584596464b86fbd92dc"
-  integrity sha512-y+mnsPPC4Etzs/waHIC9Pj3DwhVQGqVru0n1KSqHZc0moKNAZ0NRBWYVat9awLIjjVrnepUva/+/bi31T4hR4A==
+"@react-native-community/masked-view@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.9.tgz#383aca2fb053e3e14405c99cce2d5805df730821"
+  integrity sha512-nUtzbiLeXU0K9oVed6rc/WVrjGJwDSL4q1RTDkpZYU4j0FeovfuzcNUIDesD2r728LYfIop+uAgQdm+6qBOCug==
 
 "@react-native-firebase/app-types@6.4.0":
   version "6.4.0"
@@ -1084,12 +1084,22 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@^2.25.0", "@typescript-eslint/eslint-plugin@^2.27.0":
+"@typescript-eslint/eslint-plugin@^2.25.0":
   version "2.27.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-2.27.0.tgz#e479cdc4c9cf46f96b4c287755733311b0d0ba4b"
   integrity sha512-/my+vVHRN7zYgcp0n4z5A6HAK7bvKGBiswaM5zIlOQczsxj/aiD7RcgD+dvVFuwFaGh5+kM7XA6Q6PN0bvb1tw==
   dependencies:
     "@typescript-eslint/experimental-utils" "2.27.0"
+    functional-red-black-tree "^1.0.1"
+    regexpp "^3.0.0"
+    tsutils "^3.17.1"
+
+"@typescript-eslint/eslint-plugin@^2.28.0":
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-2.28.0.tgz#4431bc6d3af41903e5255770703d4e55a0ccbdec"
+  integrity sha512-w0Ugcq2iatloEabQP56BRWJowliXUP5Wv6f9fKzjJmDW81hOTBxRoJ4LoEOxRpz9gcY51Libytd2ba3yLmSOfg==
+  dependencies:
+    "@typescript-eslint/experimental-utils" "2.28.0"
     functional-red-black-tree "^1.0.1"
     regexpp "^3.0.0"
     tsutils "^3.17.1"
@@ -1104,7 +1114,17 @@
     eslint-scope "^5.0.0"
     eslint-utils "^2.0.0"
 
-"@typescript-eslint/parser@^2.25.0", "@typescript-eslint/parser@^2.27.0":
+"@typescript-eslint/experimental-utils@2.28.0":
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-2.28.0.tgz#1fd0961cd8ef6522687b4c562647da6e71f8833d"
+  integrity sha512-4SL9OWjvFbHumM/Zh/ZeEjUFxrYKtdCi7At4GyKTbQlrj1HcphIDXlje4Uu4cY+qzszR5NdVin4CCm6AXCjd6w==
+  dependencies:
+    "@types/json-schema" "^7.0.3"
+    "@typescript-eslint/typescript-estree" "2.28.0"
+    eslint-scope "^5.0.0"
+    eslint-utils "^2.0.0"
+
+"@typescript-eslint/parser@^2.25.0":
   version "2.27.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-2.27.0.tgz#d91664335b2c46584294e42eb4ff35838c427287"
   integrity sha512-HFUXZY+EdwrJXZo31DW4IS1ujQW3krzlRjBrFRrJcMDh0zCu107/nRfhk/uBasO8m0NVDbBF5WZKcIUMRO7vPg==
@@ -1114,10 +1134,33 @@
     "@typescript-eslint/typescript-estree" "2.27.0"
     eslint-visitor-keys "^1.1.0"
 
+"@typescript-eslint/parser@^2.28.0":
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-2.28.0.tgz#bb761286efd2b0714761cab9d0ee5847cf080385"
+  integrity sha512-RqPybRDquui9d+K86lL7iPqH6Dfp9461oyqvlXMNtap+PyqYbkY5dB7LawQjDzot99fqzvS0ZLZdfe+1Bt3Jgw==
+  dependencies:
+    "@types/eslint-visitor-keys" "^1.0.0"
+    "@typescript-eslint/experimental-utils" "2.28.0"
+    "@typescript-eslint/typescript-estree" "2.28.0"
+    eslint-visitor-keys "^1.1.0"
+
 "@typescript-eslint/typescript-estree@2.27.0":
   version "2.27.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-2.27.0.tgz#a288e54605412da8b81f1660b56c8b2e42966ce8"
   integrity sha512-t2miCCJIb/FU8yArjAvxllxbTiyNqaXJag7UOpB5DVoM3+xnjeOngtqlJkLRnMtzaRcJhe3CIR9RmL40omubhg==
+  dependencies:
+    debug "^4.1.1"
+    eslint-visitor-keys "^1.1.0"
+    glob "^7.1.6"
+    is-glob "^4.0.1"
+    lodash "^4.17.15"
+    semver "^6.3.0"
+    tsutils "^3.17.1"
+
+"@typescript-eslint/typescript-estree@2.28.0":
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-2.28.0.tgz#d34949099ff81092c36dc275b6a1ea580729ba00"
+  integrity sha512-HDr8MP9wfwkiuqzRVkuM3BeDrOC4cKbO5a6BymZBHUt5y/2pL0BXD6I/C/ceq2IZoHWhcASk+5/zo+dwgu9V8Q==
   dependencies:
     debug "^4.1.1"
     eslint-visitor-keys "^1.1.0"
@@ -2155,10 +2198,17 @@ eslint-plugin-jest@22.4.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-22.4.1.tgz#a5fd6f7a2a41388d16f527073b778013c5189a9c"
   integrity sha512-gcLfn6P2PrFAVx3AobaOzlIEevpAEf9chTpFZz7bYfc7pz8XRv7vuKTIE4hxPKZSha6XWKKplDQ0x9Pq8xX2mg==
 
-eslint-plugin-prettier@3.1.2, eslint-plugin-prettier@^3.1.2:
+eslint-plugin-prettier@3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.2.tgz#432e5a667666ab84ce72f945c72f77d996a5c9ba"
   integrity sha512-GlolCC9y3XZfv3RQfwGew7NnuFDKsfI4lbvRK+PIIo23SFH+LemGs4cKwzAaRa+Mdb+lQO/STaIayno8T5sJJA==
+  dependencies:
+    prettier-linter-helpers "^1.0.0"
+
+eslint-plugin-prettier@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.3.tgz#ae116a0fc0e598fdae48743a4430903de5b4e6ca"
+  integrity sha512-+HG5jmu/dN3ZV3T6eCD7a4BlAySdN7mLIbJYo0z1cFQuI+r2DiTJEFeF68ots93PsnrMxbzIZ2S/ieX+mkrBeQ==
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
@@ -4558,6 +4608,14 @@ react-native-gesture-handler@^1.6.1:
     hoist-non-react-statics "^2.3.1"
     invariant "^2.2.4"
     prop-types "^15.7.2"
+
+react-native-inappbrowser-reborn@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-inappbrowser-reborn/-/react-native-inappbrowser-reborn-3.4.0.tgz#fe449722e309c1611fa5e3a742a7e449aaf5a9e5"
+  integrity sha512-buHTc8xvjtO1pDKrGxgXetyV1D3XdmXJ+b8x1AW+PrKeLg8lzBdlVmSUtpIQBg98WPwK3FA08l/CvShocmvOyg==
+  dependencies:
+    invariant "^2.2.4"
+    opencollective-postinstall "^2.0.2"
 
 react-native-iphone-x-helper@^1.2.1:
   version "1.2.1"
