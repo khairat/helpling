@@ -1,11 +1,9 @@
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
-import { uniq } from 'lodash'
 import { useEffect, useState } from 'react'
 
-import { RequestType, UserType } from '../types'
-
-const users = new Map<string, UserType>()
+import { users } from '../lib'
+import { RequestType } from '../types'
 
 export const useRequests = () => {
   const [loading, setLoading] = useState(true)
@@ -45,21 +43,11 @@ export const useRequests = () => {
           }
         })
 
-        if (uniq(userIds).length > 0) {
-          const { docs } = await firestore()
-            .collection('users')
-            .where('id', 'in', uniq(userIds))
-            .get()
-
-          docs.forEach((doc) =>
-            users.set(doc.id, {
-              id: doc.id,
-              ...doc.data()
-            } as UserType)
-          )
+        if (userIds.length > 0) {
+          await users.fetch(userIds)
         }
 
-        const _requests = docs.map((doc) => {
+        const requests = docs.map((doc) => {
           const data = doc.data()
 
           return {
@@ -70,8 +58,7 @@ export const useRequests = () => {
           }
         }) as RequestType[]
 
-        setRequests(_requests)
-
+        setRequests(requests)
         setLoading(false)
       })
 
