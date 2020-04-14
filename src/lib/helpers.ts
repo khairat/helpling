@@ -5,9 +5,15 @@ import { users } from './users'
 
 class Helpers {
   createRequest(
-    doc: FirebaseFirestoreTypes.QueryDocumentSnapshot
+    doc:
+      | FirebaseFirestoreTypes.QueryDocumentSnapshot
+      | FirebaseFirestoreTypes.DocumentSnapshot
   ): RequestType {
     const data = doc.data()
+
+    if (!data) {
+      throw new Error('No data found')
+    }
 
     return {
       ...data,
@@ -18,9 +24,15 @@ class Helpers {
   }
 
   createComment(
-    doc: FirebaseFirestoreTypes.QueryDocumentSnapshot
+    doc:
+      | FirebaseFirestoreTypes.QueryDocumentSnapshot
+      | FirebaseFirestoreTypes.DocumentSnapshot
   ): CommentType {
     const data = doc.data()
+
+    if (!data) {
+      throw new Error('No data found')
+    }
 
     return {
       ...data,

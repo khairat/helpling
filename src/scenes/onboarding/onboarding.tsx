@@ -56,7 +56,10 @@ export const Onboarding: FunctionComponent<Props> = ({
             label: country,
             value: country
           }))}
-          onChange={(country) => setCountry(country)}
+          onChange={(country) => {
+            setCountry(country)
+            setCity(undefined)
+          }}
           placeholder="Country"
           selected={country}
           title="Select your country"

@@ -2,17 +2,20 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React, { FunctionComponent } from 'react'
 import { useSafeArea } from 'react-native-safe-area-context'
 
-import { Header } from '../../components/common'
+import { img_add } from '../../assets'
+import { Header, HeaderButton } from '../../components/common'
 import { layout } from '../../styles'
 import { RequestType } from '../../types'
+import { CreateRequest } from './create'
 import { Request } from './request'
 import { Requests } from './requests'
 
 export type RequestsParamList = {
-  Requests: undefined
+  CreateRequest: undefined
   Request: {
     request: RequestType
   }
+  Requests: undefined
 }
 
 const { Navigator, Screen } = createStackNavigator()
@@ -29,11 +32,21 @@ export const RequestsNavigator: FunctionComponent = () => {
       <Screen
         component={Requests}
         name="Requests"
-        options={{
-          header: (props) => <Header {...props} />,
+        options={({ navigation: { navigate } }) => ({
+          header: (props) => (
+            <Header
+              {...props}
+              right={
+                <HeaderButton
+                  icon={img_add}
+                  onPress={() => navigate('CreateRequest')}
+                />
+              }
+            />
+          ),
           headerStyle,
           title: 'Requests'
-        }}
+        })}
       />
       <Screen
         component={Request}
@@ -42,6 +55,15 @@ export const RequestsNavigator: FunctionComponent = () => {
           header: (props) => <Header {...props} />,
           headerStyle,
           title: 'Request'
+        }}
+      />
+      <Screen
+        component={CreateRequest}
+        name="CreateRequest"
+        options={{
+          header: (props) => <Header {...props} />,
+          headerStyle,
+          title: 'Create request'
         }}
       />
     </Navigator>

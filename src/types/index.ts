@@ -1,39 +1,56 @@
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
-export interface PickerItemType {
+// components
+
+export type PickerItemType = {
   label: string
   value: string
 }
 
-export interface NotificationType {
+export type NotificationType = {
   body: string
   title: string
   type: 'error' | 'notification'
 }
 
-export interface UserType {
+// models
+
+export type UserType = {
   id: string
   city: string
   country: string
   name: string
 }
 
-export interface RequestType {
+export type RequestType = {
   id: string
   city: string
   country: string
   description: string
   helpling?: UserType
-  status: 'pending' | 'accepted' | 'completed'
-  type: 'food' | 'invite' | 'money' | 'physical'
+  status: RequestStatusType
+  type: RequestTypeType
   user: UserType
   createdAt: FirebaseFirestoreTypes.Timestamp
   updatedAt: FirebaseFirestoreTypes.Timestamp
 }
 
-export interface CommentType {
+export type RequestStatusType = 'pending' | 'accepted' | 'completed'
+
+export type RequestTypeType = 'food' | 'invite' | 'money' | 'physical'
+
+export type CommentType = {
   id: string
   body: string
   user: UserType
   createdAt: FirebaseFirestoreTypes.Timestamp
+}
+
+// input
+
+export type RequestInputType = {
+  city: string
+  country: string
+  description: string
+  type: RequestTypeType
 }
