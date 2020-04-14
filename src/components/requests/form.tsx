@@ -1,6 +1,9 @@
+import { useNavigation } from '@react-navigation/native'
+import { StackHeaderProps } from '@react-navigation/stack'
 import { startCase } from 'lodash'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   LayoutAnimation,
@@ -10,7 +13,7 @@ import {
   View
 } from 'react-native'
 
-import { img_types } from '../../assets'
+import { img_types, img_ui_save } from '../../assets'
 import { data_countries } from '../../data'
 import { useAuth } from '../../store'
 import { colors, layout, typography } from '../../styles'
@@ -20,7 +23,14 @@ import {
   RequestType,
   RequestTypeType
 } from '../../types'
-import { Button, Picker, Separator, TextBox, Touchable } from '../common'
+import {
+  Header,
+  HeaderButton,
+  Picker,
+  Separator,
+  TextBox,
+  Touchable
+} from '../common'
 
 interface Props {
   kind: 'offer' | 'request'
@@ -39,11 +49,53 @@ export const Form: FunctionComponent<Props> = ({
   onUpdate
 }) => {
   const [{ user }] = useAuth()
+  const { setOptions } = useNavigation()
 
   const [description, setDescription] = useState(item ? item.description : '')
   const [type, setType] = useState<RequestTypeType | undefined>(item?.type)
   const [country, setCountry] = useState<PickerItemType>()
   const [city, setCity] = useState<PickerItemType>()
+
+  useEffect(() => {
+    setOptions({
+      header: (props: StackHeaderProps) => (
+        <Header
+          {...props}
+          right={
+            loading ? (
+              <ActivityIndicator color={colors.accent} style={styles.spinner} />
+            ) : type ? (
+              <HeaderButton
+                icon={img_ui_save}
+                onPress={() => {
+                  if (onUpdate && item && description) {
+                    onUpdate(item.id, description)
+                  } else if (onCreate && description && country && city) {
+                    onCreate({
+                      city: city.value,
+                      country: country.value,
+                      description,
+                      type
+                    })
+                  }
+                }}
+              />
+            ) : undefined
+          }
+        />
+      )
+    })
+  }, [
+    city,
+    country,
+    description,
+    item,
+    loading,
+    onCreate,
+    onUpdate,
+    setOptions,
+    type
+  ])
 
   useEffect(() => {
     if (user) {
@@ -106,75 +158,53 @@ export const Form: FunctionComponent<Props> = ({
   }
 
   return (
-    <>
-      <ScrollView
-        contentContainerStyle={styles.main}
-        keyboardShouldPersistTaps="always">
-        <Text style={styles.label}>
-          Describe your {kind}.{' '}
-          {kind === 'offer'
-            ? 'Remember to keep it short.'
-            : 'Use this to convince others why they should help you. But keep it short.'}
-        </Text>
-        <TextBox
-          multiline
-          onChangeText={(description) => setDescription(description)}
-          placeholder="Description"
-          value={description}
-        />
-        <Text style={styles.label}>Where are you located?</Text>
-        <Picker
-          data={countries.map((country) => ({
-            label: country,
-            value: country
-          }))}
-          onChange={(country) => {
-            setCountry(country)
-            setCity(undefined)
-          }}
-          placeholder="Country"
-          selected={country}
-          title="Select your country"
-        />
-        {country && (
-          <Picker
-            data={cities.map((city) => ({
-              label: city,
-              value: city
-            }))}
-            onChange={(city) => setCity(city)}
-            placeholder="City"
-            selected={city}
-            style={styles.picker}
-            title="Select your city"
-          />
-        )}
-      </ScrollView>
-      <Button
-        label={`Create ${kind}`}
-        loading={loading}
-        onPress={() => {
-          if (onUpdate && item && description) {
-            onUpdate(item.id, description)
-          } else if (onCreate && description && country && city) {
-            onCreate({
-              city: city.value,
-              country: country.value,
-              description,
-              type
-            })
-          }
-        }}
-        style={styles.button}
+    <ScrollView
+      contentContainerStyle={styles.main}
+      keyboardShouldPersistTaps="always">
+      <Text style={styles.label}>
+        Describe your {kind}.{' '}
+        {kind === 'offer'
+          ? 'Remember to keep it short.'
+          : 'Use this to convince others why they should help you. But keep it short.'}
+      </Text>
+      <TextBox
+        multiline
+        onChangeText={(description) => setDescription(description)}
+        placeholder="Description"
+        value={description}
       />
-    </>
+      <Text style={styles.label}>Where are you located?</Text>
+      <Picker
+        data={countries.map((country) => ({
+          label: country,
+          value: country
+        }))}
+        onChange={(country) => {
+          setCountry(country)
+          setCity(undefined)
+        }}
+        placeholder="Country"
+        selected={country}
+        title="Select your country"
+      />
+      {country && (
+        <Picker
+          data={cities.map((city) => ({
+            label: city,
+            value: city
+          }))}
+          onChange={(city) => setCity(city)}
+          placeholder="City"
+          selected={city}
+          style={styles.picker}
+          title="Select your city"
+        />
+      )}
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-  button: {
-    margin: layout.margin
-  },
   description: {
     ...typography.footnote,
     color: colors.foreground,
@@ -209,6 +239,9 @@ const styles = StyleSheet.create({
   },
   picker: {
     marginTop: layout.padding
+  },
+  spinner: {
+    margin: layout.margin
   },
   type: {
     ...typography.subtitle,
