@@ -11,15 +11,13 @@ export const useRequests = () => {
   const [requests, setRequests] = useState<RequestType[]>([])
 
   useEffect(() => {
-    setLoading(true)
-
     const user = auth().currentUser
 
     if (!user) {
-      setLoading(false)
-
       return
     }
+
+    setLoading(true)
 
     const unsubscribe = firestore()
       .collection('requests')
