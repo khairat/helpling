@@ -39,8 +39,9 @@ export const Comments: FunctionComponent<Props> = ({ itemId }) => {
       <FlatList
         contentContainerStyle={styles.list}
         data={comments}
+        inverted
         ListEmptyComponent={Empty}
-        ListHeaderComponent={
+        ListFooterComponent={
           comments.length > 0 ? (
             <View style={styles.header}>
               <Text style={styles.title}>Comments ({comments.length})</Text>
