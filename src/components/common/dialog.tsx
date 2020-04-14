@@ -183,9 +183,9 @@ const styles = StyleSheet.create({
     color: colors.state.success
   },
   content: {
-    borderBottomColor: colors.border,
+    borderBottomColor: colors.background,
     borderBottomWidth: layout.border,
-    borderTopColor: colors.border,
+    borderTopColor: colors.background,
     borderTopWidth: layout.border,
     padding: layout.margin
   },
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   separator: {
-    backgroundColor: colors.border,
+    backgroundColor: colors.background,
     width: layout.border
   },
   title: {
