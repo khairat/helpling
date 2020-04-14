@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { useComments } from '../../hooks'
 import { colors, layout, typography } from '../../styles'
-import { Separator, Spinner } from '../common'
+import { Spinner } from '../common'
 import { AddComment } from './add-comment'
 import { Comment } from './comment'
 import { Empty } from './empty'
@@ -24,12 +24,13 @@ export const Comments: FunctionComponent<Props> = ({ itemId }) => {
       <FlatList
         contentContainerStyle={styles.list}
         data={comments}
-        ItemSeparatorComponent={Separator}
         ListEmptyComponent={Empty}
         ListHeaderComponent={
-          <View style={styles.header}>
-            <Text style={styles.title}>Comments ({comments.length})</Text>
-          </View>
+          comments.length > 0 ? (
+            <View style={styles.header}>
+              <Text style={styles.title}>Comments ({comments.length})</Text>
+            </View>
+          ) : null
         }
         renderItem={({ item }) => <Comment item={item} />}
         style={styles.main}
@@ -44,16 +45,13 @@ export const Comments: FunctionComponent<Props> = ({ itemId }) => {
 
 const styles = StyleSheet.create({
   header: {
-    borderBottomColor: colors.border,
-    borderBottomWidth: layout.border,
     padding: layout.margin
   },
   list: {
     flexGrow: 1
   },
   main: {
-    borderTopColor: colors.border,
-    borderTopWidth: layout.border * 2
+    backgroundColor: '#000'
   },
   title: {
     ...typography.regular,

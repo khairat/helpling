@@ -18,7 +18,9 @@ export const Comment: FunctionComponent<Props> = ({ item }) => (
       style={styles.avatar}
     />
     <View style={styles.details}>
-      <Text style={styles.body}>{item.body}</Text>
+      <View style={styles.body}>
+        <Text style={styles.bodyText}>{item.body}</Text>
+      </View>
       <View style={styles.meta}>
         <Text style={[styles.metaLabel, styles.name]}>{item.user.name}</Text>
         <Text style={styles.metaLabel}>
@@ -36,6 +38,12 @@ const styles = StyleSheet.create({
     width: layout.icon
   },
   body: {
+    alignSelf: 'flex-start',
+    backgroundColor: colors.backgroundLight,
+    borderRadius: layout.radius,
+    padding: layout.padding
+  },
+  bodyText: {
     ...typography.footnote,
     color: colors.foreground
   },

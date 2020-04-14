@@ -59,8 +59,6 @@ const styles = StyleSheet.create({
     width: layout.icon
   },
   main: {
-    borderTopColor: colors.border,
-    borderTopWidth: layout.border * 2,
     flexDirection: 'row'
   },
   textBox: {
