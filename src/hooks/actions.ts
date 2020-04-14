@@ -1,14 +1,31 @@
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
+import functions from '@react-native-firebase/functions'
 import { useState } from 'react'
 
-import { helpers } from '../lib'
-import { RequestInputType } from '../types'
+import { helpers, mitter } from '../lib'
+import { KindType, RequestInputType } from '../types'
 
 export const useActions = (kind: 'offers' | 'requests') => {
+  const [accepting, setAccepting] = useState(false)
   const [creating, setCreating] = useState(false)
   const [removing, setRemoving] = useState(false)
   const [updating, setUpdating] = useState(false)
+
+  const accept = async (id: string, kind: KindType) => {
+    setAccepting(true)
+
+    try {
+      await functions().httpsCallable('accept')({
+        id,
+        kind
+      })
+    } catch ({ message }) {
+      mitter.error(message)
+    } finally {
+      setAccepting(false)
+    }
+  }
 
   const create = async (data: RequestInputType) => {
     const user = auth().currentUser
@@ -56,6 +73,8 @@ export const useActions = (kind: 'offers' | 'requests') => {
   }
 
   return {
+    accept,
+    accepting,
     create,
     creating,
     remove,

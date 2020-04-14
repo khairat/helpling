@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect } from 'react'
 import { ActivityIndicator, StyleSheet } from 'react-native'
 
-import { img_ui_edit, img_ui_remove } from '../../assets'
+import { img_ui_check, img_ui_edit, img_ui_remove } from '../../assets'
 import { Comments } from '../../components/comments'
 import { Header, HeaderButton } from '../../components/common'
 import { ListItem } from '../../components/requests'
@@ -19,14 +19,14 @@ interface Props {
 }
 
 export const Offer: FunctionComponent<Props> = ({
-  navigation: { navigate, pop, setOptions },
+  navigation: { navigate, pop, setOptions, setParams },
   route: {
     params: { offer }
   }
 }) => {
   const [{ user }] = useAuth()
 
-  const { remove, removing } = useActions('offers')
+  const { accept, accepting, remove, removing } = useActions('offers')
 
   useEffect(() => {
     setOptions({
@@ -34,7 +34,7 @@ export const Offer: FunctionComponent<Props> = ({
         <Header
           {...props}
           right={
-            removing ? (
+            accepting || removing ? (
               <ActivityIndicator color={colors.accent} style={styles.spinner} />
             ) : user?.id === offer.user.id ? (
               <>
@@ -63,12 +63,44 @@ export const Offer: FunctionComponent<Props> = ({
                   }}
                 />
               </>
+            ) : offer.status === 'pending' ? (
+              <HeaderButton
+                icon={img_ui_check}
+                onPress={async () => {
+                  const yes = await dialog.confirm(
+                    'Are you sure you want to accept this offer?',
+                    'Accept offer'
+                  )
+
+                  if (yes) {
+                    await accept(offer.id, 'offer')
+
+                    setParams({
+                      offer: {
+                        ...offer,
+                        status: 'accepted'
+                      }
+                    })
+                  }
+                }}
+              />
             ) : undefined
           }
         />
       )
     })
-  }, [navigate, offer, pop, remove, removing, setOptions, user])
+  }, [
+    accept,
+    accepting,
+    navigate,
+    offer,
+    pop,
+    remove,
+    removing,
+    setOptions,
+    setParams,
+    user
+  ])
 
   return (
     <>
