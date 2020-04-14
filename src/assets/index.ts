@@ -1,5 +1,9 @@
 import { ImageSourcePropType } from 'react-native'
 
+import { default as img_auth_apple } from './img/auth/apple.png'
+import { default as img_auth_google } from './img/auth/google.png'
+import { default as img_helpling } from './img/helpling.png'
+import { default as img_hero_error } from './img/hero/error.png'
 import { default as img_nav_active_messages } from './img/nav/active_messages.png'
 import { default as img_nav_active_offers } from './img/nav/active_offers.png'
 import { default as img_nav_active_profile } from './img/nav/active_profile.png'
@@ -18,6 +22,19 @@ import { default as img_type_food } from './img/types/food.png'
 import { default as img_type_invite } from './img/types/invite.png'
 import { default as img_type_money } from './img/types/money.png'
 import { default as img_type_physical } from './img/types/physical.png'
+import { default as img_ui_add } from './img/ui/add.png'
+import { default as img_ui_back } from './img/ui/back.png'
+import { default as img_ui_check } from './img/ui/check.png'
+import { default as img_ui_close } from './img/ui/close.png'
+import { default as img_ui_edit } from './img/ui/edit.png'
+import { default as img_ui_error } from './img/ui/error.png'
+import { default as img_ui_expand } from './img/ui/expand.png'
+import { default as img_ui_link } from './img/ui/link.png'
+import { default as img_ui_notification } from './img/ui/notification.png'
+import { default as img_ui_remove } from './img/ui/remove.png'
+import { default as img_ui_save } from './img/ui/save.png'
+import { default as img_ui_search } from './img/ui/search.png'
+import { default as img_ui_send } from './img/ui/send.png'
 
 export const img_nav: Record<string, ImageSourcePropType> = {
   Messages: img_nav_messages,
@@ -49,23 +66,6 @@ export const img_profile: Record<string, ImageSourcePropType> = {
   signOut: img_profile_sign_out
 }
 
-import { default as img_auth_apple } from './img/auth/apple.png'
-import { default as img_auth_google } from './img/auth/google.png'
-import { default as img_helpling } from './img/helpling.png'
-import { default as img_hero_error } from './img/hero/error.png'
-import { default as img_ui_add } from './img/ui/add.png'
-import { default as img_ui_back } from './img/ui/back.png'
-import { default as img_ui_close } from './img/ui/close.png'
-import { default as img_ui_edit } from './img/ui/edit.png'
-import { default as img_ui_error } from './img/ui/error.png'
-import { default as img_ui_expand } from './img/ui/expand.png'
-import { default as img_ui_link } from './img/ui/link.png'
-import { default as img_ui_notification } from './img/ui/notification.png'
-import { default as img_ui_remove } from './img/ui/remove.png'
-import { default as img_ui_save } from './img/ui/save.png'
-import { default as img_ui_search } from './img/ui/search.png'
-import { default as img_ui_send } from './img/ui/send.png'
-
 export {
   img_helpling,
   img_auth_apple,
@@ -79,6 +79,7 @@ export {
   img_ui_expand,
   img_ui_link,
   img_ui_notification,
+  img_ui_check,
   img_ui_remove,
   img_ui_save,
   img_ui_search,
