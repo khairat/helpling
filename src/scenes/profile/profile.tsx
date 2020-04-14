@@ -8,8 +8,6 @@ import { colors, layout, typography } from '../../styles'
 export const Profile: FunctionComponent = () => {
   const { signOut, unloading, user } = useAuth()
 
-  console.log('user', user)
-
   return (
     <View style={styles.main}>
       <Text style={styles.title}>Hello, {user?.username}</Text>

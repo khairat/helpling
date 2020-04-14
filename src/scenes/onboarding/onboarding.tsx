@@ -79,12 +79,6 @@ export const Onboarding: FunctionComponent<Props> = ({
         label="Finish"
         loading={onboarding}
         onPress={() => {
-          console.log({
-            city,
-            country,
-            username
-          })
-
           if (username && country && city) {
             completeOnboarding(userId, username, country.value, city.value)
           }

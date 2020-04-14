@@ -23,11 +23,6 @@ export const useAuth = (init = false) => {
           .doc(uid)
           .onSnapshot((document) => {
             if (document.exists) {
-              console.log('user', {
-                ...document.data(),
-                id: uid
-              })
-
               setUser({
                 ...document.data(),
                 id: uid
