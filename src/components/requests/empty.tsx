@@ -8,8 +8,8 @@ import { KindType } from '../../types'
 import { Button } from '../common'
 
 interface Props {
-  message: string
   kind: KindType
+  message: string
 }
 
 export const Empty: FunctionComponent<Props> = ({ kind, message }) => {
