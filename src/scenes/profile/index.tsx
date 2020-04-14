@@ -4,9 +4,17 @@ import { useSafeArea } from 'react-native-safe-area-context'
 
 import { Header } from '../../components/common'
 import { layout } from '../../styles'
+import { MyOffers } from './offers'
 import { Profile } from './profile'
+import { MyRequests } from './requests'
 
 export type ProfileParamList = {
+  MyOffers: {
+    userId: string
+  }
+  MyRequests: {
+    userId: string
+  }
   Profile: undefined
 }
 
@@ -28,6 +36,24 @@ export const ProfileNavigator: FunctionComponent = () => {
           header: (props) => <Header {...props} />,
           headerStyle,
           title: 'Profile'
+        }}
+      />
+      <Screen
+        component={MyOffers}
+        name="MyOffers"
+        options={{
+          header: (props) => <Header {...props} />,
+          headerStyle,
+          title: 'My offers'
+        }}
+      />
+      <Screen
+        component={MyRequests}
+        name="MyRequests"
+        options={{
+          header: (props) => <Header {...props} />,
+          headerStyle,
+          title: 'My requests'
         }}
       />
     </Navigator>

@@ -24,13 +24,25 @@ export const Profile: FunctionComponent<Props> = ({
   const menu: MenuItemType[] = [
     {
       icon: img_profile.requests,
-      label: 'Your requests',
-      onPress: () => navigate('MyRequests')
+      label: 'My requests',
+      onPress: () => {
+        if (user) {
+          navigate('MyRequests', {
+            userId: user.id
+          })
+        }
+      }
     },
     {
       icon: img_profile.offers,
-      label: 'Your offers',
-      onPress: () => navigate('MyOffers')
+      label: 'My offers',
+      onPress: () => {
+        if (user) {
+          navigate('MyOffers', {
+            userId: user.id
+          })
+        }
+      }
     },
     {
       icon: img_profile.about,
