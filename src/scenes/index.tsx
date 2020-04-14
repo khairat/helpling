@@ -9,7 +9,7 @@ import { RequestsNavigator } from './requests'
 const { Navigator, Screen } = createBottomTabNavigator()
 
 export const MainNavigator: FunctionComponent = () => (
-  <Navigator lazy tabBar={(props) => <TabBar {...props} />}>
+  <Navigator tabBar={(props) => <TabBar {...props} />}>
     <Screen component={RequestsNavigator} name="Requests" />
     <Screen component={OffersNavigator} name="Offers" />
     <Screen component={ProfileNavigator} name="Profile" />
