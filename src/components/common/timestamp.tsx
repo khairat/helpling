@@ -11,15 +11,17 @@ export const Timestamp: FunctionComponent<Props> = ({ style, time }) => {
   const [label, setLabel] = useState<string>()
 
   useEffect(() => {
+    let timeout: number
+
     const update = () => {
       setLabel(moment(time).fromNow())
 
       if (moment().diff(time, 'seconds') < 60) {
-        setTimeout(() => update(), 3 * 1000)
+        timeout = setTimeout(() => update(), 3 * 1000)
       } else if (moment().diff(time, 'minutes') < 60) {
-        setTimeout(() => update(), 60 * 1000)
+        timeout = setTimeout(() => update(), 60 * 1000)
       } else if (moment().diff(time, 'hours') < 25) {
-        setTimeout(() => update(), 60 * 60 * 1000)
+        timeout = setTimeout(() => update(), 60 * 60 * 1000)
       }
     }
 
@@ -29,7 +31,13 @@ export const Timestamp: FunctionComponent<Props> = ({ style, time }) => {
 
     AppState.addEventListener('change', handler)
 
-    return () => AppState.removeEventListener('change', handler)
+    return () => {
+      AppState.removeEventListener('change', handler)
+
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+    }
   }, [time])
 
   return <Text style={style}>{label}</Text>
