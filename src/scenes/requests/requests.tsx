@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react'
-import { FlatList } from 'react-native'
 
-import { Separator, Spinner } from '../../components/common'
-import { ListItem } from '../../components/requests'
+import { Spinner } from '../../components/common'
+import { List } from '../../components/requests'
 import { useRequests } from '../../hooks'
 
 export const Requests: FunctionComponent = () => {
@@ -12,11 +11,5 @@ export const Requests: FunctionComponent = () => {
     return <Spinner />
   }
 
-  return (
-    <FlatList
-      data={requests}
-      ItemSeparatorComponent={Separator}
-      renderItem={({ item }) => <ListItem item={item} />}
-    />
-  )
+  return <List items={requests} />
 }

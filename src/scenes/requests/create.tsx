@@ -2,7 +2,7 @@ import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent } from 'react'
 
-import { Form } from '../../components/requests/form'
+import { Form } from '../../components/requests'
 import { useActions } from '../../hooks'
 import { RequestsParamList } from '.'
 
