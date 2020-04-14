@@ -22,10 +22,11 @@ import { default as img_type_food } from './img/types/food.png'
 import { default as img_type_invite } from './img/types/invite.png'
 import { default as img_type_money } from './img/types/money.png'
 import { default as img_type_physical } from './img/types/physical.png'
+import { default as img_ui_accept } from './img/ui/accept.png'
 import { default as img_ui_add } from './img/ui/add.png'
 import { default as img_ui_back } from './img/ui/back.png'
-import { default as img_ui_check } from './img/ui/check.png'
 import { default as img_ui_close } from './img/ui/close.png'
+import { default as img_ui_complete } from './img/ui/complete.png'
 import { default as img_ui_edit } from './img/ui/edit.png'
 import { default as img_ui_error } from './img/ui/error.png'
 import { default as img_ui_expand } from './img/ui/expand.png'
@@ -79,7 +80,8 @@ export {
   img_ui_expand,
   img_ui_link,
   img_ui_notification,
-  img_ui_check,
+  img_ui_accept,
+  img_ui_complete,
   img_ui_remove,
   img_ui_save,
   img_ui_search,

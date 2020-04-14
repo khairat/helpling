@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect } from 'react'
 import { ActivityIndicator, StyleSheet } from 'react-native'
 
-import { img_ui_check, img_ui_edit, img_ui_remove } from '../../assets'
+import { img_ui_accept, img_ui_edit, img_ui_remove } from '../../assets'
 import { Comments } from '../../components/comments'
 import { Header, HeaderButton } from '../../components/common'
 import { ListItem } from '../../components/requests'
@@ -65,7 +65,7 @@ export const Offer: FunctionComponent<Props> = ({
               </>
             ) : offer.status === 'pending' ? (
               <HeaderButton
-                icon={img_ui_check}
+                icon={img_ui_accept}
                 onPress={async () => {
                   const yes = await dialog.confirm(
                     'Are you sure you want to accept this offer?',
