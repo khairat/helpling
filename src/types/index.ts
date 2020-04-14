@@ -22,6 +22,8 @@ export type MenuItemType = {
   onPress: () => void
 }
 
+export type KindType = 'offer' | 'request'
+
 // models
 
 export type UserType = {

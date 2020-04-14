@@ -18,6 +18,7 @@ import { data_countries } from '../../data'
 import { useAuth } from '../../store'
 import { colors, layout, typography } from '../../styles'
 import {
+  KindType,
   PickerItemType,
   RequestInputType,
   RequestType,
@@ -33,7 +34,7 @@ import {
 } from '../common'
 
 interface Props {
-  kind: 'offer' | 'request'
+  kind: KindType
   loading: boolean
   item?: RequestType
 

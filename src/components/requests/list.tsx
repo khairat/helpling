@@ -3,12 +3,12 @@ import React, { FunctionComponent } from 'react'
 import { FlatList } from 'react-native'
 
 import { Separator, Touchable } from '../../components/common'
-import { RequestType } from '../../types'
+import { KindType, RequestType } from '../../types'
 import { ListItem } from './list-item'
 
 interface Props {
   items: RequestType[]
-  kind: 'offer' | 'request'
+  kind: KindType
 }
 
 export const List: FunctionComponent<Props> = ({ items, kind }) => {

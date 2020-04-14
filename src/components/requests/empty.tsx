@@ -4,11 +4,12 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 
 import { img_hero_error } from '../../assets'
 import { colors, layout, typography } from '../../styles'
+import { KindType } from '../../types'
 import { Button } from '../common'
 
 interface Props {
   message: string
-  kind: 'offer' | 'request'
+  kind: KindType
 }
 
 export const Empty: FunctionComponent<Props> = ({ kind, message }) => {
