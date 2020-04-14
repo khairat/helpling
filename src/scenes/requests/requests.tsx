@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { FlatList } from 'react-native-gesture-handler'
+import { FlatList } from 'react-native'
 
 import { Separator, Spinner } from '../../components/common'
 import { ListItem } from '../../components/requests'
