@@ -70,7 +70,7 @@ export const useOnboarding = () => {
 
   const completeOnboarding = async (
     id: string,
-    username: string,
+    name: string,
     country: string,
     city: string
   ) => {
@@ -82,7 +82,7 @@ export const useOnboarding = () => {
         country,
         createdAt: new Date(),
         id,
-        username
+        name
       })
     } finally {
       setOnboarding(false)

@@ -10,7 +10,7 @@ export const Profile: FunctionComponent = () => {
 
   return (
     <View style={styles.main}>
-      <Text style={styles.title}>Hello, {user?.username}</Text>
+      <Text style={styles.title}>Hello, {user?.name}</Text>
       <Button
         label="Sign out"
         loading={unloading}

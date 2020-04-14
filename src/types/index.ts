@@ -13,5 +13,5 @@ export interface User {
   id: string
   city: string
   country: string
-  username: string
+  name: string
 }

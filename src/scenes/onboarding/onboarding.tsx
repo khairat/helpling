@@ -25,7 +25,7 @@ export const Onboarding: FunctionComponent<Props> = ({
 
   const { completeOnboarding, onboarding } = useOnboarding()
 
-  const [username, setUsername] = useState('')
+  const [name, setName] = useState('')
   const [country, setCountry] = useState<PickerItem>()
   const [city, setCity] = useState<PickerItem>()
 
@@ -44,9 +44,9 @@ export const Onboarding: FunctionComponent<Props> = ({
         <TextBox
           autoCapitalize="none"
           autoCorrect={false}
-          onChangeText={(username) => setUsername(username)}
+          onChangeText={(name) => setName(name)}
           placeholder="Username"
-          value={username}
+          value={name}
         />
         <Text style={styles.label}>
           Choose your location so we can show you requests near you.
@@ -79,8 +79,8 @@ export const Onboarding: FunctionComponent<Props> = ({
         label="Finish"
         loading={onboarding}
         onPress={() => {
-          if (username && country && city) {
-            completeOnboarding(userId, username, country.value, city.value)
+          if (name && country && city) {
+            completeOnboarding(userId, name, country.value, city.value)
           }
         }}
         style={[
