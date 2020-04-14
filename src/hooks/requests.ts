@@ -40,10 +40,7 @@ export const useRequests = (kind: 'offers' | 'requests', userId?: string) => {
     } else {
       unsubscribe.current = firestore()
         .collection(kind)
-        // .where('status', '==', 'pending')
-        // .where('userId', '>', user.uid)
-        // .where('userId', '<', user.uid)
-        // .orderBy('userId')
+        .where('status', '==', 'pending')
         .orderBy('createdAt', 'desc')
         .onSnapshot(onData)
     }

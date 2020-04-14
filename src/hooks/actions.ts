@@ -24,6 +24,7 @@ export const useActions = (kind: 'offers' | 'requests') => {
       .add({
         ...data,
         createdAt: new Date(),
+        status: 'pending',
         updatedAt: new Date(),
         userId: user.uid
       })
