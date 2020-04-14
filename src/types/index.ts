@@ -30,3 +30,10 @@ export interface RequestType {
   createdAt: FirebaseFirestoreTypes.Timestamp
   updatedAt: FirebaseFirestoreTypes.Timestamp
 }
+
+export interface CommentType {
+  id: string
+  body: string
+  user: UserType
+  createdAt: FirebaseFirestoreTypes.Timestamp
+}
