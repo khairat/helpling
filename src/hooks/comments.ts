@@ -15,7 +15,7 @@ export const useComments = (id: string) => {
     const user = auth().currentUser
 
     if (!user) {
-      return
+      throw new Error('User not found')
     }
 
     setLoading(true)
@@ -56,9 +56,7 @@ export const useComments = (id: string) => {
     const user = auth().currentUser
 
     if (!user) {
-      setLoading(false)
-
-      return
+      throw new Error('User not found')
     }
 
     setAdding(true)

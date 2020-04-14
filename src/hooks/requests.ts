@@ -14,7 +14,7 @@ export const useRequests = () => {
     const user = auth().currentUser
 
     if (!user) {
-      return
+      throw new Error('User not found')
     }
 
     setLoading(true)

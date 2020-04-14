@@ -22,11 +22,9 @@ export const CreateRequest: FunctionComponent<Props> = ({
       onCreate={async (data) => {
         const request = await createRequest(data)
 
-        if (request) {
-          replace('Request', {
-            request
-          })
-        }
+        replace('Request', {
+          request
+        })
       }}
     />
   )

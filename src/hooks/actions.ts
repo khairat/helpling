@@ -12,7 +12,7 @@ export const useActions = () => {
     const user = auth().currentUser
 
     if (!user) {
-      return
+      throw new Error('User not found')
     }
 
     setCreatingRequest(true)
