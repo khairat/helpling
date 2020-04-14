@@ -13,9 +13,13 @@ interface Props {
 }
 
 export const Comments: FunctionComponent<Props> = ({ itemId }) => {
-  const { addComment, adding, comments, loading, unsubscribe } = useComments(
-    itemId
-  )
+  const {
+    comments,
+    createComment,
+    creating,
+    loading,
+    unsubscribe
+  } = useComments(itemId)
 
   useEffect(
     () => () => {
@@ -47,8 +51,8 @@ export const Comments: FunctionComponent<Props> = ({ itemId }) => {
         style={styles.main}
       />
       <AddComment
-        loading={adding}
-        onSubmit={(body) => addComment(itemId, body)}
+        loading={creating}
+        onSubmit={(body) => createComment(itemId, body)}
       />
     </>
   )

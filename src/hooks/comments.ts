@@ -8,7 +8,7 @@ import { CommentType } from '../types'
 export const useComments = (id: string) => {
   const unsubscribe = useRef<() => void>()
 
-  const [adding, setAdding] = useState(false)
+  const [creating, setCreating] = useState(false)
   const [loading, setLoading] = useState(true)
 
   const [comments, setComments] = useState<CommentType[]>([])
@@ -52,14 +52,14 @@ export const useComments = (id: string) => {
       })
   }, [id])
 
-  const addComment = async (itemId: string, body: string) => {
+  const createComment = async (itemId: string, body: string) => {
     const user = auth().currentUser
 
     if (!user) {
       throw new Error('User not found')
     }
 
-    setAdding(true)
+    setCreating(true)
 
     await firestore().collection('comments').add({
       body,
@@ -68,13 +68,13 @@ export const useComments = (id: string) => {
       userId: user.uid
     })
 
-    setAdding(false)
+    setCreating(false)
   }
 
   return {
-    addComment,
-    adding,
     comments,
+    createComment,
+    creating,
     loading,
     unsubscribe: unsubscribe.current
   }
