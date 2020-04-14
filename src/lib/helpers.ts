@@ -4,6 +4,28 @@ import { CommentType, RequestType } from '../types'
 import { users } from './users'
 
 class Helpers {
+  async fetchUsers(
+    docs: FirebaseFirestoreTypes.QueryDocumentSnapshot[]
+  ): Promise<void> {
+    const ids = docs.reduce<string[]>((ids, doc) => {
+      const data = doc.data()
+
+      if (!users.get(data.userId)) {
+        ids.push(data.userId)
+      }
+
+      if (data.helplingId && !users.get(data.helplingId)) {
+        ids.push(data.helplingId)
+      }
+
+      return ids
+    }, [])
+
+    if (ids.length > 0) {
+      await users.fetch(ids)
+    }
+  }
+
   createRequest(
     doc:
       | FirebaseFirestoreTypes.QueryDocumentSnapshot
