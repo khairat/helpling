@@ -21,15 +21,18 @@ export const Comments: FunctionComponent<Props> = ({ itemId }) => {
 
   return (
     <>
-      <View style={styles.header}>
-        <Text style={styles.title}>Comments ({comments.length})</Text>
-      </View>
       <FlatList
         contentContainerStyle={styles.list}
         data={comments}
         ItemSeparatorComponent={Separator}
         ListEmptyComponent={Empty}
+        ListHeaderComponent={
+          <View style={styles.header}>
+            <Text style={styles.title}>Comments ({comments.length})</Text>
+          </View>
+        }
         renderItem={({ item }) => <Comment item={item} />}
+        style={styles.main}
       />
       <AddComment
         loading={adding}
@@ -43,15 +46,18 @@ const styles = StyleSheet.create({
   header: {
     borderBottomColor: colors.border,
     borderBottomWidth: layout.border,
-    borderTopColor: colors.border,
-    borderTopWidth: layout.border * 2,
     padding: layout.margin
   },
   list: {
     flexGrow: 1
   },
+  main: {
+    borderTopColor: colors.border,
+    borderTopWidth: layout.border * 2
+  },
   title: {
-    ...typography.subtitle,
+    ...typography.regular,
+    ...typography.medium,
     color: colors.foreground
   }
 })
