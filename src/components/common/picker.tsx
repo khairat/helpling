@@ -8,7 +8,7 @@ import {
   ViewStyle
 } from 'react-native'
 
-import { img_close, img_expand, img_search } from '../../assets'
+import { img_ui_close, img_ui_expand, img_ui_search } from '../../assets'
 import { colors, layout, typography } from '../../styles'
 import { PickerItemType } from '../../types'
 import { Modal } from './modal'
@@ -45,7 +45,7 @@ export const Picker: FunctionComponent<Props> = ({
           style={[styles.textBoxLabel, selected && styles.textBoxLabelActive]}>
           {selected?.label ?? placeholder}
         </Text>
-        <Image source={img_expand} style={styles.icon} />
+        <Image source={img_ui_expand} style={styles.icon} />
       </Touchable>
       <Modal
         onClose={() => setVisible(false)}
@@ -54,7 +54,7 @@ export const Picker: FunctionComponent<Props> = ({
         visible={visible}>
         {data.length > 10 && (
           <View style={styles.search}>
-            <Image source={img_search} style={styles.icon} />
+            <Image source={img_ui_search} style={styles.icon} />
             <TextBox
               onChangeText={(query) => setQuery(query)}
               placeholder="Filter"
@@ -63,7 +63,7 @@ export const Picker: FunctionComponent<Props> = ({
             />
             {query.length > 0 && (
               <Touchable onPress={() => setQuery('')}>
-                <Image source={img_close} style={styles.icon} />
+                <Image source={img_ui_close} style={styles.icon} />
               </Touchable>
             )}
           </View>

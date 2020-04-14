@@ -4,7 +4,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Image, Keyboard, StyleSheet, View } from 'react-native'
 import { useSafeArea } from 'react-native-safe-area-context'
 
-import { nav, navActive } from '../../assets'
+import { img_nav, img_nav_active } from '../../assets'
 import { colors, layout } from '../../styles'
 import { Touchable } from './touchable'
 
@@ -56,7 +56,11 @@ export const TabBar: FunctionComponent<BottomTabBarProps> = ({
             }
           ]}>
           <Image
-            source={index === active ? navActive[route.name] : nav[route.name]}
+            source={
+              index === active
+                ? img_nav_active[route.name]
+                : img_nav[route.name]
+            }
             style={[styles.icon, index === active && styles.active]}
           />
         </Touchable>

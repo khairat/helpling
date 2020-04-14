@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React, { FunctionComponent } from 'react'
 import { useSafeArea } from 'react-native-safe-area-context'
 
-import { img_add } from '../../assets'
+import { img_ui_add } from '../../assets'
 import { Header, HeaderButton } from '../../components/common'
 import { layout } from '../../styles'
 import { RequestType } from '../../types'
@@ -38,7 +38,7 @@ export const OffersNavigator: FunctionComponent = () => {
               {...props}
               right={
                 <HeaderButton
-                  icon={img_add}
+                  icon={img_ui_add}
                   onPress={() => navigate('CreateOffer')}
                 />
               }

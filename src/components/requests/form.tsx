@@ -10,9 +10,9 @@ import {
   View
 } from 'react-native'
 
-import { types } from '../../assets'
+import { img_types } from '../../assets'
 import { data_countries } from '../../data'
-import { useAuth } from '../../hooks'
+import { useAuth } from '../../store'
 import { colors, layout, typography } from '../../styles'
 import {
   PickerItemType,
@@ -38,16 +38,7 @@ export const Form: FunctionComponent<Props> = ({
   onCreate,
   onUpdate
 }) => {
-  const { unsubscribe, user } = useAuth()
-
-  useEffect(
-    () => () => {
-      if (unsubscribe) {
-        unsubscribe()
-      }
-    },
-    [unsubscribe]
-  )
+  const [{ user }] = useAuth()
 
   const [description, setDescription] = useState(item ? item.description : '')
   const [type, setType] = useState<RequestTypeType | undefined>(item?.type)
@@ -94,7 +85,7 @@ export const Form: FunctionComponent<Props> = ({
               setType(item)
             }}
             style={styles.item}>
-            <Image source={types[item]} style={styles.icon} />
+            <Image source={img_types[item]} style={styles.icon} />
             <View style={styles.details}>
               <Text style={styles.type}>{startCase(item)}</Text>
               <Text style={styles.description}>

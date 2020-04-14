@@ -8,7 +8,7 @@ import {
   ViewStyle
 } from 'react-native'
 
-import { img_close } from '../../assets'
+import { img_ui_close } from '../../assets'
 import { colors, layout, typography } from '../../styles'
 import { KeyboardView } from './keyboard-view'
 import { Touchable } from './touchable'
@@ -39,7 +39,7 @@ export const Modal: FunctionComponent<Props> = ({
           <View style={styles.header}>
             <Text style={styles.title}>{title}</Text>
             <Touchable onPress={onClose}>
-              <Image source={img_close} style={styles.icon} />
+              <Image source={img_ui_close} style={styles.icon} />
             </Touchable>
           </View>
           {children}

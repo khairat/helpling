@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { useSafeArea } from 'react-native-safe-area-context'
 
-import { img_back } from '../../assets'
+import { img_ui_back } from '../../assets'
 import { colors, layout, typography } from '../../styles'
 import { Touchable } from './touchable'
 
@@ -50,7 +50,7 @@ export const Header: FunctionComponent<Props & StackHeaderProps> = ({
       ]}>
       {(previous || left) && (
         <View style={styles.left}>
-          {previous && <HeaderButton icon={img_back} onPress={goBack} />}
+          {previous && <HeaderButton icon={img_ui_back} onPress={goBack} />}
           {left}
         </View>
       )}

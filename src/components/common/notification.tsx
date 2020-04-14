@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import { useSafeArea } from 'react-native-safe-area-context'
 
-import { img_close, img_error, img_notification } from '../../assets'
+import { img_ui_close, img_ui_error, img_ui_notification } from '../../assets'
 import { mitter } from '../../lib'
 import { colors, layout, typography } from '../../styles'
 import { NotificationType } from '../../types'
@@ -73,7 +73,9 @@ export const Notification: FunctionComponent = () => {
         notification?.type === 'error' && styles.error
       ]}>
       <Image
-        source={notification?.type === 'error' ? img_error : img_notification}
+        source={
+          notification?.type === 'error' ? img_ui_error : img_ui_notification
+        }
         style={styles.icon}
       />
       <View style={styles.details}>
@@ -87,7 +89,7 @@ export const Notification: FunctionComponent = () => {
 
             setNotification(null)
           }}>
-          <Image source={img_close} style={styles.icon} />
+          <Image source={img_ui_close} style={styles.icon} />
         </Touchable>
       )}
     </View>

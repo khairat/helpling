@@ -2,7 +2,7 @@ import moment from 'moment'
 import React, { FunctionComponent } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
-import { types } from '../../assets'
+import { img_types } from '../../assets'
 import { colors, layout, typography } from '../../styles'
 import { RequestType } from '../../types'
 
@@ -12,7 +12,7 @@ interface Props {
 
 export const ListItem: FunctionComponent<Props> = ({ item }) => (
   <View style={styles.main}>
-    <Image source={types[item.type]} style={styles.type} />
+    <Image source={img_types[item.type]} style={styles.type} />
     <View style={styles.details}>
       <Text style={styles.description}>{item.description}</Text>
       <Text style={styles.location}>

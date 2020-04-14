@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react'
 import { ActivityIndicator, Image, StyleSheet, View } from 'react-native'
 
-import { img_send } from '../../assets'
+import { img_ui_send } from '../../assets'
 import { colors, layout } from '../../styles'
 import { TextBox, Touchable } from '../common'
 
@@ -39,7 +39,7 @@ export const AddComment: FunctionComponent<Props> = ({ loading, onSubmit }) => {
           <ActivityIndicator color={colors.primary} />
         ) : (
           <Touchable onPress={submit} style={styles.button}>
-            <Image source={img_send} style={styles.icon} />
+            <Image source={img_ui_send} style={styles.icon} />
           </Touchable>
         )}
       </View>
