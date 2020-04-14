@@ -2,7 +2,7 @@ import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import { useEffect, useRef, useState } from 'react'
 
-import { helpers } from '../lib'
+import { helpers, mitter } from '../lib'
 import { CommentType } from '../types'
 
 export const useComments = (id: string) => {
@@ -26,14 +26,23 @@ export const useComments = (id: string) => {
       .collection('comments')
       .where('itemId', '==', id)
       .orderBy('createdAt', 'desc')
-      .onSnapshot(async ({ docs }) => {
-        await helpers.fetchUsers(docs)
+      .onSnapshot(
+        async ({ docs }) => {
+          await helpers.fetchUsers(docs)
 
-        const comments = docs.map((doc) => helpers.createComment(doc))
+          const comments = docs.map((doc) => helpers.createComment(doc))
 
-        setComments(comments)
-        setLoading(false)
-      })
+          setComments(comments)
+          setLoading(false)
+        },
+        () => {
+          setLoading(false)
+
+          mitter.error('Something went wrong. Please try again later.')
+
+          // TODO: log to sentry
+        }
+      )
   }, [id])
 
   const createComment = async (itemId: string, body: string) => {
