@@ -22,7 +22,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    padding: layout.margin * 2
+    padding: layout.margin * 2,
+    transform: [
+      {
+        scaleY: -1
+      }
+    ]
   },
   message: {
     ...typography.paragraph,
