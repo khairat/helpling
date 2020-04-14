@@ -7,11 +7,15 @@ import { Header, HeaderButton } from '../../components/common'
 import { layout } from '../../styles'
 import { RequestType } from '../../types'
 import { CreateOffer } from './create'
+import { EditOffer } from './edit'
 import { Offer } from './offer'
 import { Offers } from './offers'
 
 export type OffersParamList = {
   CreateOffer: undefined
+  EditOffer: {
+    offer: RequestType
+  }
   Offer: {
     offer: RequestType
   }
@@ -64,6 +68,15 @@ export const OffersNavigator: FunctionComponent = () => {
           header: (props) => <Header {...props} />,
           headerStyle,
           title: 'Create offer'
+        }}
+      />
+      <Screen
+        component={EditOffer}
+        name="EditOffer"
+        options={{
+          header: (props) => <Header {...props} />,
+          headerStyle,
+          title: 'Edit offer'
         }}
       />
     </Navigator>

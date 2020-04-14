@@ -173,32 +173,36 @@ export const Form: FunctionComponent<Props> = ({
         placeholder="Description"
         value={description}
       />
-      <Text style={styles.label}>Where are you located?</Text>
-      <Picker
-        data={countries.map((country) => ({
-          label: country,
-          value: country
-        }))}
-        onChange={(country) => {
-          setCountry(country)
-          setCity(undefined)
-        }}
-        placeholder="Country"
-        selected={country}
-        title="Select your country"
-      />
-      {country && (
-        <Picker
-          data={cities.map((city) => ({
-            label: city,
-            value: city
-          }))}
-          onChange={(city) => setCity(city)}
-          placeholder="City"
-          selected={city}
-          style={styles.picker}
-          title="Select your city"
-        />
+      {!item && (
+        <>
+          <Text style={styles.label}>Where are you located?</Text>
+          <Picker
+            data={countries.map((country) => ({
+              label: country,
+              value: country
+            }))}
+            onChange={(country) => {
+              setCountry(country)
+              setCity(undefined)
+            }}
+            placeholder="Country"
+            selected={country}
+            title="Select your country"
+          />
+          {country && (
+            <Picker
+              data={cities.map((city) => ({
+                label: city,
+                value: city
+              }))}
+              onChange={(city) => setCity(city)}
+              placeholder="City"
+              selected={city}
+              style={styles.picker}
+              title="Select your city"
+            />
+          )}
+        </>
       )}
     </ScrollView>
   )

@@ -7,11 +7,15 @@ import { Header, HeaderButton } from '../../components/common'
 import { layout } from '../../styles'
 import { RequestType } from '../../types'
 import { CreateRequest } from './create'
+import { EditRequest } from './edit'
 import { Request } from './request'
 import { Requests } from './requests'
 
 export type RequestsParamList = {
   CreateRequest: undefined
+  EditRequest: {
+    request: RequestType
+  }
   Request: {
     request: RequestType
   }
@@ -64,6 +68,15 @@ export const RequestsNavigator: FunctionComponent = () => {
           header: (props) => <Header {...props} />,
           headerStyle,
           title: 'Create request'
+        }}
+      />
+      <Screen
+        component={EditRequest}
+        name="EditRequest"
+        options={{
+          header: (props) => <Header {...props} />,
+          headerStyle,
+          title: 'Edit request'
         }}
       />
     </Navigator>
