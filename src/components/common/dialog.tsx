@@ -13,6 +13,7 @@ export interface DialogProps {
   labelNegative?: string
   labelPositive?: string
   message: string
+  noCancel?: boolean
   placeholder?: string
   positive?: boolean
   title: string
@@ -42,6 +43,7 @@ export const Dialog: FunctionComponent = () => {
     labelNegative,
     labelPositive,
     message,
+    noCancel,
     onNo,
     onValue,
     onYes,
@@ -116,16 +118,18 @@ export const Dialog: FunctionComponent = () => {
                 </>
               ) : type === 'prompt' ? (
                 <>
-                  <Button
-                    label={labelNegative ?? 'Cancel'}
-                    onPress={() => setProps(null)}
-                    style={styles.button}
-                    styleLabel={
-                      positive
-                        ? styles.buttonLabelNegative
-                        : styles.buttonLabelPositive
-                    }
-                  />
+                  {!noCancel && (
+                    <Button
+                      label={labelNegative ?? 'Cancel'}
+                      onPress={() => setProps(null)}
+                      style={styles.button}
+                      styleLabel={
+                        positive
+                          ? styles.buttonLabelNegative
+                          : styles.buttonLabelPositive
+                      }
+                    />
+                  )}
                   <View style={styles.separator} />
                   <Button
                     label={labelPositive ?? 'Submit'}

@@ -1,18 +1,45 @@
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator, Header } from '@react-navigation/stack'
 import React, { FunctionComponent } from 'react'
+import { useSafeArea } from 'react-native-safe-area-context'
 
+import { layout } from '../../styles'
+import { Landing } from './landing'
 import { Onboarding } from './onboarding'
 
-const { Navigator, Screen } = createStackNavigator()
+export type OnboardingParamList = {
+  Landing: undefined
+  Onboarding: {
+    userId: string
+  }
+}
 
-export const OnboardingNavigator: FunctionComponent = () => (
-  <Navigator>
-    <Screen
-      component={Onboarding}
-      name="Onboarding"
-      options={{
-        headerShown: false
-      }}
-    />
-  </Navigator>
-)
+const { Navigator, Screen } = createStackNavigator<OnboardingParamList>()
+
+export const OnboardingNavigator: FunctionComponent = () => {
+  const { top } = useSafeArea()
+
+  const headerStyle = {
+    height: layout.header + top
+  }
+
+  return (
+    <Navigator>
+      <Screen
+        component={Landing}
+        name="Landing"
+        options={{
+          headerShown: false
+        }}
+      />
+      <Screen
+        component={Onboarding}
+        name="Onboarding"
+        options={{
+          header: (props) => <Header {...props} />,
+          headerStyle,
+          title: 'Onboarding'
+        }}
+      />
+    </Navigator>
+  )
+}

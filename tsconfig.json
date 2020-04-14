@@ -8,6 +8,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmit": true,
+    "resolveJsonModule": true,
     "strict": true,
     "target": "esnext"
   },

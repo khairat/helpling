@@ -1,116 +1,121 @@
-import React, { FunctionComponent } from 'react'
-import {
-  ActivityIndicator,
-  Image,
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { RouteProp } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import React, { FunctionComponent, useState } from 'react'
+import { ScrollView, StyleSheet, Text } from 'react-native'
 import { useSafeArea } from 'react-native-safe-area-context'
 
-import { img_apple, img_google, img_helpling } from '../../assets'
-import { Touchable } from '../../components/common'
-import { useAuth } from '../../hooks'
+import { Button, Picker, TextBox } from '../../components/common'
+import { data_countries } from '../../data'
+import { useOnboarding } from '../../hooks'
 import { colors, layout, typography } from '../../styles'
+import { PickerItem } from '../../types'
+import { OnboardingParamList } from '.'
 
-export const Onboarding: FunctionComponent = () => {
+interface Props {
+  navigation: StackNavigationProp<OnboardingParamList, 'Onboarding'>
+  route: RouteProp<OnboardingParamList, 'Onboarding'>
+}
+
+export const Onboarding: FunctionComponent<Props> = ({
+  route: {
+    params: { userId }
+  }
+}) => {
   const { bottom } = useSafeArea()
 
-  const {
-    signInWithApple,
-    signInWithGoogle,
-    signingInWithApple,
-    signingInWithGoogle
-  } = useAuth()
+  const { completeOnboarding, onboarding } = useOnboarding()
+
+  const [username, setUsername] = useState('')
+  const [country, setCountry] = useState<PickerItem>()
+  const [city, setCity] = useState<PickerItem>()
+
+  const countries = Object.keys(data_countries)
+  const cities = country ? data_countries[country.value] : []
 
   return (
     <>
-      <View style={styles.main}>
-        <Image source={img_helpling} style={styles.logo} />
-        <Text style={styles.title}>Helpling</Text>
-        <Text style={styles.description}>
-          Find people who need your help and help them.
+      <ScrollView
+        contentContainerStyle={styles.main}
+        keyboardShouldPersistTaps="always">
+        <Text style={styles.label}>
+          Helpling doesn't reveal your real name to anyone.{'\n'}Pick a
+          username.
         </Text>
-      </View>
-      <View
-        style={[
-          styles.footer,
-          {
-            marginBottom: bottom
-          }
-        ]}>
-        {Platform.OS === 'ios' && (
-          <Touchable onPress={() => signInWithApple()} style={styles.button}>
-            {signingInWithApple ? (
-              <ActivityIndicator color="#000" />
-            ) : (
-              <>
-                <Image source={img_apple} style={styles.buttonIcon} />
-                <Text style={styles.buttonLabel}>Sign in with Apple</Text>
-              </>
-            )}
-          </Touchable>
+        <TextBox
+          autoCapitalize="none"
+          autoCorrect={false}
+          onChangeText={(username) => setUsername(username)}
+          placeholder="Username"
+          value={username}
+        />
+        <Text style={styles.label}>
+          Choose your location so we can show you requests near you.
+        </Text>
+        <Picker
+          data={countries.map((country) => ({
+            label: country,
+            value: country
+          }))}
+          onChange={(country) => setCountry(country)}
+          placeholder="Country"
+          selected={country}
+          title="Select your country"
+        />
+        {country && (
+          <Picker
+            data={cities.map((city) => ({
+              label: city,
+              value: city
+            }))}
+            onChange={(city) => setCity(city)}
+            placeholder="City"
+            selected={city}
+            style={styles.picker}
+            title="Select your city"
+          />
         )}
-        <Touchable onPress={() => signInWithGoogle()} style={styles.button}>
-          {signingInWithGoogle ? (
-            <ActivityIndicator color="#000" />
-          ) : (
-            <>
-              <Image source={img_google} style={styles.buttonIcon} />
-              <Text style={styles.buttonLabel}>Sign in with Google</Text>
-            </>
-          )}
-        </Touchable>
-      </View>
+      </ScrollView>
+      <Button
+        label="Finish"
+        loading={onboarding}
+        onPress={() => {
+          console.log({
+            city,
+            country,
+            username
+          })
+
+          if (username && country && city) {
+            completeOnboarding(userId, username, country.value, city.value)
+          }
+        }}
+        style={[
+          styles.button,
+          {
+            marginBottom: bottom + layout.margin
+          }
+        ]}
+      />
     </>
   )
 }
 
 const styles = StyleSheet.create({
   button: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: layout.radius,
-    flexDirection: 'row',
-    height: layout.button,
-    justifyContent: 'center',
-    marginTop: layout.margin,
-    paddingHorizontal: layout.margin
+    margin: layout.margin
   },
-  buttonIcon: {
-    height: layout.icon,
-    marginRight: layout.padding,
-    width: layout.icon
-  },
-  buttonLabel: {
-    ...typography.regular,
-    ...typography.medium,
-    color: '#000'
-  },
-  description: {
-    ...typography.small,
+  label: {
+    ...typography.paragraph,
     color: colors.foreground,
-    marginTop: layout.padding,
-    textAlign: 'center'
+    marginBottom: layout.padding,
+    marginTop: layout.margin
   },
-  footer: {
+  main: {
+    flex: 1,
     padding: layout.margin,
     paddingTop: 0
   },
-  logo: {
-    height: layout.logo,
-    width: layout.logo
-  },
-  main: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-    padding: layout.margin * 2
-  },
-  title: {
-    ...typography.title,
-    color: colors.foreground,
-    marginTop: layout.margin
+  picker: {
+    marginTop: layout.padding
   }
 })

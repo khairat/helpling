@@ -51,6 +51,7 @@ export const Modal: FunctionComponent<Props> = ({
 
 const styles = StyleSheet.create({
   header: {
+    alignItems: 'center',
     backgroundColor: colors.accent,
     borderTopEndRadius: layout.radius,
     borderTopStartRadius: layout.radius,

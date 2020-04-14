@@ -4,8 +4,10 @@ export { default as img_apple } from './img/apple.png'
 export { default as img_back } from './img/back.png'
 export { default as img_close } from './img/close.png'
 export { default as img_error } from './img/error.png'
+export { default as img_expand } from './img/expand.png'
 export { default as img_google } from './img/google.png'
 export { default as img_notification } from './img/notification.png'
+export { default as img_search } from './img/search.png'
 
 import { ImageSourcePropType } from 'react-native'
 

@@ -1,85 +1,71 @@
-import AppleSignIn, {
-  AppleAuthCredentialState,
-  AppleAuthRequestOperation,
-  AppleAuthRequestScope
-} from '@invertase/react-native-apple-authentication'
-import { GoogleSignin } from '@react-native-community/google-signin'
-import firebase from '@react-native-firebase/auth'
+import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
 import { useEffect, useState } from 'react'
 
-export const useAuth = (init?: boolean) => {
-  const [loading, setLoading] = useState(true)
-  const [isLoggedIn, setLoggedIn] = useState(false)
+import { User } from '../types'
 
-  const [signingInWithApple, setSigningInWithApple] = useState(false)
-  const [signingInWithGoogle, setSigningInWithGoogle] = useState(false)
+let unsubscribeAuthStateChange: () => void
+let unsubscribeFetchUser: () => void
+
+export const useAuth = (init = false) => {
+  const [loading, setLoading] = useState(init)
+  const [unloading, setUnloading] = useState(false)
+
+  const [user, setUser] = useState<User>()
 
   useEffect(() => {
-    if (init) {
-      const unsubscribe = firebase().onAuthStateChanged((user) => {
-        setLoggedIn(!!user)
+    unsubscribeAuthStateChange = auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        const { uid } = user
 
+        unsubscribeFetchUser = firestore()
+          .collection('users')
+          .doc(uid)
+          .onSnapshot((document) => {
+            if (document.exists) {
+              console.log('user', {
+                ...document.data(),
+                id: uid
+              })
+
+              setUser({
+                ...document.data(),
+                id: uid
+              } as User)
+            } else {
+              setUser(undefined)
+            }
+
+            setLoading(false)
+          })
+      } else {
         setLoading(false)
-      })
-
-      return () => unsubscribe()
-    }
-  }, [init])
-
-  const signInWithApple = async () => {
-    if (signingInWithApple || signingInWithGoogle) {
-      return
-    }
-
-    setSigningInWithApple(true)
-
-    try {
-      const { identityToken, nonce, user } = await AppleSignIn.performRequest({
-        requestedOperation: AppleAuthRequestOperation.LOGIN,
-        requestedScopes: [AppleAuthRequestScope.EMAIL]
-      })
-
-      const state = await AppleSignIn.getCredentialStateForUser(user)
-
-      if (state === AppleAuthCredentialState.AUTHORIZED) {
-        const credential = firebase.AppleAuthProvider.credential(
-          identityToken,
-          nonce
-        )
-
-        await firebase().signInWithCredential(credential)
       }
-    } finally {
-      setSigningInWithApple(false)
+    })
+
+    return () => {
+      if (unsubscribeAuthStateChange) {
+        unsubscribeAuthStateChange()
+      }
+
+      if (unsubscribeFetchUser) {
+        unsubscribeFetchUser()
+      }
     }
-  }
+  }, [])
 
-  const signInWithGoogle = async () => {
-    if (signingInWithApple || signingInWithGoogle) {
-      return
-    }
+  const signOut = async () => {
+    setUnloading(true)
 
-    setSigningInWithGoogle(true)
+    await auth().signOut()
 
-    try {
-      GoogleSignin.configure()
-
-      const { idToken } = await GoogleSignin.signIn()
-
-      const googleCredential = firebase.GoogleAuthProvider.credential(idToken)
-
-      await firebase().signInWithCredential(googleCredential)
-    } finally {
-      setSigningInWithGoogle(false)
-    }
+    setUnloading(false)
   }
 
   return {
-    isLoggedIn,
     loading,
-    signInWithApple,
-    signInWithGoogle,
-    signingInWithApple,
-    signingInWithGoogle
+    signOut,
+    unloading,
+    user
   }
 }
