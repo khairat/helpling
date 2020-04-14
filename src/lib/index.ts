@@ -1,4 +1,5 @@
 export { dialog } from './dialog'
+export { helpers } from './helpers'
 export { mitter } from './mitter'
 export { nav } from './nav'
 export { users } from './users'

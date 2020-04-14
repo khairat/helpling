@@ -2,7 +2,7 @@ import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import { useEffect, useState } from 'react'
 
-import { users } from '../lib'
+import { helpers, users } from '../lib'
 import { CommentType } from '../types'
 
 export const useComments = (id: string) => {
@@ -34,7 +34,7 @@ export const useComments = (id: string) => {
             userIds.push(data.userId)
           }
 
-          if (!users.get(data.helplingId) && data.helplingId) {
+          if (data.helplingId && !users.get(data.helplingId)) {
             userIds.push(data.helplingId)
           }
         })
@@ -43,15 +43,7 @@ export const useComments = (id: string) => {
           await users.fetch(userIds)
         }
 
-        const comments = docs.map((doc) => {
-          const data = doc.data()
-
-          return {
-            ...data,
-            id: doc.id,
-            user: users.get(data.userId)
-          }
-        }) as CommentType[]
+        const comments = docs.map((doc) => helpers.createComment(doc))
 
         setComments(comments)
         setLoading(false)

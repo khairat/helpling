@@ -2,7 +2,7 @@ import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import { useEffect, useState } from 'react'
 
-import { users } from '../lib'
+import { helpers, users } from '../lib'
 import { RequestType } from '../types'
 
 export const useRequests = () => {
@@ -36,7 +36,7 @@ export const useRequests = () => {
             userIds.push(data.userId)
           }
 
-          if (!users.get(data.helplingId) && data.helplingId) {
+          if (data.helplingId && !users.get(data.helplingId)) {
             userIds.push(data.helplingId)
           }
         })
@@ -45,16 +45,7 @@ export const useRequests = () => {
           await users.fetch(userIds)
         }
 
-        const requests = docs.map((doc) => {
-          const data = doc.data()
-
-          return {
-            ...data,
-            helpling: data.helplingId ?? users.get(data.helplingId),
-            id: doc.id,
-            user: users.get(data.userId)
-          }
-        }) as RequestType[]
+        const requests = docs.map((doc) => helpers.createRequest(doc))
 
         setRequests(requests)
         setLoading(false)
