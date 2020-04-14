@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     width: layout.icon
   },
   main: {
-    backgroundColor: colors.backgroundDark,
+    backgroundColor: colors.background,
     flexDirection: 'row'
   },
   textBox: {
