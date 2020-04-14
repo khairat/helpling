@@ -12,7 +12,7 @@ interface Props {
   item: Request
 }
 
-export const Item: FunctionComponent<Props> = ({ item }) => {
+export const ListItem: FunctionComponent<Props> = ({ item }) => {
   const { navigate } = useNavigation()
 
   return (
