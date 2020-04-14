@@ -3,6 +3,7 @@ import React, { FunctionComponent } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
 import { img_types } from '../../assets'
+import { useAuth } from '../../store'
 import { colors, layout, typography } from '../../styles'
 import { RequestType } from '../../types'
 
@@ -10,21 +11,29 @@ interface Props {
   item: RequestType
 }
 
-export const ListItem: FunctionComponent<Props> = ({ item }) => (
-  <View style={styles.main}>
-    <Image source={img_types[item.type]} style={styles.type} />
-    <View style={styles.details}>
-      <Text style={styles.description}>{item.description}</Text>
-      <Text style={styles.location}>
-        {item.city}, {item.country}
-      </Text>
-      <View style={styles.meta}>
-        <Text style={[styles.metaLabel, styles.name]}>{item.user.name}</Text>
-        <Text style={styles.metaLabel}>{moment(item.createdAt).fromNow()}</Text>
+export const ListItem: FunctionComponent<Props> = ({ item }) => {
+  const [{ user }] = useAuth()
+
+  return (
+    <View style={styles.main}>
+      <Image source={img_types[item.type]} style={styles.type} />
+      <View style={styles.details}>
+        <Text style={styles.description}>{item.description}</Text>
+        <Text style={styles.location}>
+          {item.city}, {item.country}
+        </Text>
+        <View style={styles.meta}>
+          <Text style={[styles.metaLabel, styles.name]}>
+            {user?.id === item.user.id ? 'YOU' : item.user.name}
+          </Text>
+          <Text style={styles.metaLabel}>
+            {moment(item.createdAt).fromNow()}
+          </Text>
+        </View>
       </View>
     </View>
-  </View>
-)
+  )
+}
 
 const styles = StyleSheet.create({
   description: {
@@ -57,7 +66,7 @@ const styles = StyleSheet.create({
   },
   name: {
     ...typography.medium,
-    color: colors.primary
+    color: colors.accent
   },
   type: {
     height: layout.icon * 2,
