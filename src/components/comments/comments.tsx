@@ -36,18 +36,14 @@ export const Comments: FunctionComponent<Props> = ({ itemId }) => {
 
   return (
     <>
+      <View style={styles.header}>
+        <Text style={styles.title}>Comments ({comments.length})</Text>
+      </View>
       <FlatList
         contentContainerStyle={styles.list}
         data={comments}
         inverted
         ListEmptyComponent={Empty}
-        ListFooterComponent={
-          comments.length > 0 ? (
-            <View style={styles.header}>
-              <Text style={styles.title}>Comments ({comments.length})</Text>
-            </View>
-          ) : null
-        }
         renderItem={({ item }) => <Comment item={item} />}
         style={styles.main}
       />
@@ -61,10 +57,12 @@ export const Comments: FunctionComponent<Props> = ({ itemId }) => {
 
 const styles = StyleSheet.create({
   header: {
+    backgroundColor: colors.backgroundDark,
     padding: layout.margin
   },
   list: {
-    flexGrow: 1
+    flexGrow: 1,
+    paddingTop: layout.padding
   },
   main: {
     backgroundColor: colors.backgroundDark
