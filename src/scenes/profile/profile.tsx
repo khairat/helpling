@@ -51,12 +51,6 @@ export const Profile: FunctionComponent<Props> = ({
       onPress: () => browser.open('https://helpling.app/about')
     },
     {
-      icon: img_profile.help,
-      label: 'Help',
-      link: true,
-      onPress: () => browser.open('https://helpling.app/help')
-    },
-    {
       icon: img_profile.privacy,
       label: 'Privacy policy',
       link: true,
