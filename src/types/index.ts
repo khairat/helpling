@@ -1,5 +1,3 @@
-import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
-
 // components
 
 export type PickerItemType = {
@@ -31,8 +29,8 @@ export type RequestType = {
   status: RequestStatusType
   type: RequestTypeType
   user: UserType
-  createdAt: FirebaseFirestoreTypes.Timestamp
-  updatedAt: FirebaseFirestoreTypes.Timestamp
+  createdAt: string
+  updatedAt: string
 }
 
 export type RequestStatusType = 'pending' | 'accepted' | 'completed'
@@ -43,7 +41,7 @@ export type CommentType = {
   id: string
   body: string
   user: UserType
-  createdAt: FirebaseFirestoreTypes.Timestamp
+  createdAt: string
 }
 
 // input

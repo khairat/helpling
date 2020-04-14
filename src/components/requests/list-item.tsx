@@ -20,9 +20,7 @@ export const ListItem: FunctionComponent<Props> = ({ item }) => (
       </Text>
       <View style={styles.meta}>
         <Text style={[styles.metaLabel, styles.name]}>{item.user.name}</Text>
-        <Text style={styles.metaLabel}>
-          {moment(item.createdAt.toDate()).fromNow()}
-        </Text>
+        <Text style={styles.metaLabel}>{moment(item.createdAt).fromNow()}</Text>
       </View>
     </View>
   </View>
