@@ -20,5 +20,5 @@ export const Requests: FunctionComponent = () => {
     return <Spinner />
   }
 
-  return <List items={items} kind="request" />
+  return <List items={items} kind="request" showHeader />
 }

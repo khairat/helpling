@@ -14,10 +14,14 @@ interface Props {
 
 export const MyOffers: FunctionComponent<Props> = ({
   route: {
-    params: { userId }
+    params: { helpling, userId }
   }
 }) => {
-  const { items, loading, unsubscribe } = useRequests('offers', userId)
+  const { items, loading, unsubscribe } = useRequests(
+    'offers',
+    userId,
+    helpling
+  )
 
   useEffect(
     () => () => {

@@ -20,5 +20,5 @@ export const Offers: FunctionComponent = () => {
     return <Spinner />
   }
 
-  return <List items={items} kind="offer" />
+  return <List items={items} kind="offer" showHeader />
 }

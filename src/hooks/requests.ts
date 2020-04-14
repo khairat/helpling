@@ -7,7 +7,11 @@ import { useEffect, useRef, useState } from 'react'
 import { helpers } from '../lib'
 import { RequestType } from '../types'
 
-export const useRequests = (kind: 'offers' | 'requests', userId?: string) => {
+export const useRequests = (
+  kind: 'offers' | 'requests',
+  userId?: string,
+  helpling?: boolean
+) => {
   const unsubscribe = useRef<() => void>()
 
   const [loading, setLoading] = useState(true)
@@ -31,7 +35,13 @@ export const useRequests = (kind: 'offers' | 'requests', userId?: string) => {
 
     setLoading(true)
 
-    if (userId) {
+    if (helpling) {
+      unsubscribe.current = firestore()
+        .collection(kind)
+        .where('helplingId', '==', userId)
+        .orderBy('createdAt', 'desc')
+        .onSnapshot(onData, (error) => console.log(error.message))
+    } else if (userId) {
       unsubscribe.current = firestore()
         .collection(kind)
         .where('userId', '==', userId)
@@ -44,7 +54,7 @@ export const useRequests = (kind: 'offers' | 'requests', userId?: string) => {
         .orderBy('createdAt', 'desc')
         .onSnapshot(onData)
     }
-  }, [kind, userId])
+  }, [helpling, kind, userId])
 
   return {
     items,

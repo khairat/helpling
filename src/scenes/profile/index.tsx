@@ -10,9 +10,11 @@ import { MyRequests } from './requests'
 
 export type ProfileParamList = {
   MyOffers: {
+    helpling?: boolean
     userId: string
   }
   MyRequests: {
+    helpling?: boolean
     userId: string
   }
   Profile: undefined
@@ -41,20 +43,28 @@ export const ProfileNavigator: FunctionComponent = () => {
       <Screen
         component={MyOffers}
         name="MyOffers"
-        options={{
+        options={({
+          route: {
+            params: { helpling }
+          }
+        }) => ({
           header: (props) => <Header {...props} />,
           headerStyle,
-          title: 'My offers'
-        }}
+          title: `My${helpling ? ' accepted' : ''} offers`
+        })}
       />
       <Screen
         component={MyRequests}
         name="MyRequests"
-        options={{
+        options={({
+          route: {
+            params: { helpling }
+          }
+        }) => ({
           header: (props) => <Header {...props} />,
           headerStyle,
-          title: 'My requests'
-        }}
+          title: `My${helpling ? ' accepted' : ''} requests`
+        })}
       />
     </Navigator>
   )

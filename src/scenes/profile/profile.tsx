@@ -24,7 +24,7 @@ export const Profile: FunctionComponent<Props> = ({
   const menu: MenuItemType[] = [
     {
       icon: img_profile.requests,
-      label: 'My requests',
+      label: "Requests I've created",
       onPress: () => {
         if (user) {
           navigate('MyRequests', {
@@ -34,11 +34,35 @@ export const Profile: FunctionComponent<Props> = ({
       }
     },
     {
+      icon: img_profile.requests,
+      label: "Requests I've accepted",
+      onPress: () => {
+        if (user) {
+          navigate('MyRequests', {
+            helpling: true,
+            userId: user.id
+          })
+        }
+      }
+    },
+    {
       icon: img_profile.offers,
-      label: 'My offers',
+      label: "Offers I've created",
       onPress: () => {
         if (user) {
           navigate('MyOffers', {
+            userId: user.id
+          })
+        }
+      }
+    },
+    {
+      icon: img_profile.offers,
+      label: "Offers I've accepted",
+      onPress: () => {
+        if (user) {
+          navigate('MyOffers', {
+            helpling: true,
             userId: user.id
           })
         }

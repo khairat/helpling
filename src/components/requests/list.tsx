@@ -1,6 +1,12 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { FunctionComponent } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View
+} from 'react-native'
 
 import { Separator, Touchable } from '../../components/common'
 import { colors, layout, typography } from '../../styles'
@@ -11,9 +17,10 @@ import { ListItem } from './list-item'
 interface Props {
   items: RequestType[]
   kind: KindType
+  showHeader?: boolean
 }
 
-export const List: FunctionComponent<Props> = ({ items, kind }) => {
+export const List: FunctionComponent<Props> = ({ items, kind, showHeader }) => {
   const { navigate } = useNavigation()
 
   return (
@@ -32,15 +39,16 @@ export const List: FunctionComponent<Props> = ({ items, kind }) => {
         />
       }
       ListHeaderComponent={
-        <View style={styles.header}>
-          <Text style={styles.message}>
-            Can't find your {kind}s? Check your{' '}
-            <Text onPress={() => navigate('Profile')} style={styles.link}>
-              profile
-            </Text>
-            .
-          </Text>
-        </View>
+        showHeader ? (
+          <TouchableWithoutFeedback onPress={() => navigate('Profile')}>
+            <View style={styles.header}>
+              <Text style={styles.message}>
+                Can't find your {kind}s? Check your{' '}
+                <Text style={styles.link}>profile</Text>.
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        ) : null
       }
       renderItem={({ item }) => (
         <Touchable
