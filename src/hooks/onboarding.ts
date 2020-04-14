@@ -98,9 +98,9 @@ export const useOnboarding = () => {
         userId: uid
       })
     } else {
-      const document = await firestore().collection('users').doc(uid).get()
+      const doc = await firestore().collection('users').doc(uid).get()
 
-      if (!document.exists) {
+      if (!doc.exists) {
         navigate('Onboarding', {
           userId: uid
         })

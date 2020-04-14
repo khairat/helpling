@@ -21,12 +21,14 @@ export const useAuth = (init = false) => {
         unsubscribeFetchUser = firestore()
           .collection('users')
           .doc(uid)
-          .onSnapshot((document) => {
-            if (document.exists) {
-              setUser({
-                ...document.data(),
+          .onSnapshot((doc) => {
+            if (doc.exists) {
+              const user = {
+                ...doc.data(),
                 id: uid
-              } as User)
+              } as User
+
+              setUser(user)
             } else {
               setUser(undefined)
             }
