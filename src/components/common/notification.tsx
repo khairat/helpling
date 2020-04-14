@@ -31,12 +31,18 @@ export const Notification: FunctionComponent = () => {
   )
 
   useEffect(() => {
+    let timeout: number
+
     mitter.onError((notification) => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
 
       setNotification(notification)
 
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
 
         setNotification(null)
@@ -70,7 +76,11 @@ export const Notification: FunctionComponent = () => {
           paddingTop: top + layout.margin
         },
         notification ? styles.visible : styles.hidden,
-        notification?.type === 'error' && styles.error
+        notification?.type === 'notification'
+          ? styles.notification
+          : notification?.type === 'error'
+          ? styles.error
+          : null
       ]}>
       <Image
         source={
@@ -119,11 +129,15 @@ const styles = StyleSheet.create({
   },
   main: {
     alignItems: 'center',
-    backgroundColor: colors.primary,
+    backgroundColor: colors.background,
     flexDirection: 'row',
     paddingVertical: layout.margin,
     position: 'absolute',
     width: '100%'
+  },
+  notification: {
+    backgroundColor: colors.state.message,
+    borderBottomColor: colors.state.success
   },
   title: {
     ...typography.subtitle,

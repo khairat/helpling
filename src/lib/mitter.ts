@@ -6,8 +6,14 @@ import { NotificationType } from '../types'
 class Mitter {
   mitter = mitt()
 
-  error(notification: NotificationType) {
-    this.mitter.emit('error', notification)
+  error(message: string) {
+    const options: NotificationType = {
+      body: message,
+      title: 'Error',
+      type: 'error'
+    }
+
+    this.mitter.emit('error', options)
   }
 
   onError(handler: Handler) {
