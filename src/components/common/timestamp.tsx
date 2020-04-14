@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { AppState, Text, TextStyle } from 'react-native'
+import { AppState, AppStateStatus, Text, TextStyle } from 'react-native'
 
 interface Props {
   style?: TextStyle
@@ -27,7 +27,11 @@ export const Timestamp: FunctionComponent<Props> = ({ style, time }) => {
 
     update()
 
-    const handler = () => setLabel(moment(time).fromNow())
+    const handler = (state: AppStateStatus) => {
+      if (state === 'active') {
+        setLabel(moment(time).fromNow())
+      }
+    }
 
     AppState.addEventListener('change', handler)
 
