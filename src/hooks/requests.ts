@@ -1,3 +1,4 @@
+import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import { uniq } from 'lodash'
 import { useEffect, useState } from 'react'
@@ -14,10 +15,21 @@ export const useRequests = () => {
   useEffect(() => {
     setLoading(true)
 
+    const user = auth().currentUser
+
+    if (!user) {
+      setLoading(false)
+
+      return
+    }
+
     const unsubscribe = firestore()
       .collection('requests')
-      .orderBy('createdAt', 'desc')
       // .where('status', '==', 'pending')
+      // .where('userId', '>', user.uid)
+      // .where('userId', '<', user.uid)
+      // .orderBy('userId')
+      .orderBy('createdAt', 'desc')
       .onSnapshot(async ({ docs }) => {
         const userIds: string[] = []
 
