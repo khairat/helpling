@@ -1,4 +1,3 @@
-import moment from 'moment'
 import React, { FunctionComponent } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
@@ -6,6 +5,7 @@ import { img_types } from '../../assets'
 import { useAuth } from '../../store'
 import { colors, layout, typography } from '../../styles'
 import { RequestType } from '../../types'
+import { Timestamp } from '../common'
 
 interface Props {
   item: RequestType
@@ -26,9 +26,7 @@ export const ListItem: FunctionComponent<Props> = ({ item }) => {
           <Text style={[styles.metaLabel, styles.name]}>
             {user?.id === item.user.id ? 'YOU' : item.user.name}
           </Text>
-          <Text style={styles.metaLabel}>
-            {moment(item.createdAt).fromNow()}
-          </Text>
+          <Timestamp style={styles.metaLabel} time={item.createdAt} />
         </View>
       </View>
     </View>
