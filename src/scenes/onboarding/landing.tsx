@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import { useSafeArea } from 'react-native-safe-area-context'
 
-import { img_apple, img_google, img_helpling } from '../../assets'
+import { img_auth_apple, img_auth_google, img_helpling } from '../../assets'
 import { Touchable } from '../../components/common'
 import { useOnboarding } from '../../hooks'
 import { colors, layout, typography } from '../../styles'
@@ -46,7 +46,7 @@ export const Landing: FunctionComponent = () => {
               <ActivityIndicator color="#000" />
             ) : (
               <>
-                <Image source={img_apple} style={styles.buttonIcon} />
+                <Image source={img_auth_apple} style={styles.buttonIcon} />
                 <Text style={styles.buttonLabel}>Sign in with Apple</Text>
               </>
             )}
@@ -57,7 +57,7 @@ export const Landing: FunctionComponent = () => {
             <ActivityIndicator color="#000" />
           ) : (
             <>
-              <Image source={img_google} style={styles.buttonIcon} />
+              <Image source={img_auth_google} style={styles.buttonIcon} />
               <Text style={styles.buttonLabel}>Sign in with Google</Text>
             </>
           )}
