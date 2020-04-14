@@ -29,6 +29,7 @@ export const Notification: FunctionComponent = () => {
   const [notification, setNotification] = useState<NotificationType | null>(
     null
   )
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     let timeout: number
@@ -40,12 +41,15 @@ export const Notification: FunctionComponent = () => {
 
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
 
+      setVisible(true)
       setNotification(notification)
 
       timeout = setTimeout(() => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
 
-        setNotification(null)
+        setVisible(false)
+
+        setTimeout(() => setNotification(null), 300)
       }, 5000)
     })
 
@@ -56,6 +60,7 @@ export const Notification: FunctionComponent = () => {
         if (body && title) {
           LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
 
+          setVisible(true)
           setNotification({
             body,
             title,
@@ -75,7 +80,7 @@ export const Notification: FunctionComponent = () => {
         {
           paddingTop: top + layout.margin
         },
-        notification ? styles.visible : styles.hidden,
+        visible ? styles.visible : styles.hidden,
         notification?.type === 'notification'
           ? styles.notification
           : notification?.type === 'error'
@@ -97,7 +102,9 @@ export const Notification: FunctionComponent = () => {
           onPress={() => {
             LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
 
-            setNotification(null)
+            setVisible(false)
+
+            setTimeout(() => setNotification(null), 300)
           }}>
           <Image source={img_ui_close} style={styles.icon} />
         </Touchable>
