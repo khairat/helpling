@@ -5,20 +5,20 @@ import { useState } from 'react'
 import { helpers } from '../lib'
 import { RequestInputType } from '../types'
 
-export const useActions = () => {
-  const [creatingRequest, setCreatingRequest] = useState(false)
+export const useActions = (kind: 'offers' | 'requests') => {
+  const [creating, setCreating] = useState(false)
 
-  const createRequest = async (data: RequestInputType) => {
+  const create = async (data: RequestInputType) => {
     const user = auth().currentUser
 
     if (!user) {
       throw new Error('User not found')
     }
 
-    setCreatingRequest(true)
+    setCreating(true)
 
     const ref = await firestore()
-      .collection('requests')
+      .collection(kind)
       .add({
         ...data,
         createdAt: new Date(),
@@ -26,7 +26,7 @@ export const useActions = () => {
         userId: user.uid
       })
 
-    setCreatingRequest(false)
+    setCreating(false)
 
     const request = helpers.createRequest(await ref.get())
 
@@ -34,7 +34,7 @@ export const useActions = () => {
   }
 
   return {
-    createRequest,
-    creatingRequest
+    create,
+    creating
   }
 }

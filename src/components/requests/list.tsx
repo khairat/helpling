@@ -8,9 +8,10 @@ import { RequestType } from '../../types'
 
 interface Props {
   items: RequestType[]
+  kind: 'offer' | 'request'
 }
 
-export const List: FunctionComponent<Props> = ({ items }) => {
+export const List: FunctionComponent<Props> = ({ items, kind }) => {
   const { navigate } = useNavigation()
 
   return (
@@ -19,11 +20,17 @@ export const List: FunctionComponent<Props> = ({ items }) => {
       ItemSeparatorComponent={Separator}
       renderItem={({ item }) => (
         <Touchable
-          onPress={() =>
-            navigate('Request', {
-              request: item
-            })
-          }>
+          onPress={() => {
+            if (kind === 'offer') {
+              navigate('Offer', {
+                offer: item
+              })
+            } else {
+              navigate('Request', {
+                request: item
+              })
+            }
+          }}>
           <ListItem item={item} />
         </Touchable>
       )}

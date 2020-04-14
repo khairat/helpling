@@ -4,27 +4,27 @@ import React, { FunctionComponent } from 'react'
 
 import { Form } from '../../components/requests'
 import { useActions } from '../../hooks'
-import { RequestsParamList } from '.'
+import { OffersParamList } from '.'
 
 interface Props {
-  navigation: StackNavigationProp<RequestsParamList, 'CreateRequest'>
-  route: RouteProp<RequestsParamList, 'CreateRequest'>
+  navigation: StackNavigationProp<OffersParamList, 'CreateOffer'>
+  route: RouteProp<OffersParamList, 'CreateOffer'>
 }
 
-export const CreateRequest: FunctionComponent<Props> = ({
+export const CreateOffer: FunctionComponent<Props> = ({
   navigation: { replace }
 }) => {
-  const { create, creating } = useActions('requests')
+  const { create, creating } = useActions('offers')
 
   return (
     <Form
-      kind="request"
+      kind="offer"
       loading={creating}
       onCreate={async (data) => {
-        const request = await create(data)
+        const offer = await create(data)
 
-        replace('Request', {
-          request
+        replace('Offer', {
+          offer
         })
       }}
     />

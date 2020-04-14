@@ -5,11 +5,11 @@ import { List } from '../../components/requests'
 import { useRequests } from '../../hooks'
 
 export const Requests: FunctionComponent = () => {
-  const { loading, requests } = useRequests()
+  const { items, loading } = useRequests('requests')
 
   if (loading) {
     return <Spinner />
   }
 
-  return <List items={requests} />
+  return <List items={items} kind="request" />
 }

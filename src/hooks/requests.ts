@@ -5,10 +5,9 @@ import { useEffect, useState } from 'react'
 import { helpers, users } from '../lib'
 import { RequestType } from '../types'
 
-export const useRequests = () => {
+export const useRequests = (kind: 'offers' | 'requests') => {
   const [loading, setLoading] = useState(true)
-
-  const [requests, setRequests] = useState<RequestType[]>([])
+  const [items, setItems] = useState<RequestType[]>([])
 
   useEffect(() => {
     const user = auth().currentUser
@@ -20,42 +19,47 @@ export const useRequests = () => {
     setLoading(true)
 
     const unsubscribe = firestore()
-      .collection('requests')
+      .collection(kind)
       // .where('status', '==', 'pending')
       // .where('userId', '>', user.uid)
       // .where('userId', '<', user.uid)
       // .orderBy('userId')
       .orderBy('createdAt', 'desc')
-      .onSnapshot(async ({ docs }) => {
-        const userIds: string[] = []
+      .onSnapshot(
+        async ({ docs }) => {
+          const userIds: string[] = []
 
-        docs.forEach((doc) => {
-          const data = doc.data()
+          docs.forEach((doc) => {
+            const data = doc.data()
 
-          if (!users.get(data.userId)) {
-            userIds.push(data.userId)
+            if (!users.get(data.userId)) {
+              userIds.push(data.userId)
+            }
+
+            if (data.helplingId && !users.get(data.helplingId)) {
+              userIds.push(data.helplingId)
+            }
+          })
+
+          if (userIds.length > 0) {
+            await users.fetch(userIds)
           }
 
-          if (data.helplingId && !users.get(data.helplingId)) {
-            userIds.push(data.helplingId)
-          }
-        })
+          const items = docs.map((doc) => helpers.createRequest(doc))
 
-        if (userIds.length > 0) {
-          await users.fetch(userIds)
+          setItems(items)
+          setLoading(false)
+        },
+        (error) => {
+          console.log(kind, error)
         }
-
-        const requests = docs.map((doc) => helpers.createRequest(doc))
-
-        setRequests(requests)
-        setLoading(false)
-      })
+      )
 
     return () => unsubscribe()
-  }, [])
+  }, [kind])
 
   return {
-    loading,
-    requests
+    items,
+    loading
   }
 }
