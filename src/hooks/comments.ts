@@ -1,11 +1,13 @@
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { helpers, users } from '../lib'
 import { CommentType } from '../types'
 
 export const useComments = (id: string) => {
+  const unsubscribe = useRef<() => void>()
+
   const [adding, setAdding] = useState(false)
   const [loading, setLoading] = useState(true)
 
@@ -20,7 +22,7 @@ export const useComments = (id: string) => {
 
     setLoading(true)
 
-    const unsubscribe = firestore()
+    unsubscribe.current = firestore()
       .collection('comments')
       .where('itemId', '==', id)
       .orderBy('createdAt', 'desc')
@@ -48,8 +50,6 @@ export const useComments = (id: string) => {
         setComments(comments)
         setLoading(false)
       })
-
-    return () => unsubscribe()
   }, [id])
 
   const addComment = async (itemId: string, body: string) => {
@@ -75,6 +75,7 @@ export const useComments = (id: string) => {
     addComment,
     adding,
     comments,
-    loading
+    loading,
+    unsubscribe: unsubscribe.current
   }
 }

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 import { Button } from '../../components/common'
@@ -6,7 +6,16 @@ import { useAuth } from '../../hooks'
 import { colors, layout, typography } from '../../styles'
 
 export const Profile: FunctionComponent = () => {
-  const { signOut, unloading, user } = useAuth()
+  const { signOut, unloading, unsubscribe, user } = useAuth()
+
+  useEffect(
+    () => () => {
+      if (unsubscribe) {
+        unsubscribe()
+      }
+    },
+    [unsubscribe]
+  )
 
   return (
     <View style={styles.main}>

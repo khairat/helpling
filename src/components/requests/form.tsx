@@ -38,7 +38,16 @@ export const Form: FunctionComponent<Props> = ({
   onCreate,
   onUpdate
 }) => {
-  const { user } = useAuth()
+  const { unsubscribe, user } = useAuth()
+
+  useEffect(
+    () => () => {
+      if (unsubscribe) {
+        unsubscribe()
+      }
+    },
+    [unsubscribe]
+  )
 
   const [description, setDescription] = useState(item ? item.description : '')
   const [type, setType] = useState<RequestTypeType | undefined>(item?.type)

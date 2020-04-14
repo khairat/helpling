@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { useComments } from '../../hooks'
@@ -13,7 +13,18 @@ interface Props {
 }
 
 export const Comments: FunctionComponent<Props> = ({ itemId }) => {
-  const { addComment, adding, comments, loading } = useComments(itemId)
+  const { addComment, adding, comments, loading, unsubscribe } = useComments(
+    itemId
+  )
+
+  useEffect(
+    () => () => {
+      if (unsubscribe) {
+        unsubscribe()
+      }
+    },
+    [unsubscribe]
+  )
 
   if (loading) {
     return <Spinner style={styles.main} />

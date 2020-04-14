@@ -1,11 +1,13 @@
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { helpers, users } from '../lib'
 import { RequestType } from '../types'
 
 export const useRequests = (kind: 'offers' | 'requests') => {
+  const unsubscribe = useRef<() => void>()
+
   const [loading, setLoading] = useState(true)
   const [items, setItems] = useState<RequestType[]>([])
 
@@ -18,7 +20,7 @@ export const useRequests = (kind: 'offers' | 'requests') => {
 
     setLoading(true)
 
-    const unsubscribe = firestore()
+    unsubscribe.current = firestore()
       .collection(kind)
       // .where('status', '==', 'pending')
       // .where('userId', '>', user.uid)
@@ -54,12 +56,11 @@ export const useRequests = (kind: 'offers' | 'requests') => {
           console.log(kind, error)
         }
       )
-
-    return () => unsubscribe()
   }, [kind])
 
   return {
     items,
-    loading
+    loading,
+    unsubscribe: unsubscribe.current
   }
 }
