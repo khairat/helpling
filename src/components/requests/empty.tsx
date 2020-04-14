@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import React, { FunctionComponent } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
-import { img_hero_error } from '../../assets'
+import { img_hero_empty } from '../../assets'
 import { colors, layout, typography } from '../../styles'
 import { KindType } from '../../types'
 import { Button } from '../common'
@@ -17,7 +17,7 @@ export const Empty: FunctionComponent<Props> = ({ kind, message }) => {
 
   return (
     <View style={styles.main}>
-      <Image source={img_hero_error} style={styles.image} />
+      <Image source={img_hero_empty} style={styles.image} />
       <Text style={styles.message}>{message}</Text>
       <Button
         label={`Create ${kind}`}
@@ -41,8 +41,8 @@ export const Empty: FunctionComponent<Props> = ({ kind, message }) => {
 
 const styles = StyleSheet.create({
   image: {
-    height: layout.header * 2,
-    width: layout.header * 2
+    height: layout.icon * 4,
+    width: layout.icon * 4
   },
   main: {
     alignItems: 'center',

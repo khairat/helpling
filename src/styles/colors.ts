@@ -13,5 +13,10 @@ export const colors = {
     message: '#007aff',
     success: '#4cd964',
     warning: '#ff9500'
+  },
+  status: {
+    accepted: '#007aff',
+    completed: '#4cd964',
+    pending: '#ff9500'
   }
 }

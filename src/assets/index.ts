@@ -3,6 +3,7 @@ import { ImageSourcePropType } from 'react-native'
 import { default as img_auth_apple } from './img/auth/apple.png'
 import { default as img_auth_google } from './img/auth/google.png'
 import { default as img_helpling } from './img/helpling.png'
+import { default as img_hero_empty } from './img/hero/empty.png'
 import { default as img_hero_error } from './img/hero/error.png'
 import { default as img_nav_active_messages } from './img/nav/active_messages.png'
 import { default as img_nav_active_offers } from './img/nav/active_offers.png'
@@ -85,5 +86,6 @@ export {
   img_ui_remove,
   img_ui_save,
   img_ui_search,
+  img_hero_empty,
   img_ui_send
 }

@@ -1,3 +1,4 @@
+import { startCase } from 'lodash'
 import React, { FunctionComponent } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
@@ -27,6 +28,16 @@ export const ListItem: FunctionComponent<Props> = ({ item }) => {
             {user?.id === item.user.id ? 'YOU' : item.user.name}
           </Text>
           <Timestamp style={styles.metaLabel} time={item.createdAt} />
+          <Text
+            style={[
+              styles.metaLabel,
+              styles.status,
+              item.status === 'accepted' && styles.accepted,
+              item.status === 'completed' && styles.completed,
+              item.status === 'pending' && styles.pending
+            ]}>
+            {startCase(item.status)}
+          </Text>
         </View>
       </View>
     </View>
@@ -34,6 +45,12 @@ export const ListItem: FunctionComponent<Props> = ({ item }) => {
 }
 
 const styles = StyleSheet.create({
+  accepted: {
+    color: colors.status.accepted
+  },
+  completed: {
+    color: colors.status.completed
+  },
   description: {
     ...typography.paragraph,
     color: colors.foreground
@@ -65,6 +82,12 @@ const styles = StyleSheet.create({
   name: {
     ...typography.medium,
     color: colors.accent
+  },
+  pending: {
+    color: colors.status.pending
+  },
+  status: {
+    ...typography.medium
   },
   type: {
     height: layout.icon * 2,
