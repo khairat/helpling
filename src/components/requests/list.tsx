@@ -3,8 +3,8 @@ import React, { FunctionComponent } from 'react'
 import { FlatList } from 'react-native'
 
 import { Separator, Touchable } from '../../components/common'
-import { ListItem } from '../../components/requests'
 import { RequestType } from '../../types'
+import { ListItem } from './list-item'
 
 interface Props {
   items: RequestType[]
