@@ -3,14 +3,14 @@ import firestore from '@react-native-firebase/firestore'
 import { uniq } from 'lodash'
 import { useEffect, useState } from 'react'
 
-import { Request, User } from '../types'
+import { RequestType, UserType } from '../types'
 
-const users = new Map<string, User>()
+const users = new Map<string, UserType>()
 
 export const useRequests = () => {
   const [loading, setLoading] = useState(true)
 
-  const [requests, setRequests] = useState<Request[]>([])
+  const [requests, setRequests] = useState<RequestType[]>([])
 
   useEffect(() => {
     setLoading(true)
@@ -55,7 +55,7 @@ export const useRequests = () => {
             users.set(doc.id, {
               id: doc.id,
               ...doc.data()
-            } as User)
+            } as UserType)
           )
         }
 
@@ -68,7 +68,7 @@ export const useRequests = () => {
             id: doc.id,
             user: users.get(data.userId)
           }
-        }) as Request[]
+        }) as RequestType[]
 
         setRequests(_requests)
 

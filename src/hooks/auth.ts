@@ -2,7 +2,7 @@ import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import { useEffect, useState } from 'react'
 
-import { User } from '../types'
+import { UserType } from '../types'
 
 let unsubscribeAuthStateChange: () => void
 let unsubscribeFetchUser: () => void
@@ -11,7 +11,7 @@ export const useAuth = (init = false) => {
   const [loading, setLoading] = useState(init)
   const [unloading, setUnloading] = useState(false)
 
-  const [user, setUser] = useState<User>()
+  const [user, setUser] = useState<UserType>()
 
   useEffect(() => {
     unsubscribeAuthStateChange = auth().onAuthStateChanged(async (user) => {
@@ -26,7 +26,7 @@ export const useAuth = (init = false) => {
               const user = {
                 ...doc.data(),
                 id: uid
-              } as User
+              } as UserType
 
               setUser(user)
             } else {

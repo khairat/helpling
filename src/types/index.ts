@@ -1,6 +1,6 @@
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
-export interface PickerItem {
+export interface PickerItemType {
   label: string
   value: string
 }
@@ -11,22 +11,22 @@ export interface NotificationType {
   type: 'error' | 'notification'
 }
 
-export interface User {
+export interface UserType {
   id: string
   city: string
   country: string
   name: string
 }
 
-export interface Request {
+export interface RequestType {
   id: string
   city: string
   country: string
   description: string
-  helpling?: User
+  helpling?: UserType
   status: 'pending' | 'accepted' | 'completed'
   type: 'food' | 'invite' | 'money' | 'physical'
-  user: User
+  user: UserType
   createdAt: FirebaseFirestoreTypes.Timestamp
   updatedAt: FirebaseFirestoreTypes.Timestamp
 }

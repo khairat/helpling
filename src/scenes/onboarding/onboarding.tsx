@@ -8,7 +8,7 @@ import { Button, Picker, TextBox } from '../../components/common'
 import { data_countries } from '../../data'
 import { useOnboarding } from '../../hooks'
 import { colors, layout, typography } from '../../styles'
-import { PickerItem } from '../../types'
+import { PickerItemType } from '../../types'
 import { OnboardingParamList } from '.'
 
 interface Props {
@@ -26,8 +26,8 @@ export const Onboarding: FunctionComponent<Props> = ({
   const { completeOnboarding, onboarding } = useOnboarding()
 
   const [name, setName] = useState('')
-  const [country, setCountry] = useState<PickerItem>()
-  const [city, setCity] = useState<PickerItem>()
+  const [country, setCountry] = useState<PickerItemType>()
+  const [city, setCity] = useState<PickerItemType>()
 
   const countries = Object.keys(data_countries)
   const cities = country ? data_countries[country.value] : []

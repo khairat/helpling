@@ -10,19 +10,19 @@ import {
 
 import { img_close, img_expand, img_search } from '../../assets'
 import { colors, layout, typography } from '../../styles'
-import { PickerItem } from '../../types'
+import { PickerItemType } from '../../types'
 import { Modal } from './modal'
 import { TextBox } from './text-box'
 import { Touchable } from './touchable'
 
 interface Props {
-  data: PickerItem[]
+  data: PickerItemType[]
   placeholder: string
   title: string
   style?: ViewStyle
-  selected?: PickerItem
+  selected?: PickerItemType
 
-  onChange: (item: PickerItem) => void
+  onChange: (item: PickerItemType) => void
 }
 
 export const Picker: FunctionComponent<Props> = ({

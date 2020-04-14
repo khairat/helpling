@@ -5,11 +5,11 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 
 import { types } from '../../assets'
 import { colors, layout, typography } from '../../styles'
-import { Request } from '../../types'
+import { RequestType } from '../../types'
 import { Touchable } from '../common'
 
 interface Props {
-  item: Request
+  item: RequestType
 }
 
 export const ListItem: FunctionComponent<Props> = ({ item }) => {
@@ -19,7 +19,7 @@ export const ListItem: FunctionComponent<Props> = ({ item }) => {
     <Touchable
       onPress={() =>
         navigate('Request', {
-          requestId: item.id
+          request: item
         })
       }
       style={styles.main}>
