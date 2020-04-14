@@ -16,7 +16,7 @@ export const Comments: FunctionComponent<Props> = ({ itemId }) => {
   const { addComment, adding, comments, loading } = useComments(itemId)
 
   if (loading) {
-    return <Spinner />
+    return <Spinner style={styles.main} />
   }
 
   return (
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   main: {
-    backgroundColor: '#000'
+    backgroundColor: colors.backgroundDark
   },
   title: {
     ...typography.regular,
