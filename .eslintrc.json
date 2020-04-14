@@ -8,12 +8,12 @@
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "@typescript-eslint",
-    "react",
-    "react-native",
     "react-hooks",
-    "sort-keys-fix",
-    "sort-destructure-keys",
+    "react-native",
+    "react",
     "simple-import-sort",
+    "sort-destructure-keys",
+    "sort-keys-fix",
     "prettier"
   ],
   "rules": {
