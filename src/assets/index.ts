@@ -19,6 +19,10 @@ import { default as img_nav_notifications } from './img/nav/notifications.png'
 import { default as img_nav_offers } from './img/nav/offers.png'
 import { default as img_nav_profile } from './img/nav/profile.png'
 import { default as img_nav_requests } from './img/nav/requests.png'
+import { default as img_food } from './img/types/food.png'
+import { default as img_invite } from './img/types/invite.png'
+import { default as img_money } from './img/types/money.png'
+import { default as img_physical } from './img/types/physical.png'
 
 export const nav: Record<string, ImageSourcePropType> = {
   Notifications: img_nav_notifications,
@@ -32,4 +36,11 @@ export const navActive: Record<string, ImageSourcePropType> = {
   Offers: img_nav_active_offers,
   Profile: img_nav_active_profile,
   Requests: img_nav_active_requests
+}
+
+export const types: Record<string, ImageSourcePropType> = {
+  food: img_food,
+  invite: img_invite,
+  money: img_money,
+  physical: img_physical
 }

@@ -1,22 +1,15 @@
 import React, { FunctionComponent } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
 
-import { colors, typography } from '../../styles'
+import { Spinner } from '../../components/common'
+import { List } from '../../components/requests'
+import { useRequests } from '../../hooks'
 
-export const Requests: FunctionComponent = () => (
-  <View style={styles.main}>
-    <Text style={styles.title}>Requests</Text>
-  </View>
-)
+export const Requests: FunctionComponent = () => {
+  const { loading, requests } = useRequests()
 
-const styles = StyleSheet.create({
-  main: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center'
-  },
-  title: {
-    ...typography.title,
-    color: colors.foreground
+  if (loading) {
+    return <Spinner />
   }
-})
+
+  return <List items={requests} />
+}

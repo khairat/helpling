@@ -2,7 +2,7 @@ export const colors = {
   accent: '#fe6458',
   background: '#010f28',
   backgroundLight: '#1a273e',
-  border: '#010f28',
+  border: '#1a273e',
   foreground: '#fff',
   foregroundDark: '#ccc',
   modal: 'rgba(0, 0, 0, 0.5)',
