@@ -52,17 +52,11 @@ export const List: FunctionComponent<Props> = ({ items, kind, showHeader }) => {
       }
       renderItem={({ item }) => (
         <Touchable
-          onPress={() => {
-            if (kind === 'offer') {
-              navigate('Offer', {
-                offer: item
-              })
-            } else {
-              navigate('Request', {
-                request: item
-              })
-            }
-          }}>
+          onPress={() =>
+            navigate(kind === 'offer' ? 'Offer' : 'Request', {
+              [kind]: item
+            })
+          }>
           <ListItem item={item} />
         </Touchable>
       )}

@@ -8,6 +8,7 @@ import { KindType, RequestInputType } from '../types'
 
 export const useActions = (kind: 'offers' | 'requests') => {
   const [accepting, setAccepting] = useState(false)
+  const [completing, setCompleting] = useState(false)
   const [creating, setCreating] = useState(false)
   const [removing, setRemoving] = useState(false)
   const [updating, setUpdating] = useState(false)
@@ -20,10 +21,29 @@ export const useActions = (kind: 'offers' | 'requests') => {
         id,
         kind
       })
+
+      return true
     } catch ({ message }) {
       mitter.error(message)
     } finally {
       setAccepting(false)
+    }
+  }
+
+  const complete = async (id: string, kind: KindType) => {
+    setCompleting(true)
+
+    try {
+      await functions().httpsCallable('complete')({
+        id,
+        kind
+      })
+
+      return true
+    } catch ({ message }) {
+      mitter.error(message)
+    } finally {
+      setCompleting(false)
     }
   }
 
@@ -75,6 +95,8 @@ export const useActions = (kind: 'offers' | 'requests') => {
   return {
     accept,
     accepting,
+    complete,
+    completing,
     create,
     creating,
     remove,

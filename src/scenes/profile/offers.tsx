@@ -45,5 +45,5 @@ export const MyOffers: FunctionComponent<Props> = ({
     )
   }
 
-  return <List items={items} kind="request" />
+  return <List items={items} kind="offer" />
 }
