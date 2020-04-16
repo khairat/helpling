@@ -106,7 +106,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
                 // TODO: remove hack
                 setTimeout(() =>
                   navigate('Thread', {
-                    id: success
+                    thread: success
                   })
                 )
               }

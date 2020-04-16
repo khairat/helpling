@@ -1,14 +1,29 @@
-import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
+import firestore, {
+  FirebaseFirestoreTypes
+} from '@react-native-firebase/firestore'
 
-import { CommentType, MessageType, RequestType, ThreadType } from '../types'
+import {
+  CommentType,
+  KindType,
+  MessageType,
+  RequestType,
+  ThreadType
+} from '../types'
 import { users } from './users'
 
 class Helpers {
   async fetchUsers(
-    docs: FirebaseFirestoreTypes.QueryDocumentSnapshot[]
+    docs: (
+      | FirebaseFirestoreTypes.QueryDocumentSnapshot
+      | FirebaseFirestoreTypes.DocumentSnapshot
+    )[]
   ): Promise<void> {
     const ids = docs.reduce<string[]>((ids, doc) => {
       const data = doc.data()
+
+      if (!data) {
+        return ids
+      }
 
       if (data.userId && !users.get(data.userId)) {
         ids.push(data.userId)
@@ -32,6 +47,22 @@ class Helpers {
     if (ids.length > 0) {
       await users.fetch(ids)
     }
+  }
+
+  async fetchItem(kind: KindType, id: string): Promise<RequestType> {
+    const item = await firestore().collection(`${kind}s`).doc(id).get()
+
+    await this.fetchUsers([item])
+
+    return this.createRequest(item)
+  }
+
+  async fetchThread(id: string): Promise<ThreadType> {
+    const thread = await firestore().collection('threads').doc(id).get()
+
+    await this.fetchUsers([thread])
+
+    return this.createThread(thread)
   }
 
   createRequest(

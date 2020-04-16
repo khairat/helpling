@@ -4,13 +4,14 @@ import { useSafeArea } from 'react-native-safe-area-context'
 
 import { Header } from '../../components/common'
 import { layout } from '../../styles'
+import { ThreadType } from '../../types'
 import { Messages } from './messages'
 import { Thread } from './thread'
 
 export type MessagesParamList = {
   Messages: undefined
   Thread: {
-    id: string
+    thread: ThreadType
   }
 }
 

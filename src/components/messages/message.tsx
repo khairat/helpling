@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React, { FunctionComponent } from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
 
 import { colors, layout, typography } from '../../styles'
 import { MessageType, UserType } from '../../types'
@@ -24,7 +24,7 @@ export const Message: FunctionComponent<Props> = ({ message, user }) => {
         />
       )}
       <View style={[styles.message, mine && styles.right]}>
-        <View style={[styles.body, mine && styles.bodyRight]}>
+        <View style={styles.body}>
           <Text style={styles.bodyText}>{message.body}</Text>
         </View>
         <Text style={styles.time}>
@@ -35,6 +35,8 @@ export const Message: FunctionComponent<Props> = ({ message, user }) => {
   )
 }
 
+const { width } = Dimensions.get('window')
+
 const styles = StyleSheet.create({
   avatar: {
     borderRadius: layout.icon * 2,
@@ -43,14 +45,11 @@ const styles = StyleSheet.create({
     width: layout.icon * 2
   },
   body: {
-    alignSelf: 'flex-start',
     backgroundColor: colors.backgroundLight,
     borderRadius: layout.radius,
-    maxWidth: '80%',
-    padding: layout.padding
-  },
-  bodyRight: {
-    alignSelf: 'flex-end'
+    maxWidth: width * 0.7,
+    paddingHorizontal: layout.padding * 1.4,
+    paddingVertical: layout.padding
   },
   bodyText: {
     ...typography.paragraph,
@@ -63,7 +62,7 @@ const styles = StyleSheet.create({
     paddingVertical: layout.padding
   },
   message: {
-    justifyContent: 'flex-start'
+    alignItems: 'flex-start'
   },
   right: {
     alignItems: 'flex-end',

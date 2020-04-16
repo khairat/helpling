@@ -24,6 +24,7 @@ import { default as img_type_food } from './img/types/food.png'
 import { default as img_type_invite } from './img/types/invite.png'
 import { default as img_type_money } from './img/types/money.png'
 import { default as img_type_physical } from './img/types/physical.png'
+import { default as img_ui_about } from './img/ui/about.png'
 import { default as img_ui_accept } from './img/ui/accept.png'
 import { default as img_ui_add } from './img/ui/add.png'
 import { default as img_ui_back } from './img/ui/back.png'
@@ -79,6 +80,7 @@ export {
   img_helpling,
   img_auth_apple,
   img_auth_google,
+  img_ui_about,
   img_ui_accept,
   img_ui_add,
   img_ui_back,

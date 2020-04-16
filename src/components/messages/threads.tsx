@@ -28,7 +28,7 @@ export const Threads: FunctionComponent<Props> = ({ threads }) => {
         <Touchable
           onPress={() =>
             navigate('Thread', {
-              id: item.id
+              thread: item
             })
           }>
           <Thread thread={item} user={user} />

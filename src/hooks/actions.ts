@@ -24,7 +24,9 @@ export const useActions = (kind: 'offers' | 'requests') => {
         kind
       })
 
-      return threadId
+      const thread = await helpers.fetchThread(threadId)
+
+      return thread
     } catch ({ message }) {
       mitter.error(message)
     } finally {
