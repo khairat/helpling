@@ -33,7 +33,11 @@ export const Messages: FunctionComponent<Props> = ({
         renderItem={({ item }) => <Message message={item} user={user} />}
         style={styles.main}
       />
-      <Reply loading={replying} onReply={(body) => onReply(body)} />
+      <Reply
+        dismiss={false}
+        loading={replying}
+        onReply={(body) => onReply(body)}
+      />
     </>
   )
 }

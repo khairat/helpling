@@ -13,12 +13,17 @@ import { TextBox } from './text-box'
 import { Touchable } from './touchable'
 
 interface Props {
+  dismiss?: boolean
   loading: boolean
 
   onReply: (body: string) => void
 }
 
-export const Reply: FunctionComponent<Props> = ({ loading, onReply }) => {
+export const Reply: FunctionComponent<Props> = ({
+  dismiss = true,
+  loading,
+  onReply
+}) => {
   const [body, setBody] = useState('')
 
   const reply = () => {
@@ -30,7 +35,9 @@ export const Reply: FunctionComponent<Props> = ({ loading, onReply }) => {
 
     setBody('')
 
-    Keyboard.dismiss()
+    if (dismiss) {
+      Keyboard.dismiss()
+    }
   }
 
   return (
