@@ -79,7 +79,7 @@ class Helpers {
     return {
       ...data,
       createdAt: data.createdAt.toDate().toISOString(),
-      helpling: data.helplingId ?? users.get(data.helplingId),
+      helpling: data.helplingId && users.get(data.helplingId),
       id: doc.id,
       updatedAt: data.updatedAt.toDate().toISOString(),
       user: users.get(data.userId)

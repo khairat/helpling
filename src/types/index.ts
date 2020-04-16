@@ -40,6 +40,7 @@ export type RequestType = {
   description: string
   helpling?: UserType
   status: RequestStatusType
+  threadId?: string
   type: RequestTypeType
   user: UserType
   createdAt: string

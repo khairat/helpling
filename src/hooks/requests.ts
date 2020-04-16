@@ -4,7 +4,7 @@ import firestore, {
 } from '@react-native-firebase/firestore'
 import { useEffect, useRef, useState } from 'react'
 
-import { helpers, mitter } from '../lib'
+import { helpers } from '../lib'
 import { RequestType } from '../types'
 
 export const useRequests = (
@@ -26,14 +26,6 @@ export const useRequests = (
     setLoading(false)
   }
 
-  const onError = () => {
-    setLoading(false)
-
-    mitter.error('Something went wrong. Please try again later.')
-
-    // TODO: log to sentry
-  }
-
   useEffect(() => {
     const user = auth().currentUser
 
@@ -48,19 +40,19 @@ export const useRequests = (
         .collection(kind)
         .where('helplingId', '==', userId)
         .orderBy('createdAt', 'desc')
-        .onSnapshot(onData, onError)
+        .onSnapshot(onData)
     } else if (userId) {
       unsubscribe.current = firestore()
         .collection(kind)
         .where('userId', '==', userId)
         .orderBy('createdAt', 'desc')
-        .onSnapshot(onData, onError)
+        .onSnapshot(onData)
     } else {
       unsubscribe.current = firestore()
         .collection(kind)
         .where('status', '==', 'pending')
         .orderBy('createdAt', 'desc')
-        .onSnapshot(onData, onError)
+        .onSnapshot(onData)
     }
   }, [helpling, kind, userId])
 

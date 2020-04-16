@@ -11,6 +11,8 @@ class Users {
   }
 
   async fetch(ids: string[]): Promise<void> {
+    ids = ids.filter((id) => !this.users.get(id))
+
     const { docs } = await firestore()
       .collection('users')
       .where('id', 'in', uniq(ids))

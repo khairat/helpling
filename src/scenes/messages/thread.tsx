@@ -1,4 +1,4 @@
-import { RouteProp, useNavigation } from '@react-navigation/native'
+import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { differenceBy } from 'lodash'
 import React, { FunctionComponent, useEffect, useState } from 'react'
@@ -19,13 +19,11 @@ interface Props {
 }
 
 export const Thread: FunctionComponent<Props> = ({
-  navigation: { setOptions },
+  navigation: { navigate, setOptions },
   route: {
     params: { thread }
   }
 }) => {
-  const { navigate } = useNavigation()
-
   const [{ user }] = useAuth()
 
   const [fetching, setFetching] = useState(false)
@@ -63,14 +61,15 @@ export const Thread: FunctionComponent<Props> = ({
 
                   setFetching(false)
 
-                  navigate(itemType === 'offer' ? 'Offers' : 'Requests')
-
-                  // TODO: fix hack
-                  setTimeout(() =>
-                    navigate(itemType === 'offer' ? 'Offer' : 'Request', {
-                      [itemType]: item
+                  if (itemType === 'offer') {
+                    navigate('Offer', {
+                      offer: item
                     })
-                  )
+                  } else {
+                    navigate('Request', {
+                      request: item
+                    })
+                  }
                 }}
               />
             )
