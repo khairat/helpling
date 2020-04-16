@@ -25,7 +25,7 @@ export const Thread: FunctionComponent<Props> = ({ thread, user }) => {
       <View style={styles.details}>
         <Text style={styles.user}>{other?.name}</Text>
         {!!thread.last && <Text style={styles.last}>{thread.last}</Text>}
-        <Timestamp style={styles.time} time={thread.createdAt} />
+        <Timestamp style={styles.time} time={thread.updatedAt} />
       </View>
     </View>
   )
