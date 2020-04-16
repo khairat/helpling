@@ -11,7 +11,7 @@ import {
 import { Separator, Touchable } from '../../components/common'
 import { colors, layout, typography } from '../../styles'
 import { KindType, RequestType } from '../../types'
-import { Empty } from './empty'
+import { Empty } from '../common/empty'
 import { ListItem } from './list-item'
 
 interface Props {

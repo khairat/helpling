@@ -2,8 +2,8 @@ import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect } from 'react'
 
-import { Spinner } from '../../components/common'
-import { Empty, List } from '../../components/requests'
+import { Empty, Spinner } from '../../components/common'
+import { List } from '../../components/requests'
 import { useRequests } from '../../hooks'
 import { ProfileParamList } from '.'
 
@@ -23,14 +23,8 @@ export const MyRequests: FunctionComponent<Props> = ({
     helpling
   )
 
-  useEffect(
-    () => () => {
-      if (unsubscribe) {
-        unsubscribe()
-      }
-    },
-    [unsubscribe]
-  )
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => () => unsubscribe(), [])
 
   if (loading) {
     return <Spinner />

@@ -57,6 +57,23 @@ export type CommentType = {
   createdAt: string
 }
 
+export type ThreadType = {
+  id: string
+  itemId: string
+  itemType: KindType
+  last: string
+  users: UserType[]
+  createdAt: string
+  updatedAt: string
+}
+
+export type MessageType = {
+  id: string
+  body: string
+  user: UserType
+  createdAt: string
+}
+
 // input
 
 export type RequestInputType = {

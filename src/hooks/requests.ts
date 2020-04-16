@@ -12,7 +12,7 @@ export const useRequests = (
   userId?: string,
   helpling?: boolean
 ) => {
-  const unsubscribe = useRef<() => void>()
+  const unsubscribe = useRef<() => void>(() => {})
 
   const [loading, setLoading] = useState(true)
   const [items, setItems] = useState<RequestType[]>([])

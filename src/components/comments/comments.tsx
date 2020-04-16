@@ -3,10 +3,8 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { useComments } from '../../hooks'
 import { colors, layout, typography } from '../../styles'
-import { Spinner } from '../common'
-import { AddComment } from './add-comment'
+import { Empty, Reply, Spinner } from '../common'
 import { Comment } from './comment'
-import { Empty } from './empty'
 
 interface Props {
   itemId: string
@@ -21,14 +19,8 @@ export const Comments: FunctionComponent<Props> = ({ itemId }) => {
     unsubscribe
   } = useComments(itemId)
 
-  useEffect(
-    () => () => {
-      if (unsubscribe) {
-        unsubscribe()
-      }
-    },
-    [unsubscribe]
-  )
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => () => unsubscribe(), [])
 
   if (loading) {
     return <Spinner style={styles.main} />
@@ -43,13 +35,18 @@ export const Comments: FunctionComponent<Props> = ({ itemId }) => {
         contentContainerStyle={styles.list}
         data={comments}
         inverted
-        ListEmptyComponent={Empty}
+        ListEmptyComponent={
+          <Empty
+            inverted
+            message={'No comments yet.\nBe the first to write one.'}
+          />
+        }
         renderItem={({ item }) => <Comment item={item} />}
         style={styles.main}
       />
-      <AddComment
+      <Reply
         loading={creating}
-        onSubmit={(body) => createComment(itemId, body)}
+        onReply={(body) => createComment(itemId, body)}
       />
     </>
   )
@@ -62,7 +59,7 @@ const styles = StyleSheet.create({
   },
   list: {
     flexGrow: 1,
-    paddingTop: layout.padding
+    paddingVertical: layout.padding
   },
   main: {
     backgroundColor: colors.backgroundDark

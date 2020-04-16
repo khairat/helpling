@@ -1,6 +1,6 @@
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
-import { CommentType, RequestType } from '../types'
+import { CommentType, MessageType, RequestType, ThreadType } from '../types'
 import { users } from './users'
 
 class Helpers {
@@ -10,12 +10,20 @@ class Helpers {
     const ids = docs.reduce<string[]>((ids, doc) => {
       const data = doc.data()
 
-      if (!users.get(data.userId)) {
+      if (data.userId && !users.get(data.userId)) {
         ids.push(data.userId)
       }
 
       if (data.helplingId && !users.get(data.helplingId)) {
         ids.push(data.helplingId)
+      }
+
+      if (data.userIds) {
+        data.userIds.forEach((id: string) => {
+          if (!users.get(id)) {
+            ids.push(id)
+          }
+        })
       }
 
       return ids
@@ -64,6 +72,45 @@ class Helpers {
       id: doc.id,
       user: users.get(data.userId)
     } as CommentType
+  }
+
+  createThread(
+    doc:
+      | FirebaseFirestoreTypes.QueryDocumentSnapshot
+      | FirebaseFirestoreTypes.DocumentSnapshot
+  ): ThreadType {
+    const data = doc.data()
+
+    if (!data) {
+      throw new Error('No data found')
+    }
+
+    return {
+      ...data,
+      createdAt: data.createdAt.toDate().toISOString(),
+      id: doc.id,
+      updatedAt: data.updatedAt.toDate().toISOString(),
+      users: data.userIds.map((id: string) => users.get(id))
+    } as ThreadType
+  }
+
+  createMessage(
+    doc:
+      | FirebaseFirestoreTypes.QueryDocumentSnapshot
+      | FirebaseFirestoreTypes.DocumentSnapshot
+  ): MessageType {
+    const data = doc.data()
+
+    if (!data) {
+      throw new Error('No data found')
+    }
+
+    return {
+      ...data,
+      createdAt: data.createdAt.toDate().toISOString(),
+      id: doc.id,
+      user: users.get(data.userId)
+    } as MessageType
   }
 }
 

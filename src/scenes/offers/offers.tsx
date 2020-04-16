@@ -7,14 +7,8 @@ import { useRequests } from '../../hooks'
 export const Offers: FunctionComponent = () => {
   const { items, loading, unsubscribe } = useRequests('offers')
 
-  useEffect(
-    () => () => {
-      if (unsubscribe) {
-        unsubscribe()
-      }
-    },
-    [unsubscribe]
-  )
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => () => unsubscribe(), [])
 
   if (loading) {
     return <Spinner />

@@ -5,6 +5,7 @@ import { default as img_auth_google } from './img/auth/google.png'
 import { default as img_helpling } from './img/helpling.png'
 import { default as img_hero_empty } from './img/hero/empty.png'
 import { default as img_hero_error } from './img/hero/error.png'
+import { default as img_hero_messages } from './img/hero/messages.png'
 import { default as img_nav_active_messages } from './img/nav/active_messages.png'
 import { default as img_nav_active_offers } from './img/nav/active_offers.png'
 import { default as img_nav_active_profile } from './img/nav/active_profile.png'
@@ -68,24 +69,28 @@ export const img_profile: Record<string, ImageSourcePropType> = {
   signOut: img_profile_sign_out
 }
 
+export const img_hero: Record<string, ImageSourcePropType> = {
+  empty: img_hero_empty,
+  error: img_hero_error,
+  messages: img_hero_messages
+}
+
 export {
   img_helpling,
   img_auth_apple,
   img_auth_google,
-  img_hero_error,
+  img_ui_accept,
   img_ui_add,
   img_ui_back,
   img_ui_close,
+  img_ui_complete,
   img_ui_edit,
   img_ui_error,
   img_ui_expand,
   img_ui_link,
   img_ui_notification,
-  img_ui_accept,
-  img_ui_complete,
   img_ui_remove,
   img_ui_save,
   img_ui_search,
-  img_hero_empty,
   img_ui_send
 }

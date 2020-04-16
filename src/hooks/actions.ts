@@ -17,12 +17,14 @@ export const useActions = (kind: 'offers' | 'requests') => {
     setAccepting(true)
 
     try {
-      await functions().httpsCallable('accept')({
+      const {
+        data: { threadId }
+      } = await functions().httpsCallable('accept')({
         id,
         kind
       })
 
-      return true
+      return threadId
     } catch ({ message }) {
       mitter.error(message)
     } finally {

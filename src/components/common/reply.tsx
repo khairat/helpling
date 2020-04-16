@@ -1,34 +1,43 @@
 import React, { FunctionComponent, useState } from 'react'
-import { ActivityIndicator, Image, StyleSheet, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Image,
+  Keyboard,
+  StyleSheet,
+  View
+} from 'react-native'
 
 import { img_ui_send } from '../../assets'
 import { colors, layout } from '../../styles'
-import { TextBox, Touchable } from '../common'
+import { TextBox } from './text-box'
+import { Touchable } from './touchable'
 
 interface Props {
   loading: boolean
 
-  onSubmit: (body: string) => void
+  onReply: (body: string) => void
 }
 
-export const AddComment: FunctionComponent<Props> = ({ loading, onSubmit }) => {
+export const Reply: FunctionComponent<Props> = ({ loading, onReply }) => {
   const [body, setBody] = useState('')
 
-  const submit = () => {
+  const reply = () => {
     if (!body) {
       return
     }
 
-    onSubmit(body)
+    onReply(body)
 
     setBody('')
+
+    Keyboard.dismiss()
   }
 
   return (
     <View style={styles.main}>
       <TextBox
         onChangeText={(body) => setBody(body)}
-        onSubmitEditing={submit}
+        onSubmitEditing={reply}
         placeholder="Say something nice"
         returnKeyType="go"
         style={styles.textBox}
@@ -38,7 +47,7 @@ export const AddComment: FunctionComponent<Props> = ({ loading, onSubmit }) => {
         {loading ? (
           <ActivityIndicator color={colors.primary} />
         ) : (
-          <Touchable onPress={submit} style={styles.button}>
+          <Touchable onPress={reply} style={styles.button}>
             <Image source={img_ui_send} style={styles.icon} />
           </Touchable>
         )}

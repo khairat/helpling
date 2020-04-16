@@ -99,6 +99,17 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
                   status: action === 'accept' ? 'accepted' : 'completed'
                 }
               })
+
+              if (action === 'accept') {
+                navigate('Messages')
+
+                // TODO: remove hack
+                setTimeout(() =>
+                  navigate('Thread', {
+                    id: success
+                  })
+                )
+              }
             }
           }}
         />
