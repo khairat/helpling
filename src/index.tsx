@@ -8,7 +8,7 @@ import {
   Notification,
   Spinner
 } from './components/common'
-import { nav } from './lib'
+import { nav, notifications } from './lib'
 import { MainNavigator, OnboardingNavigator } from './scenes'
 import { useAuth } from './store'
 import { NavigatorTheme } from './styles'
@@ -18,6 +18,8 @@ export const Helpling: FunctionComponent = () => {
 
   useEffect(() => {
     init()
+
+    notifications.init()
 
     return () => {
       destroy()

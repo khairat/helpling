@@ -2,6 +2,7 @@ import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 
+import { notifications } from '../lib'
 import { UserType } from '../types'
 
 interface State {
@@ -32,6 +33,8 @@ const actions = {
       async (user) => {
         if (user) {
           const { uid } = user
+
+          notifications.subscribe(uid)
 
           const unsubscribeFetchUser = firestore()
             .collection('users')
@@ -79,6 +82,12 @@ const actions = {
     setState({
       unloading: true
     })
+
+    const user = auth().currentUser
+
+    if (user) {
+      notifications.unsubscribe(user.uid)
+    }
 
     await auth().signOut()
 
