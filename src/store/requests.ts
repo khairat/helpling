@@ -16,6 +16,7 @@ interface State {
   completing: boolean
   creating: boolean
   fetching: boolean
+  fetchingOne: boolean
   offers: RequestType[]
   otherOffers: Record<string, RequestType>
   otherRequests: Record<string, RequestType>
@@ -32,6 +33,7 @@ const initialState: State = {
   completing: false,
   creating: false,
   fetching: false,
+  fetchingOne: false,
   offers: [],
   otherOffers: {},
   otherRequests: {},
@@ -128,7 +130,7 @@ const actions = {
   },
   fetchOffer: (id: string) => async ({ getState, setState }: StoreApi) => {
     setState({
-      fetching: true
+      fetchingOne: true
     })
 
     const doc = await firestore().collection('offers').doc(id).get()
@@ -149,7 +151,7 @@ const actions = {
     }
 
     setState({
-      fetching: false
+      fetchingOne: false
     })
   },
   fetchOffers: () => ({ setState }: StoreApi) => {
@@ -178,7 +180,7 @@ const actions = {
   },
   fetchRequest: (id: string) => async ({ getState, setState }: StoreApi) => {
     setState({
-      fetching: true
+      fetchingOne: true
     })
 
     const doc = await firestore().collection('requests').doc(id).get()
@@ -199,7 +201,7 @@ const actions = {
     }
 
     setState({
-      fetching: false
+      fetchingOne: false
     })
   },
   fetchRequests: () => ({ setState }: StoreApi) => {

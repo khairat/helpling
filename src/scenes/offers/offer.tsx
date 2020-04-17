@@ -20,7 +20,7 @@ export const Offer: FunctionComponent<Props> = ({
     params: { id }
   }
 }) => {
-  const [{ fetching, otherOffers }, { fetchOffer }] = useRequests()
+  const [{ fetchingOne, otherOffers }, { fetchOffer }] = useRequests()
 
   const [offer, setOffer] = useState<RequestType>()
 
@@ -40,7 +40,7 @@ export const Offer: FunctionComponent<Props> = ({
     })
   }, [offer, setOptions])
 
-  if (fetching) {
+  if (fetchingOne) {
     return <Spinner />
   }
 
