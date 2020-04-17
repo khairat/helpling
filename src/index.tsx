@@ -14,7 +14,7 @@ import { useAuth, useRequests, useThreads, useUser } from './store'
 import { NavigatorTheme } from './styles'
 
 export const Helpling: FunctionComponent = () => {
-  const [{ initialising }, { cleanUpAuth, init }] = useAuth()
+  const [{ initialising }, { cleanUpAuth, initialise }] = useAuth()
   const [{ loading, user }, { cleanUpUser, fetchUser }] = useUser()
   const [, { cleanUpRequests }] = useRequests()
   const [, { cleanUpThreads }] = useThreads()
@@ -22,7 +22,7 @@ export const Helpling: FunctionComponent = () => {
   useEffect(() => {
     notifications.init()
 
-    init()
+    initialise()
     fetchUser()
 
     return () => {
@@ -37,7 +37,7 @@ export const Helpling: FunctionComponent = () => {
     cleanUpThreads,
     cleanUpUser,
     fetchUser,
-    init
+    initialise
   ])
 
   return (

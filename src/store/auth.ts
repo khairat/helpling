@@ -21,12 +21,14 @@ const initialState: State = {
 type StoreApi = StoreActionApi<State>
 
 const actions = {
-  cleanUpAuth: () => async ({ getState }: StoreApi) => {
+  cleanUpAuth: () => ({ getState, setState }: StoreApi) => {
     const { unsubscribe } = getState()
 
     unsubscribe()
+
+    setState(initialState)
   },
-  init: () => async ({ setState }: StoreApi) => {
+  initialise: () => ({ setState }: StoreApi) => {
     const unsubscribe = auth().onAuthStateChanged(async (user) => {
       if (user) {
         const { uid } = user

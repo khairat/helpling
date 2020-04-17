@@ -7,7 +7,7 @@ import { img_profile } from '../../assets'
 import { Separator } from '../../components/common'
 import { MenuItem, User } from '../../components/profile'
 import { browser, dialog } from '../../lib'
-import { useAuth, useUser } from '../../store'
+import { useAuth, useRequests, useThreads, useUser } from '../../store'
 import { MenuItemType } from '../../types'
 import { ProfileParamList } from '.'
 
@@ -20,7 +20,9 @@ export const Profile: FunctionComponent<Props> = ({
   navigation: { navigate }
 }) => {
   const [{ signingOut }, { signOut }] = useAuth()
-  const [{ user }] = useUser()
+  const [{ user }, { cleanUpUser }] = useUser()
+  const [, { cleanUpRequests }] = useRequests()
+  const [, { cleanUpThreads }] = useThreads()
 
   const menu: MenuItemType[] = [
     {
@@ -79,6 +81,10 @@ export const Profile: FunctionComponent<Props> = ({
         )
 
         if (yes) {
+          cleanUpRequests()
+          cleanUpThreads()
+          cleanUpUser()
+
           signOut()
         }
       }

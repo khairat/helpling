@@ -69,11 +69,13 @@ const actions = {
       })
     }
   },
-  cleanUpRequests: () => async ({ getState }: StoreApi) => {
+  cleanUpRequests: () => ({ getState, setState }: StoreApi) => {
     const { unsubscribeFetchOffers, unsubscribeFetchRequests } = getState()
 
     unsubscribeFetchOffers()
     unsubscribeFetchRequests()
+
+    setState(initialState)
   },
   completeRequest: (kind: KindType, id: string) => async ({
     setState
@@ -150,7 +152,7 @@ const actions = {
       fetching: false
     })
   },
-  fetchOffers: () => async ({ setState }: StoreApi) => {
+  fetchOffers: () => ({ setState }: StoreApi) => {
     setState({
       fetching: true
     })
@@ -200,7 +202,7 @@ const actions = {
       fetching: false
     })
   },
-  fetchRequests: () => async ({ setState }: StoreApi) => {
+  fetchRequests: () => ({ setState }: StoreApi) => {
     setState({
       fetching: true
     })

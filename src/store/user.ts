@@ -32,13 +32,14 @@ const initialState: State = {
   unsubscribeFetchAcceptedRequests: () => {},
   unsubscribeFetchOffers: () => {},
   unsubscribeFetchRequests: () => {},
-  unsubscribeFetchUser: () => {}
+  unsubscribeFetchUser: () => {},
+  user: undefined
 }
 
 type StoreApi = StoreActionApi<State>
 
 const actions = {
-  cleanUpUser: () => async ({ getState }: StoreApi) => {
+  cleanUpUser: () => ({ getState, setState }: StoreApi) => {
     const {
       unsubscribeFetchAcceptedOffers,
       unsubscribeFetchAcceptedRequests,
@@ -52,12 +53,14 @@ const actions = {
     unsubscribeFetchOffers()
     unsubscribeFetchRequests()
     unsubscribeFetchUser()
+
+    setState(initialState)
   },
-  fetchAcceptedOffers: () => async ({ setState }: StoreApi) => {
+  fetchAcceptedOffers: () => ({ setState }: StoreApi) => {
     const user = auth().currentUser
 
     if (!user) {
-      return
+      throw new Error('User not found')
     }
 
     setState({
@@ -85,11 +88,11 @@ const actions = {
       unsubscribeFetchAcceptedOffers
     })
   },
-  fetchAcceptedRequests: () => async ({ setState }: StoreApi) => {
+  fetchAcceptedRequests: () => ({ setState }: StoreApi) => {
     const user = auth().currentUser
 
     if (!user) {
-      return
+      throw new Error('User not found')
     }
 
     setState({
@@ -117,11 +120,11 @@ const actions = {
       unsubscribeFetchAcceptedRequests
     })
   },
-  fetchOffers: () => async ({ setState }: StoreApi) => {
+  fetchOffers: () => ({ setState }: StoreApi) => {
     const user = auth().currentUser
 
     if (!user) {
-      return
+      throw new Error('User not found')
     }
 
     setState({
@@ -149,11 +152,11 @@ const actions = {
       unsubscribeFetchOffers
     })
   },
-  fetchRequests: () => async ({ setState }: StoreApi) => {
+  fetchRequests: () => ({ setState }: StoreApi) => {
     const user = auth().currentUser
 
     if (!user) {
-      return
+      throw new Error('User not found')
     }
 
     setState({
@@ -181,7 +184,7 @@ const actions = {
       unsubscribeFetchRequests
     })
   },
-  fetchUser: () => async ({ setState }: StoreApi) => {
+  fetchUser: () => ({ setState }: StoreApi) => {
     const user = auth().currentUser
 
     if (!user) {

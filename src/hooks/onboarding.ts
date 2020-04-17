@@ -9,8 +9,12 @@ import firestore from '@react-native-firebase/firestore'
 import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 
+import { useUser } from '../store'
+
 export const useOnboarding = () => {
   const { navigate } = useNavigation()
+
+  const [, { fetchUser }] = useUser()
 
   const [onboarding, setOnboarding] = useState(false)
   const [signingInWithApple, setSigningInWithApple] = useState(false)
@@ -100,7 +104,9 @@ export const useOnboarding = () => {
     } else {
       const doc = await firestore().collection('users').doc(uid).get()
 
-      if (!doc.exists) {
+      if (doc.exists) {
+        await fetchUser()
+      } else {
         navigate('Onboarding', {
           userId: uid
         })

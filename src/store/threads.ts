@@ -21,12 +21,14 @@ const initialState: State = {
 type StoreApi = StoreActionApi<State>
 
 const actions = {
-  cleanUpThreads: () => async ({ getState }: StoreApi) => {
+  cleanUpThreads: () => ({ getState, setState }: StoreApi) => {
     const { unsubscribeFetchThreads } = getState()
 
     unsubscribeFetchThreads()
+
+    setState(initialState)
   },
-  fetchThreads: () => async ({ setState }: StoreApi) => {
+  fetchThreads: () => ({ setState }: StoreApi) => {
     const user = auth().currentUser
 
     if (!user) {
