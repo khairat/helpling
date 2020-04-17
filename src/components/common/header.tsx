@@ -3,12 +3,11 @@ import React, { FunctionComponent, ReactChild } from 'react'
 import {
   ActivityIndicator,
   Animated,
-  Image,
-  ImageSourcePropType,
   StyleSheet,
   Text,
   View
 } from 'react-native'
+import Image, { Source } from 'react-native-fast-image'
 import { useSafeArea } from 'react-native-safe-area-context'
 
 import { img_ui_back } from '../../assets'
@@ -62,7 +61,7 @@ export const Header: FunctionComponent<Props & StackHeaderProps> = ({
 }
 
 interface HeaderButtonProps {
-  icon: ImageSourcePropType
+  icon: Source
 
   onPress: () => void
 }

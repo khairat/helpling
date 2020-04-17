@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { FunctionComponent } from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
+import Image from 'react-native-fast-image'
 
 import { img_hero } from '../../assets'
 import { colors, layout, typography } from '../../styles'

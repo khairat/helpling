@@ -1,7 +1,8 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 import { CommonActions } from '@react-navigation/native'
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { Image, Keyboard, StyleSheet, View } from 'react-native'
+import { Keyboard, StyleSheet, View } from 'react-native'
+import Image from 'react-native-fast-image'
 import { useSafeArea } from 'react-native-safe-area-context'
 
 import { img_nav, img_nav_active } from '../../assets'

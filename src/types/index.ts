@@ -1,4 +1,4 @@
-import { ImageSourcePropType } from 'react-native'
+import { Source } from 'react-native-fast-image'
 
 // components
 
@@ -15,7 +15,7 @@ export type NotificationType = {
 }
 
 export type MenuItemType = {
-  icon: ImageSourcePropType
+  icon: Source
   label: string
   link?: boolean
   loading?: boolean

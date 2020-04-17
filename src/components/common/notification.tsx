@@ -1,7 +1,6 @@
 import messaging from '@react-native-firebase/messaging'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import {
-  Image,
   LayoutAnimation,
   Platform,
   StyleSheet,
@@ -9,6 +8,7 @@ import {
   UIManager,
   View
 } from 'react-native'
+import Image from 'react-native-fast-image'
 import { useSafeArea } from 'react-native-safe-area-context'
 
 import { img_ui_close, img_ui_error, img_ui_notification } from '../../assets'

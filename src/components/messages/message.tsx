@@ -1,6 +1,7 @@
 import moment from 'moment'
 import React, { FunctionComponent } from 'react'
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import Image from 'react-native-fast-image'
 
 import { colors, layout, typography } from '../../styles'
 import { MessageType, UserType } from '../../types'

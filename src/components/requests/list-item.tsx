@@ -1,6 +1,7 @@
 import { startCase } from 'lodash'
 import React, { FunctionComponent } from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
+import Image from 'react-native-fast-image'
 
 import { img_types } from '../../assets'
 import { useUser } from '../../store'

@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
-import { Image, StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
+import Image from 'react-native-fast-image'
 
 import { img_ui_link } from '../../assets'
 import { colors, layout, typography } from '../../styles'

@@ -1,11 +1,6 @@
 import React, { FunctionComponent, useState } from 'react'
-import {
-  ActivityIndicator,
-  Image,
-  Keyboard,
-  StyleSheet,
-  View
-} from 'react-native'
+import { ActivityIndicator, Keyboard, StyleSheet, View } from 'react-native'
+import Image from 'react-native-fast-image'
 
 import { img_ui_send } from '../../assets'
 import { colors, layout } from '../../styles'

@@ -1,12 +1,6 @@
 import React, { FunctionComponent, useState } from 'react'
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle
-} from 'react-native'
+import { FlatList, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import Image from 'react-native-fast-image'
 
 import { img_ui_close, img_ui_expand, img_ui_search } from '../../assets'
 import { colors, layout, typography } from '../../styles'

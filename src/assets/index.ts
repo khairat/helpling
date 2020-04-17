@@ -1,4 +1,4 @@
-import { ImageSourcePropType } from 'react-native'
+import { Source } from 'react-native-fast-image'
 
 import { default as img_auth_apple } from './img/auth/apple.png'
 import { default as img_auth_google } from './img/auth/google.png'
@@ -41,28 +41,28 @@ import { default as img_ui_save } from './img/ui/save.png'
 import { default as img_ui_search } from './img/ui/search.png'
 import { default as img_ui_send } from './img/ui/send.png'
 
-export const img_nav: Record<string, ImageSourcePropType> = {
+export const img_nav: Record<string, Source> = {
   Messages: img_nav_messages,
   Offers: img_nav_offers,
   Profile: img_nav_profile,
   Requests: img_nav_requests
 }
 
-export const img_nav_active: Record<string, ImageSourcePropType> = {
+export const img_nav_active: Record<string, Source> = {
   Messages: img_nav_active_messages,
   Offers: img_nav_active_offers,
   Profile: img_nav_active_profile,
   Requests: img_nav_active_requests
 }
 
-export const img_types: Record<string, ImageSourcePropType> = {
+export const img_types: Record<string, Source> = {
   food: img_type_food,
   invite: img_type_invite,
   money: img_type_money,
   physical: img_type_physical
 }
 
-export const img_profile: Record<string, ImageSourcePropType> = {
+export const img_profile: Record<string, Source> = {
   about: img_profile_about,
   help: img_profile_help,
   offers: img_profile_offers,
@@ -71,7 +71,7 @@ export const img_profile: Record<string, ImageSourcePropType> = {
   signOut: img_profile_sign_out
 }
 
-export const img_hero: Record<string, ImageSourcePropType> = {
+export const img_hero: Record<string, Source> = {
   empty: img_hero_empty,
   error: img_hero_error,
   messages: img_hero_messages

@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react'
 import {
   ActivityIndicator,
-  Image,
   Platform,
   StyleSheet,
   Text,
   View
 } from 'react-native'
+import Image from 'react-native-fast-image'
 import { useSafeArea } from 'react-native-safe-area-context'
 
 import { img_auth_apple, img_auth_google, img_helpling } from '../../assets'

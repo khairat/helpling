@@ -5,13 +5,13 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import {
   ActivityIndicator,
   FlatList,
-  Image,
   LayoutAnimation,
   ScrollView,
   StyleSheet,
   Text,
   View
 } from 'react-native'
+import Image from 'react-native-fast-image'
 
 import { img_types, img_ui_save } from '../../assets'
 import { data_countries } from '../../data'
