@@ -12,7 +12,7 @@ import {
 import { useSafeArea } from 'react-native-safe-area-context'
 
 import { img_ui_close, img_ui_error, img_ui_notification } from '../../assets'
-import { mitter } from '../../lib'
+import { mitter, nav } from '../../lib'
 import { colors, layout, typography } from '../../styles'
 import { NotificationType } from '../../types'
 import { Touchable } from './touchable'
@@ -63,6 +63,7 @@ export const Notification: FunctionComponent = () => {
           setVisible(true)
           setNotification({
             body,
+            deeplink: message?.data?.deeplink,
             title,
             type: 'notification'
           })
@@ -72,6 +73,20 @@ export const Notification: FunctionComponent = () => {
 
     return () => unsubscribe()
   }, [])
+
+  const onPress = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+
+    if (notification?.deeplink) {
+      nav.handleDeepLink(notification?.deeplink)
+    }
+
+    setVisible(false)
+
+    setTimeout(() => setNotification(null), 300)
+  }
+
+  const Details = notification?.deeplink ? Touchable : View
 
   return (
     <View
@@ -93,19 +108,12 @@ export const Notification: FunctionComponent = () => {
         }
         style={styles.icon}
       />
-      <View style={styles.details}>
+      <Details onPress={onPress} style={styles.details}>
         <Text style={styles.title}>{notification?.title}</Text>
         <Text style={styles.body}>{notification?.body}</Text>
-      </View>
+      </Details>
       {notification?.type === 'notification' && (
-        <Touchable
-          onPress={() => {
-            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-
-            setVisible(false)
-
-            setTimeout(() => setNotification(null), 300)
-          }}>
+        <Touchable onPress={onPress}>
           <Image source={img_ui_close} style={styles.icon} />
         </Touchable>
       )}

@@ -9,6 +9,7 @@ export type PickerItemType = {
 
 export type NotificationType = {
   body: string
+  deeplink?: string
   title: string
   type: 'error' | 'notification'
 }
