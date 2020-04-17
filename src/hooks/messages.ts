@@ -8,7 +8,7 @@ import { helpers } from '../lib'
 import { MessageType } from '../types'
 
 export const useMessages = (threadId: string) => {
-  const unsubscribe = useRef<() => void>(() => {})
+  const unsubscribe = useRef(() => {})
 
   const [loading, setLoading] = useState(true)
   const [replying, setReplying] = useState(false)

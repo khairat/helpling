@@ -6,7 +6,7 @@ import { helpers } from '../lib'
 import { CommentType, KindType } from '../types'
 
 export const useComments = (id: string) => {
-  const unsubscribe = useRef<() => void>(() => {})
+  const unsubscribe = useRef(() => {})
 
   const [creating, setCreating] = useState(false)
   const [loading, setLoading] = useState(true)
