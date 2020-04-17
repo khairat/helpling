@@ -51,7 +51,7 @@ export const Offer: FunctionComponent<Props> = ({
   return (
     <>
       <ListItem item={offer} />
-      <Comments itemId={id} />
+      <Comments itemId={id} kind="offer" />
     </>
   )
 }

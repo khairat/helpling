@@ -3,7 +3,7 @@ import firestore from '@react-native-firebase/firestore'
 import { useEffect, useRef, useState } from 'react'
 
 import { helpers } from '../lib'
-import { CommentType } from '../types'
+import { CommentType, KindType } from '../types'
 
 export const useComments = (id: string) => {
   const unsubscribe = useRef<() => void>(() => {})
@@ -36,7 +36,11 @@ export const useComments = (id: string) => {
       })
   }, [id])
 
-  const createComment = async (itemId: string, body: string) => {
+  const createComment = async (
+    itemType: KindType,
+    itemId: string,
+    body: string
+  ) => {
     const user = auth().currentUser
 
     if (!user) {
@@ -49,6 +53,7 @@ export const useComments = (id: string) => {
       body,
       createdAt: new Date(),
       itemId,
+      itemType,
       userId: user.uid
     })
 

@@ -53,7 +53,7 @@ export const Request: FunctionComponent<Props> = ({
   return (
     <>
       <ListItem item={request} />
-      <Comments itemId={id} />
+      <Comments itemId={id} kind="request" />
     </>
   )
 }

@@ -3,14 +3,16 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { useComments } from '../../hooks'
 import { colors, layout, typography } from '../../styles'
+import { KindType } from '../../types'
 import { Empty, Reply, Spinner } from '../common'
 import { Comment } from './comment'
 
 interface Props {
   itemId: string
+  kind: KindType
 }
 
-export const Comments: FunctionComponent<Props> = ({ itemId }) => {
+export const Comments: FunctionComponent<Props> = ({ itemId, kind }) => {
   const {
     comments,
     createComment,
@@ -46,7 +48,7 @@ export const Comments: FunctionComponent<Props> = ({ itemId }) => {
       />
       <Reply
         loading={creating}
-        onReply={(body) => createComment(itemId, body)}
+        onReply={(body) => createComment(kind, itemId, body)}
       />
     </>
   )
