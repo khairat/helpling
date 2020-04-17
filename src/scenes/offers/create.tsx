@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent } from 'react'
 
 import { Form } from '../../components/requests'
-import { useActions } from '../../hooks'
+import { useRequests } from '../../store'
 import { OffersParamList } from '.'
 
 interface Props {
@@ -14,17 +14,17 @@ interface Props {
 export const CreateOffer: FunctionComponent<Props> = ({
   navigation: { replace }
 }) => {
-  const { create, creating } = useActions('offers')
+  const [{ creating }, { createRequest }] = useRequests()
 
   return (
     <Form
       kind="offer"
       loading={creating}
       onCreate={async (data) => {
-        const offer = await create(data)
+        const id = await createRequest('offers', data)
 
         replace('Offer', {
-          offer
+          id
         })
       }}
     />

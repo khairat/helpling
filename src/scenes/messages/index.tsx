@@ -4,22 +4,13 @@ import { useSafeArea } from 'react-native-safe-area-context'
 
 import { Header } from '../../components/common'
 import { layout } from '../../styles'
-import { RequestType, ThreadType } from '../../types'
-import { Offer } from '../offers/offer'
-import { Request } from '../requests/request'
 import { Messages } from './messages'
 import { Thread } from './thread'
 
 export type MessagesParamList = {
   Messages: undefined
-  Offer: {
-    offer: RequestType
-  }
-  Request: {
-    request: RequestType
-  }
   Thread: {
-    thread: ThreadType
+    id: string
   }
 }
 
@@ -50,24 +41,6 @@ export const MessagesNavigator: FunctionComponent = () => {
           header: (props) => <Header {...props} />,
           headerStyle,
           title: 'Thread'
-        }}
-      />
-      <Screen
-        component={Request}
-        name="Request"
-        options={{
-          header: (props) => <Header {...props} />,
-          headerStyle,
-          title: 'Request'
-        }}
-      />
-      <Screen
-        component={Offer}
-        name="Offer"
-        options={{
-          header: (props) => <Header {...props} />,
-          headerStyle,
-          title: 'Offer'
         }}
       />
     </Navigator>

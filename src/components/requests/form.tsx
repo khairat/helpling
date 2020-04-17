@@ -15,7 +15,7 @@ import {
 
 import { img_types, img_ui_save } from '../../assets'
 import { data_countries } from '../../data'
-import { useAuth } from '../../store'
+import { useUser } from '../../store'
 import { colors, layout, typography } from '../../styles'
 import {
   KindType,
@@ -49,7 +49,7 @@ export const Form: FunctionComponent<Props> = ({
   onCreate,
   onUpdate
 }) => {
-  const [{ user }] = useAuth()
+  const [{ user }] = useUser()
   const { setOptions } = useNavigation()
 
   const [description, setDescription] = useState(item ? item.description : '')

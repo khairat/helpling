@@ -5,7 +5,6 @@ import { useSafeArea } from 'react-native-safe-area-context'
 import { img_ui_add } from '../../assets'
 import { Header, HeaderButton } from '../../components/common'
 import { layout } from '../../styles'
-import { RequestType } from '../../types'
 import { CreateRequest } from './create'
 import { EditRequest } from './edit'
 import { Request } from './request'
@@ -14,10 +13,10 @@ import { Requests } from './requests'
 export type RequestsParamList = {
   CreateRequest: undefined
   EditRequest: {
-    request: RequestType
+    id: string
   }
   Request: {
-    request: RequestType
+    id: string
   }
   Requests: undefined
 }

@@ -1,9 +1,11 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 
+import { Empty, Spinner } from '../../components/common'
 import { Form } from '../../components/requests'
-import { useActions } from '../../hooks'
+import { useRequests } from '../../store'
+import { RequestType } from '../../types'
 import { OffersParamList } from '.'
 
 interface Props {
@@ -13,17 +15,40 @@ interface Props {
 
 export const EditOffer: FunctionComponent<Props> = ({
   route: {
-    params: { offer }
+    params: { id }
   }
 }) => {
-  const { update, updating } = useActions('offers')
+  const [
+    { fetching, otherOffers, updating },
+    { fetchOffer, updateRequest }
+  ] = useRequests()
+
+  const [offer, setOffer] = useState<RequestType>()
+
+  useEffect(() => {
+    const offer = otherOffers[id]
+
+    if (offer) {
+      setOffer(offer)
+    } else {
+      fetchOffer(id)
+    }
+  }, [fetchOffer, id, otherOffers])
+
+  if (fetching) {
+    return <Spinner />
+  }
+
+  if (!offer) {
+    return <Empty icon="error" message="Offer not found." />
+  }
 
   return (
     <Form
       item={offer}
       kind="offer"
       loading={updating}
-      onUpdate={(id, description) => update(id, description)}
+      onUpdate={(id, description) => updateRequest('offers', id, description)}
     />
   )
 }

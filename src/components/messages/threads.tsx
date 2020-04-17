@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import React, { FunctionComponent } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
 
-import { useAuth } from '../../store'
+import { useUser } from '../../store'
 import { ThreadType } from '../../types'
 import { Empty, Separator, Touchable } from '../common'
 import { Thread } from './thread'
@@ -14,7 +14,7 @@ interface Props {
 export const Threads: FunctionComponent<Props> = ({ threads }) => {
   const { navigate } = useNavigation()
 
-  const [{ user }] = useAuth()
+  const [{ user }] = useUser()
 
   return (
     <FlatList
@@ -28,7 +28,7 @@ export const Threads: FunctionComponent<Props> = ({ threads }) => {
         <Touchable
           onPress={() =>
             navigate('Thread', {
-              thread: item
+              id: item.id
             })
           }>
           <Thread thread={item} user={user} />

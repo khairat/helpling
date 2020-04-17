@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
 
-import { useAuth } from '../../store'
+import { useUser } from '../../store'
 import { colors, layout } from '../../styles'
 import { MessageType } from '../../types'
 import { Empty, Reply } from '../common'
@@ -19,7 +19,7 @@ export const Messages: FunctionComponent<Props> = ({
   onReply,
   replying
 }) => {
-  const [{ user }] = useAuth()
+  const [{ user }] = useUser()
 
   return (
     <>

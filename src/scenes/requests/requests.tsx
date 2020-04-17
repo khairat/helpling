@@ -2,17 +2,18 @@ import React, { FunctionComponent, useEffect } from 'react'
 
 import { Spinner } from '../../components/common'
 import { List } from '../../components/requests'
-import { useRequests } from '../../hooks'
+import { useRequests } from '../../store'
 
 export const Requests: FunctionComponent = () => {
-  const { items, loading, unsubscribe } = useRequests('requests')
+  const [{ fetching, requests }, { fetchRequests }] = useRequests()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => () => unsubscribe(), [])
+  useEffect(() => {
+    fetchRequests()
+  }, [fetchRequests])
 
-  if (loading) {
+  if (fetching) {
     return <Spinner />
   }
 
-  return <List items={items} kind="request" showHeader />
+  return <List items={requests} kind="request" showHeader />
 }

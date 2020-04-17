@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { helpers } from '../lib'
 import { MessageType } from '../types'
 
-export const useThread = (id: string) => {
+export const useMessages = (threadId: string) => {
   const unsubscribe = useRef<() => void>(() => {})
 
   const [loading, setLoading] = useState(true)
@@ -20,7 +20,7 @@ export const useThread = (id: string) => {
 
     unsubscribe.current = firestore()
       .collection('messages')
-      .where('threadId', '==', id)
+      .where('threadId', '==', threadId)
       .orderBy('createdAt', 'desc')
       .onSnapshot(async ({ docs }: FirebaseFirestoreTypes.QuerySnapshot) => {
         await helpers.fetchUsers(docs)
@@ -30,7 +30,7 @@ export const useThread = (id: string) => {
         setMessages(messages)
         setLoading(false)
       })
-  }, [id])
+  }, [threadId])
 
   const reply = async (body: string) => {
     const user = auth().currentUser
@@ -44,7 +44,7 @@ export const useThread = (id: string) => {
     await firestore().collection('messages').add({
       body,
       createdAt: new Date(),
-      threadId: id,
+      threadId,
       userId: user.uid
     })
 

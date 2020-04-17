@@ -4,7 +4,7 @@ import React, { FunctionComponent, useEffect } from 'react'
 
 import { Spinner } from '../../components/common'
 import { Threads } from '../../components/messages'
-import { useThreads } from '../../hooks'
+import { useThreads } from '../../store'
 import { MessagesParamList } from '.'
 
 interface Props {
@@ -13,12 +13,13 @@ interface Props {
 }
 
 export const Messages: FunctionComponent<Props> = () => {
-  const { loading, threads, unsubscribe } = useThreads()
+  const [{ fetching, threads }, { fetchThreads }] = useThreads()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => () => unsubscribe(), [])
+  useEffect(() => {
+    fetchThreads()
+  }, [fetchThreads])
 
-  if (loading) {
+  if (fetching) {
     return <Spinner />
   }
 

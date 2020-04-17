@@ -10,27 +10,41 @@ import {
 } from './components/common'
 import { nav, notifications } from './lib'
 import { MainNavigator, OnboardingNavigator } from './scenes'
-import { useAuth } from './store'
+import { useAuth, useRequests, useThreads, useUser } from './store'
 import { NavigatorTheme } from './styles'
 
 export const Helpling: FunctionComponent = () => {
-  const [{ loading, user }, { destroy, init }] = useAuth()
+  const [{ initialising }, { cleanUpAuth, init }] = useAuth()
+  const [{ loading, user }, { cleanUpUser, fetchUser }] = useUser()
+  const [, { cleanUpRequests }] = useRequests()
+  const [, { cleanUpThreads }] = useThreads()
 
   useEffect(() => {
-    init()
-
     notifications.init()
 
+    init()
+    fetchUser()
+
     return () => {
-      destroy()
+      cleanUpAuth()
+      cleanUpUser()
+      cleanUpRequests()
+      cleanUpThreads()
     }
-  }, [destroy, init])
+  }, [
+    cleanUpAuth,
+    cleanUpRequests,
+    cleanUpThreads,
+    cleanUpUser,
+    fetchUser,
+    init
+  ])
 
   return (
     <NavigationContainer ref={nav.ref} theme={NavigatorTheme}>
       <SafeAreaProvider>
         <KeyboardView>
-          {loading ? (
+          {initialising || loading ? (
             <Spinner />
           ) : user ? (
             <MainNavigator />

@@ -4,7 +4,7 @@ import React, { FunctionComponent, useEffect } from 'react'
 
 import { Empty, Spinner } from '../../components/common'
 import { List } from '../../components/requests'
-import { useRequests } from '../../hooks'
+import { useUser } from '../../store'
 import { ProfileParamList } from '.'
 
 interface Props {
@@ -14,30 +14,34 @@ interface Props {
 
 export const MyOffers: FunctionComponent<Props> = ({
   route: {
-    params: { helpling, userId }
+    params: { helpling }
   }
 }) => {
-  const { items, loading, unsubscribe } = useRequests(
-    'offers',
-    userId,
-    helpling
-  )
+  const [
+    { acceptedOffers, fetching, offers },
+    { fetchAcceptedOffers, fetchOffers }
+  ] = useUser()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => () => unsubscribe(), [])
+  useEffect(() => {
+    if (helpling) {
+      fetchAcceptedOffers()
+    } else {
+      fetchOffers()
+    }
+  }, [fetchAcceptedOffers, fetchOffers, helpling])
 
-  if (loading) {
+  if (fetching) {
     return <Spinner />
   }
 
-  if (items.length === 0) {
+  if ((helpling ? acceptedOffers : offers).length === 0) {
     return (
       <Empty
-        kind="offer"
-        message={"You haven't created any offers yet.\nCare to help?"}
+        kind="request"
+        message={"You haven't created any offers yet.\nGood on you!"}
       />
     )
   }
 
-  return <List items={items} kind="offer" />
+  return <List items={helpling ? acceptedOffers : offers} kind="offer" />
 }

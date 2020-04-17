@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
 import { img_types } from '../../assets'
-import { useAuth } from '../../store'
+import { useUser } from '../../store'
 import { colors, layout, typography } from '../../styles'
 import { RequestType } from '../../types'
 import { Timestamp } from '../common'
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const ListItem: FunctionComponent<Props> = ({ item }) => {
-  const [{ user }] = useAuth()
+  const [{ user }] = useUser()
 
   return (
     <View style={styles.main}>

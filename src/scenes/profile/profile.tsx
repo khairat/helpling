@@ -7,7 +7,7 @@ import { img_profile } from '../../assets'
 import { Separator } from '../../components/common'
 import { MenuItem, User } from '../../components/profile'
 import { browser, dialog } from '../../lib'
-import { useAuth } from '../../store'
+import { useAuth, useUser } from '../../store'
 import { MenuItemType } from '../../types'
 import { ProfileParamList } from '.'
 
@@ -19,54 +19,41 @@ interface Props {
 export const Profile: FunctionComponent<Props> = ({
   navigation: { navigate }
 }) => {
-  const [{ unloading, user }, { signOut }] = useAuth()
+  const [{ signingOut }, { signOut }] = useAuth()
+  const [{ user }] = useUser()
 
   const menu: MenuItemType[] = [
     {
       icon: img_profile.requests,
       label: "Requests I've created",
-      onPress: () => {
-        if (user) {
-          navigate('MyRequests', {
-            userId: user.id
-          })
-        }
-      }
+      onPress: () =>
+        navigate('MyRequests', {
+          helpling: false
+        })
     },
     {
       icon: img_profile.requests,
       label: "Requests I've accepted",
-      onPress: () => {
-        if (user) {
-          navigate('MyRequests', {
-            helpling: true,
-            userId: user.id
-          })
-        }
-      }
+      onPress: () =>
+        navigate('MyRequests', {
+          helpling: true
+        })
     },
     {
       icon: img_profile.offers,
       label: "Offers I've created",
-      onPress: () => {
-        if (user) {
-          navigate('MyOffers', {
-            userId: user.id
-          })
-        }
-      }
+      onPress: () =>
+        navigate('MyOffers', {
+          helpling: false
+        })
     },
     {
       icon: img_profile.offers,
       label: "Offers I've accepted",
-      onPress: () => {
-        if (user) {
-          navigate('MyOffers', {
-            helpling: true,
-            userId: user.id
-          })
-        }
-      }
+      onPress: () =>
+        navigate('MyOffers', {
+          helpling: true
+        })
     },
     {
       icon: img_profile.about,
@@ -83,7 +70,7 @@ export const Profile: FunctionComponent<Props> = ({
     {
       icon: img_profile.signOut,
       label: 'Sign out',
-      loading: unloading,
+      loading: signingOut,
       onPress: async () => {
         const yes = await dialog.confirm(
           'Are you sure you want to sign out?',

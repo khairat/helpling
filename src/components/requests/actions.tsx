@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import { StackHeaderProps } from '@react-navigation/stack'
 import { startCase } from 'lodash'
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent } from 'react'
 import { ActivityIndicator, StyleSheet } from 'react-native'
 
 import {
@@ -10,9 +10,8 @@ import {
   img_ui_messages,
   img_ui_remove
 } from '../../assets'
-import { useActions } from '../../hooks'
-import { dialog, helpers } from '../../lib'
-import { useAuth } from '../../store'
+import { dialog, nav } from '../../lib'
+import { useRequests, useUser } from '../../store'
 import { colors, layout } from '../../styles'
 import { RequestType } from '../../types'
 import { Header, HeaderButton } from '../common'
@@ -26,53 +25,26 @@ interface Props {
 }
 
 export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
-  const { goBack, navigate, setParams } = useNavigation()
+  const { goBack, setParams } = useNavigation()
 
-  const [{ user }] = useAuth()
+  const [{ user }] = useUser()
 
-  const [loading, setLoading] = useState(false)
-
-  const {
-    accept,
-    accepting,
-    complete,
-    completing,
-    creating,
-    remove,
-    removing,
-    updating
-  } = useActions(kind === 'offer' ? 'offers' : 'requests')
+  const [
+    { accepting, completing, creating, removing, updating },
+    { acceptRequest, completeRequest, removeRequest }
+  ] = useRequests()
 
   const right = () => {
-    const getThreadButton = (id: string) => {
-      if (loading) {
-        return (
-          <ActivityIndicator color={colors.accent} style={styles.spinner} />
-        )
-      }
-
-      return (
-        <HeaderButton
-          icon={img_ui_messages}
-          onPress={async () => {
-            setLoading(true)
-
-            const thread = await helpers.fetchThread(id)
-
-            setLoading(false)
-
-            navigate('Messages')
-
-            // TODO: fix hack
-            setTimeout(() =>
-              navigate('Thread', {
-                thread
-              })
-            )
-          }}
-        />
-      )
-    }
+    const getThreadButton = (id: string) => (
+      <HeaderButton
+        icon={img_ui_messages}
+        onPress={() =>
+          nav.navigateAway('Messages', 'Thread', {
+            id
+          })
+        }
+      />
+    )
 
     if (accepting || completing || creating || removing || updating) {
       return <ActivityIndicator color={colors.accent} style={styles.spinner} />
@@ -84,8 +56,8 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
           <HeaderButton
             icon={img_ui_edit}
             onPress={() =>
-              navigate(kind === 'offer' ? 'EditOffer' : 'EditRequest', {
-                [kind]: item
+              nav.navigate(kind === 'offer' ? 'EditOffer' : 'EditRequest', {
+                id: item.id
               })
             }
           />
@@ -99,7 +71,10 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
               )
 
               if (yes) {
-                await remove(item.id)
+                await removeRequest(
+                  kind === 'offer' ? 'offers' : 'requests',
+                  item.id
+                )
 
                 goBack()
               }
@@ -118,7 +93,16 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
           <HeaderButton
             icon={img_ui_accept}
             onPress={async () => {
-              const action = item.status === 'pending' ? 'accept' : 'complete'
+              const action =
+                item.status === 'pending'
+                  ? 'accept'
+                  : item.status === 'accepted'
+                  ? 'complete'
+                  : 'none'
+
+              if (action === 'none') {
+                return
+              }
 
               const yes = await dialog.confirm(
                 `Are you sure you want to ${action} this ${kind}?`,
@@ -126,10 +110,9 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
               )
 
               if (yes) {
-                const success = await (action === 'accept' ? accept : complete)(
-                  item.id,
-                  kind
-                )
+                const success = await (action === 'accept'
+                  ? acceptRequest
+                  : completeRequest)(kind, item.id)
 
                 if (!success) {
                   return
@@ -143,14 +126,9 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
                 })
 
                 if (action === 'accept') {
-                  navigate('Messages')
-
-                  // TODO: remove hack
-                  setTimeout(() =>
-                    navigate('Thread', {
-                      thread: success
-                    })
-                  )
+                  nav.navigateAway('Messages', 'Thread', {
+                    id: success
+                  })
                 }
               }
             }}

@@ -1,16 +1,14 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { differenceBy } from 'lodash'
-import React, { FunctionComponent, useEffect, useState } from 'react'
-import { ActivityIndicator, StyleSheet } from 'react-native'
+import React, { FunctionComponent, useEffect } from 'react'
 
 import { img_ui_about } from '../../assets'
 import { Header, HeaderButton, Spinner } from '../../components/common'
 import { Messages } from '../../components/messages'
-import { useThread } from '../../hooks'
-import { helpers } from '../../lib'
-import { useAuth } from '../../store'
-import { colors, layout } from '../../styles'
+import { useMessages } from '../../hooks'
+import { nav } from '../../lib'
+import { useThreads, useUser } from '../../store'
 import { MessagesParamList } from '.'
 
 interface Props {
@@ -19,23 +17,26 @@ interface Props {
 }
 
 export const Thread: FunctionComponent<Props> = ({
-  navigation: { navigate, setOptions },
+  navigation: { setOptions },
   route: {
-    params: { thread }
+    params: { id }
   }
 }) => {
-  const [{ user }] = useAuth()
+  const [{ threads }] = useThreads()
+  const [{ user }] = useUser()
 
-  const [fetching, setFetching] = useState(false)
-
-  const { loading, messages, reply, replying, unsubscribe } = useThread(
-    thread.id
-  )
+  const { loading, messages, reply, replying, unsubscribe } = useMessages(id)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => unsubscribe(), [])
 
   useEffect(() => {
+    const thread = threads.find((thread) => thread.id === id)
+
+    if (!thread) {
+      return
+    }
+
     const { itemId, itemType, users } = thread
 
     const other = differenceBy(users, [user], 'id').pop()
@@ -49,36 +50,24 @@ export const Thread: FunctionComponent<Props> = ({
         <Header
           {...props}
           right={
-            fetching ? (
-              <ActivityIndicator color={colors.accent} style={styles.spinner} />
-            ) : (
-              <HeaderButton
-                icon={img_ui_about}
-                onPress={async () => {
-                  setFetching(true)
-
-                  const item = await helpers.fetchItem(itemType, itemId)
-
-                  setFetching(false)
-
-                  if (itemType === 'offer') {
-                    navigate('Offer', {
-                      offer: item
-                    })
-                  } else {
-                    navigate('Request', {
-                      request: item
-                    })
+            <HeaderButton
+              icon={img_ui_about}
+              onPress={() =>
+                nav.navigateAway(
+                  itemType === 'offer' ? 'Offers' : 'Requests',
+                  itemType === 'offer' ? 'Offer' : 'Request',
+                  {
+                    id: itemId
                   }
-                }}
-              />
-            )
+                )
+              }
+            />
           }
         />
       ),
       title: other.name
     })
-  }, [fetching, navigate, setOptions, thread, user])
+  }, [id, setOptions, threads, user])
 
   if (loading) {
     return <Spinner />
@@ -92,9 +81,3 @@ export const Thread: FunctionComponent<Props> = ({
     />
   )
 }
-
-const styles = StyleSheet.create({
-  spinner: {
-    margin: layout.margin
-  }
-})
