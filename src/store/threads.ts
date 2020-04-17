@@ -43,19 +43,16 @@ const actions = {
       .collection('threads')
       .where('userIds', 'array-contains', user.uid)
       .orderBy('updatedAt', 'desc')
-      .onSnapshot(
-        async ({ docs }) => {
-          await helpers.fetchUsers(docs)
+      .onSnapshot(async ({ docs }) => {
+        await helpers.fetchUsers(docs)
 
-          const threads = docs.map((doc) => helpers.createThread(doc))
+        const threads = docs.map((doc) => helpers.createThread(doc))
 
-          setState({
-            fetching: false,
-            threads
-          })
-        },
-        (error) => console.log(error)
-      )
+        setState({
+          fetching: false,
+          threads
+        })
+      })
 
     setState({
       unsubscribeFetchThreads
