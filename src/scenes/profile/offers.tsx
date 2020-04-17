@@ -37,7 +37,7 @@ export const MyOffers: FunctionComponent<Props> = ({
   if ((helpling ? acceptedOffers : offers).length === 0) {
     return (
       <Empty
-        kind="request"
+        kind="offer"
         message={"You haven't created any offers yet.\nGood on you!"}
       />
     )
