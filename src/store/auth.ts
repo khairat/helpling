@@ -33,7 +33,7 @@ const actions = {
       if (user) {
         const { uid } = user
 
-        notifications.subscribe(uid)
+        notifications.subscribeToTopic(uid)
       }
 
       setState({
@@ -54,7 +54,7 @@ const actions = {
     const user = auth().currentUser
 
     if (user) {
-      notifications.unsubscribe(user.uid)
+      notifications.unsubscribeFromTopic(user.uid)
     }
 
     await auth().signOut()
