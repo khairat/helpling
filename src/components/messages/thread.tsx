@@ -34,6 +34,7 @@ export const Thread: FunctionComponent<Props> = ({ thread, user }) => {
 
 const styles = StyleSheet.create({
   avatar: {
+    backgroundColor: colors.backgroundLight,
     borderRadius: layout.icon * 2,
     height: layout.icon * 2,
     width: layout.icon * 2

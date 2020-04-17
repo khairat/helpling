@@ -43,6 +43,7 @@ const { width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   avatar: {
+    backgroundColor: colors.backgroundLight,
     borderRadius: layout.icon * 2,
     height: layout.icon * 2,
     marginRight: layout.margin,

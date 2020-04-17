@@ -39,6 +39,7 @@ export const Comment: FunctionComponent<Props> = ({ item }) => {
 
 const styles = StyleSheet.create({
   avatar: {
+    backgroundColor: colors.backgroundLight,
     borderRadius: layout.icon,
     height: layout.icon,
     width: layout.icon
