@@ -47,10 +47,15 @@ static void InitializeFlipper(UIApplication *application) {
   rootView.backgroundColor = [UIColor colorWithRed:0.00 green:0.06 blue:0.16 alpha:1.00];
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+
   UIViewController *rootViewController = [UIViewController new];
+
   rootViewController.view = rootView;
+
   self.window.rootViewController = rootViewController;
+
   [self.window makeKeyAndVisible];
+
   return YES;
 }
 
@@ -63,9 +68,7 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
 }
 
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
   BOOL handledByApp = [RCTLinkingManager application:application openURL:url options:options];
   BOOL handledByGoogleSignIn = [RNGoogleSignin application:application openURL:url options:options];
@@ -73,13 +76,9 @@ static void InitializeFlipper(UIApplication *application) {
   return handledByApp || handledByGoogleSignIn;
 }
 
-- (BOOL)application:(UIApplication *)application
-continueUserActivity:(nonnull NSUserActivity *)userActivity
- restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler
 {
-  return [RCTLinkingManager application:application
-                   continueUserActivity:userActivity
-                     restorationHandler:restorationHandler];
+  return [RCTLinkingManager application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
 }
 
 @end
