@@ -13,6 +13,9 @@ interface Props {
 export const Message: FunctionComponent<Props> = ({ message, user }) => {
   const mine = user?.id === message.user.id
 
+  const time = moment(message.createdAt)
+  const difference = moment().diff(time, 'hours')
+
   return (
     <View style={styles.main}>
       {!mine && (
@@ -28,7 +31,7 @@ export const Message: FunctionComponent<Props> = ({ message, user }) => {
           <Text style={styles.bodyText}>{message.body}</Text>
         </View>
         <Text style={styles.time}>
-          {moment(message.createdAt).format('ddd LT')}
+          {moment(message.createdAt).format(difference >= 24 ? 'ddd LT' : 'LT')}
         </Text>
       </View>
     </View>
