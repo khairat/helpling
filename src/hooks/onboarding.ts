@@ -8,6 +8,7 @@ import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
+import { FIREBASE_WEB_CLIENT_ID } from 'react-native-dotenv'
 
 import { useUser } from '../store'
 
@@ -58,7 +59,9 @@ export const useOnboarding = () => {
     setSigningInWithGoogle(true)
 
     try {
-      GoogleSignin.configure()
+      GoogleSignin.configure({
+        webClientId: FIREBASE_WEB_CLIENT_ID
+      })
 
       const { idToken } = await GoogleSignin.signIn()
 
