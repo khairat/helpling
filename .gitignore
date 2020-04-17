@@ -70,3 +70,12 @@ buck-out/
 #
 GoogleService-Info.plist
 google-services.json
+
+# Sentry
+#
+sentry.properties
+
+# Env
+#
+.env
+.env.production

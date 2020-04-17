@@ -26,6 +26,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 #import <Firebase.h>
 #import <RNGoogleSignin/RNGoogleSignin.h>
+#import <CodePush/CodePush.h>
 
 @implementation AppDelegate
 
@@ -47,15 +48,15 @@ static void InitializeFlipper(UIApplication *application) {
   rootView.backgroundColor = [UIColor colorWithRed:0.00 green:0.06 blue:0.16 alpha:1.00];
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-
+  
   UIViewController *rootViewController = [UIViewController new];
-
+  
   rootViewController.view = rootView;
-
+  
   self.window.rootViewController = rootViewController;
-
+  
   [self.window makeKeyAndVisible];
-
+  
   return YES;
 }
 
@@ -64,7 +65,7 @@ static void InitializeFlipper(UIApplication *application) {
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 #else
-  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  return [CodePush bundleURL];
 #endif
 }
 
