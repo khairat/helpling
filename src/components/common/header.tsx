@@ -1,6 +1,7 @@
 import { StackHeaderProps } from '@react-navigation/stack'
 import React, { FunctionComponent, ReactChild } from 'react'
 import {
+  ActivityIndicator,
   Animated,
   Image,
   ImageSourcePropType,
@@ -75,6 +76,10 @@ export const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
   </Touchable>
 )
 
+export const HeaderSpinner: FunctionComponent = () => (
+  <ActivityIndicator color={colors.accent} style={styles.spinner} />
+)
+
 const styles = StyleSheet.create({
   icon: {
     height: layout.icon,
@@ -100,6 +105,9 @@ const styles = StyleSheet.create({
     marginEnd: layout.margin,
     position: 'absolute',
     right: -layout.margin
+  },
+  spinner: {
+    margin: layout.margin
   },
   title: {
     ...typography.regular,

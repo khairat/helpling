@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react'
-import { ActivityIndicator, Image, StyleSheet, Text } from 'react-native'
+import { Image, StyleSheet, Text } from 'react-native'
 
 import { img_ui_link } from '../../assets'
 import { colors, layout, typography } from '../../styles'
 import { MenuItemType } from '../../types'
-import { Touchable } from '../common'
+import { HeaderSpinner, Touchable } from '../common'
 
 interface Props {
   item: MenuItemType
@@ -16,9 +16,7 @@ export const MenuItem: FunctionComponent<Props> = ({
   <Touchable onPress={onPress} style={styles.main}>
     <Image source={icon} style={styles.icon} />
     <Text style={styles.label}>{label}</Text>
-    {loading && (
-      <ActivityIndicator color={colors.primary} style={styles.spinner} />
-    )}
+    {loading && <HeaderSpinner />}
     {link && <Image source={img_ui_link} style={styles.link} />}
   </Touchable>
 )
@@ -43,8 +41,5 @@ const styles = StyleSheet.create({
   main: {
     alignItems: 'center',
     flexDirection: 'row'
-  },
-  spinner: {
-    margin: layout.margin
   }
 })

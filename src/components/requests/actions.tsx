@@ -2,7 +2,6 @@ import { useNavigation } from '@react-navigation/native'
 import { StackHeaderProps } from '@react-navigation/stack'
 import { startCase } from 'lodash'
 import React, { FunctionComponent } from 'react'
-import { ActivityIndicator, StyleSheet } from 'react-native'
 
 import {
   img_ui_accept,
@@ -12,9 +11,8 @@ import {
 } from '../../assets'
 import { dialog, nav } from '../../lib'
 import { useRequests, useUser } from '../../store'
-import { colors, layout } from '../../styles'
 import { RequestType } from '../../types'
-import { Header, HeaderButton } from '../common'
+import { Header, HeaderButton, HeaderSpinner } from '../common'
 
 interface Props {
   header: StackHeaderProps
@@ -47,7 +45,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
     )
 
     if (accepting || completing || creating || removing || updating) {
-      return <ActivityIndicator color={colors.accent} style={styles.spinner} />
+      return <HeaderSpinner />
     }
 
     if (item && item.status === 'pending' && item.user.id === user?.id) {
@@ -148,9 +146,3 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
 
   return <Header {...header} right={right()} />
 }
-
-const styles = StyleSheet.create({
-  spinner: {
-    margin: layout.margin
-  }
-})
