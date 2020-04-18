@@ -20,18 +20,30 @@ class Nav {
 
     const [route, param] = link.split('/')
 
-    if (route === 'requests' && param) {
-      this.navigateAway('Requests', 'Request', {
-        id: param
-      })
-    } else if (route === 'offers' && param) {
-      this.navigateAway('Offers', 'Offer', {
-        id: param
-      })
-    } else if (route === 'messages' && param) {
-      this.navigateAway('Messages', 'Thread', {
-        id: param
-      })
+    if (route === 'requests') {
+      if (param) {
+        this.navigateAway('Requests', 'Request', {
+          id: param
+        })
+      } else {
+        this.navigate('Requests')
+      }
+    } else if (route === 'offers') {
+      if (param) {
+        this.navigateAway('Offers', 'Offer', {
+          id: param
+        })
+      } else {
+        this.navigate('Offers')
+      }
+    } else if (route === 'messages') {
+      if (param) {
+        this.navigateAway('Messages', 'Thread', {
+          id: param
+        })
+      } else {
+        this.navigate('Messages')
+      }
     } else if (route === 'profile') {
       if (param === 'my_requests') {
         this.navigateAway('Profile', 'MyRequests', {

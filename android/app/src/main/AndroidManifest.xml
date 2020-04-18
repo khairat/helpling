@@ -33,6 +33,52 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
 
+      <intent-filter
+        android:autoVerify="true"
+        tools:targetApi="m">
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="helpling.app"
+          android:pathPrefix="/requests"
+          android:scheme="https" />
+        <data
+          android:host="helpling.app"
+          android:pathPrefix="/offers"
+          android:scheme="https" />
+        <data
+          android:host="helpling.app"
+          android:pathPrefix="/messages"
+          android:scheme="https" />
+        <data
+          android:host="helpling.app"
+          android:pathPrefix="/profile"
+          android:scheme="https" />
+      </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="requests"
+          android:scheme="helpling" />
+        <data
+          android:host="offers"
+          android:scheme="helpling" />
+        <data
+          android:host="messages"
+          android:scheme="helpling" />
+        <data
+          android:host="profile"
+          android:scheme="helpling" />
+      </intent-filter>
+
     </activity>
 
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
