@@ -25,8 +25,6 @@ export const Timestamp: FunctionComponent<Props> = ({
         timeout = setTimeout(() => update(), 3 * 1000)
       } else if (moment().diff(time, 'minutes') < 60) {
         timeout = setTimeout(() => update(), 60 * 1000)
-      } else if (moment().diff(time, 'hours') < 25) {
-        timeout = setTimeout(() => update(), 60 * 60 * 1000)
       }
     }
 
