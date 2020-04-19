@@ -11,6 +11,7 @@ class Sharing {
     } = item
 
     Share.open({
+      failOnCancel: false,
       message: `"${description}"\n\nView ${kind} by ${name} on Helpling`,
       url: `https://helpling.app/${kind}s/${id}`
     })
