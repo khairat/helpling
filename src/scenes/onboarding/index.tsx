@@ -1,7 +1,8 @@
-import { createStackNavigator, Header } from '@react-navigation/stack'
+import { createStackNavigator } from '@react-navigation/stack'
 import React, { FunctionComponent } from 'react'
 import { useSafeArea } from 'react-native-safe-area-context'
 
+import { Header } from '../../components/common'
 import { layout } from '../../styles'
 import { Landing } from './landing'
 import { Onboarding } from './onboarding'
