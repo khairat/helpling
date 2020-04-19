@@ -165,6 +165,7 @@ const actions = {
       .collection('offers')
       .where('status', '==', 'pending')
       .orderBy('createdAt', 'desc')
+      .limit(100)
       .onSnapshot(async ({ docs }) => {
         await helpers.fetchUsers(docs)
 
@@ -217,6 +218,7 @@ const actions = {
       .collection('requests')
       .where('status', '==', 'pending')
       .orderBy('createdAt', 'desc')
+      .limit(100)
       .onSnapshot(async ({ docs }) => {
         await helpers.fetchUsers(docs)
 
