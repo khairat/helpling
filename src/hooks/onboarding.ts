@@ -91,6 +91,8 @@ export const useOnboarding = () => {
         id,
         name
       })
+
+      fetchUser()
     } finally {
       setOnboarding(false)
     }
