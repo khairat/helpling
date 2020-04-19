@@ -15,7 +15,8 @@ export const Message: FunctionComponent<Props> = ({ message, user }) => {
   const mine = user?.id === message.user.id
 
   const time = moment(message.createdAt)
-  const difference = moment().diff(time, 'hours')
+  const differenceInDays = moment().diff(time, 'days')
+  const differenceInHours = moment().diff(time, 'hours')
 
   return (
     <View style={styles.main}>
@@ -32,7 +33,13 @@ export const Message: FunctionComponent<Props> = ({ message, user }) => {
           <Text style={styles.bodyText}>{message.body}</Text>
         </View>
         <Text style={styles.time}>
-          {moment(message.createdAt).format(difference >= 24 ? 'ddd LT' : 'LT')}
+          {moment(message.createdAt).format(
+            differenceInDays >= 7
+              ? 'MMM D LT'
+              : differenceInHours >= 24
+              ? 'ddd LT'
+              : 'LT'
+          )}
         </Text>
       </View>
     </View>
