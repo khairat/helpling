@@ -154,7 +154,9 @@ const actions = {
       fetchingOne: false
     })
   },
-  fetchOffers: () => ({ setState }: StoreApi) => {
+  fetchOffers: () => ({ getState, setState }: StoreApi) => {
+    getState().unsubscribeFetchOffers()
+
     setState({
       fetching: true
     })
@@ -204,7 +206,9 @@ const actions = {
       fetchingOne: false
     })
   },
-  fetchRequests: () => ({ setState }: StoreApi) => {
+  fetchRequests: () => ({ getState, setState }: StoreApi) => {
+    getState().unsubscribeFetchRequests()
+
     setState({
       fetching: true
     })

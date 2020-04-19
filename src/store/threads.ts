@@ -28,7 +28,9 @@ const actions = {
 
     setState(initialState)
   },
-  fetchThreads: () => ({ setState }: StoreApi) => {
+  fetchThreads: () => ({ getState, setState }: StoreApi) => {
+    getState().unsubscribeFetchThreads()
+
     const user = auth().currentUser
 
     if (!user) {

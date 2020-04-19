@@ -28,7 +28,9 @@ const actions = {
 
     setState(initialState)
   },
-  initialise: () => ({ setState }: StoreApi) => {
+  initialise: () => ({ getState, setState }: StoreApi) => {
+    getState().unsubscribe()
+
     const unsubscribe = auth().onAuthStateChanged(async (user) => {
       if (user) {
         const { uid } = user

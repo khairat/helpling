@@ -56,7 +56,9 @@ const actions = {
 
     setState(initialState)
   },
-  fetchAcceptedOffers: () => ({ setState }: StoreApi) => {
+  fetchAcceptedOffers: () => ({ getState, setState }: StoreApi) => {
+    getState().unsubscribeFetchAcceptedOffers()
+
     const user = auth().currentUser
 
     if (!user) {
@@ -88,7 +90,9 @@ const actions = {
       unsubscribeFetchAcceptedOffers
     })
   },
-  fetchAcceptedRequests: () => ({ setState }: StoreApi) => {
+  fetchAcceptedRequests: () => ({ getState, setState }: StoreApi) => {
+    getState().unsubscribeFetchAcceptedRequests()
+
     const user = auth().currentUser
 
     if (!user) {
@@ -120,7 +124,9 @@ const actions = {
       unsubscribeFetchAcceptedRequests
     })
   },
-  fetchOffers: () => ({ setState }: StoreApi) => {
+  fetchOffers: () => ({ getState, setState }: StoreApi) => {
+    getState().unsubscribeFetchOffers()
+
     const user = auth().currentUser
 
     if (!user) {
@@ -152,7 +158,9 @@ const actions = {
       unsubscribeFetchOffers
     })
   },
-  fetchRequests: () => ({ setState }: StoreApi) => {
+  fetchRequests: () => ({ getState, setState }: StoreApi) => {
+    getState().unsubscribeFetchRequests()
+
     const user = auth().currentUser
 
     if (!user) {
@@ -184,7 +192,9 @@ const actions = {
       unsubscribeFetchRequests
     })
   },
-  fetchUser: () => ({ setState }: StoreApi) => {
+  fetchUser: () => ({ getState, setState }: StoreApi) => {
+    getState().unsubscribeFetchUser()
+
     const user = auth().currentUser
 
     if (!user) {
