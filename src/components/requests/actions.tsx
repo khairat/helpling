@@ -13,7 +13,12 @@ import {
 import { dialog, nav, sharing } from '../../lib'
 import { useRequests, useUser } from '../../store'
 import { RequestType } from '../../types'
-import { Header, HeaderButton, HeaderSpinner } from '../common'
+import {
+  Header,
+  HeaderButton,
+  HeaderButtonGroup,
+  HeaderSpinner
+} from '../common'
 
 interface Props {
   header: StackHeaderProps
@@ -37,6 +42,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
     const getShareButton = () => (
       <HeaderButton
         icon={img_ui_share}
+        label="Share"
         onPress={() => {
           if (!item) {
             return
@@ -50,6 +56,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
     const getThreadButton = (id: string) => (
       <HeaderButton
         icon={img_ui_messages}
+        label="Go to messages"
         onPress={() =>
           nav.navigateAway('Messages', 'Thread', {
             id
@@ -64,10 +71,11 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
 
     if (item && item.status === 'pending' && item.user.id === user?.id) {
       return (
-        <>
+        <HeaderButtonGroup>
           {getShareButton()}
           <HeaderButton
             icon={img_ui_edit}
+            label="Edit"
             onPress={() =>
               nav.navigate(kind === 'offer' ? 'EditOffer' : 'EditRequest', {
                 id: item.id
@@ -76,6 +84,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
           />
           <HeaderButton
             icon={img_ui_remove}
+            label="Delete"
             onPress={async () => {
               const yes = await dialog.confirm(
                 `Are you sure you want to remove this ${kind}?`,
@@ -93,19 +102,26 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
               }
             }}
           />
-        </>
+        </HeaderButtonGroup>
       )
     }
 
     if (item && item.status !== 'completed' && item.user.id !== user?.id) {
       return (
-        <>
+        <HeaderButtonGroup>
           {getShareButton()}
           {(item.user.id === user?.id || item.helpling?.id === user?.id) &&
             item.threadId &&
             getThreadButton(item.threadId)}
           <HeaderButton
             icon={img_ui_accept}
+            label={
+              item.status === 'pending'
+                ? 'Accept'
+                : item.status === 'accepted'
+                ? 'Complete'
+                : ''
+            }
             onPress={async () => {
               const action =
                 item.status === 'pending'
@@ -147,7 +163,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
               }
             }}
           />
-        </>
+        </HeaderButtonGroup>
       )
     }
 
@@ -157,10 +173,10 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
       item.threadId
     ) {
       return (
-        <>
+        <HeaderButtonGroup>
           {getShareButton()}
           {getThreadButton(item.threadId)}
-        </>
+        </HeaderButtonGroup>
       )
     }
   }

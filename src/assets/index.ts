@@ -35,6 +35,7 @@ import { default as img_ui_edit } from './img/ui/edit.png'
 import { default as img_ui_error } from './img/ui/error.png'
 import { default as img_ui_expand } from './img/ui/expand.png'
 import { default as img_ui_link } from './img/ui/link.png'
+import { default as img_ui_menu } from './img/ui/menu.png'
 import { default as img_ui_messages } from './img/ui/messages.png'
 import { default as img_ui_notification } from './img/ui/notification.png'
 import { default as img_ui_remove } from './img/ui/remove.png'
@@ -94,6 +95,7 @@ export {
   img_ui_error,
   img_ui_expand,
   img_ui_link,
+  img_ui_menu,
   img_ui_messages,
   img_ui_notification,
   img_ui_remove,

@@ -1,7 +1,12 @@
 export { Button } from './button'
 export { Dialog } from './dialog'
 export { Empty } from './empty'
-export { Header, HeaderButton, HeaderSpinner } from './header'
+export {
+  Header,
+  HeaderButton,
+  HeaderButtonGroup,
+  HeaderSpinner
+} from './header'
 export { KeyboardView } from './keyboard-view'
 export { Message } from './message'
 export { Modal } from './modal'
