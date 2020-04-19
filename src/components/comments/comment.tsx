@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   body: {
     alignSelf: 'flex-start',
     backgroundColor: colors.backgroundLight,
-    borderRadius: layout.radius,
+    borderRadius: layout.radius * 5,
     padding: layout.padding
   },
   bodyText: {

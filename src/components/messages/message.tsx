@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: colors.backgroundLight,
-    borderRadius: layout.radius,
+    borderRadius: layout.radius * 5,
     maxWidth: width * 0.7,
     paddingHorizontal: layout.padding * 1.4,
     paddingVertical: layout.padding
