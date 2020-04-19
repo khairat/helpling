@@ -41,6 +41,7 @@ import { default as img_ui_remove } from './img/ui/remove.png'
 import { default as img_ui_save } from './img/ui/save.png'
 import { default as img_ui_search } from './img/ui/search.png'
 import { default as img_ui_send } from './img/ui/send.png'
+import { default as img_ui_share } from './img/ui/share.png'
 
 export const img_nav: Record<string, Source> = {
   Messages: img_nav_messages,
@@ -98,5 +99,6 @@ export {
   img_ui_remove,
   img_ui_save,
   img_ui_search,
-  img_ui_send
+  img_ui_send,
+  img_ui_share
 }

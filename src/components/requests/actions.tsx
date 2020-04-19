@@ -7,9 +7,10 @@ import {
   img_ui_accept,
   img_ui_edit,
   img_ui_messages,
-  img_ui_remove
+  img_ui_remove,
+  img_ui_share
 } from '../../assets'
-import { dialog, nav } from '../../lib'
+import { dialog, nav, sharing } from '../../lib'
 import { useRequests, useUser } from '../../store'
 import { RequestType } from '../../types'
 import { Header, HeaderButton, HeaderSpinner } from '../common'
@@ -33,6 +34,19 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
   ] = useRequests()
 
   const right = () => {
+    const getShareButton = () => (
+      <HeaderButton
+        icon={img_ui_share}
+        onPress={() => {
+          if (!item) {
+            return
+          }
+
+          sharing.share(kind, item)
+        }}
+      />
+    )
+
     const getThreadButton = (id: string) => (
       <HeaderButton
         icon={img_ui_messages}
@@ -51,6 +65,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
     if (item && item.status === 'pending' && item.user.id === user?.id) {
       return (
         <>
+          {getShareButton()}
           <HeaderButton
             icon={img_ui_edit}
             onPress={() =>
@@ -85,6 +100,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
     if (item && item.status !== 'completed' && item.user.id !== user?.id) {
       return (
         <>
+          {getShareButton()}
           {(item.user.id === user?.id || item.helpling?.id === user?.id) &&
             item.threadId &&
             getThreadButton(item.threadId)}
@@ -140,7 +156,12 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
       (item.user.id === user?.id || item.helpling?.id === user?.id) &&
       item.threadId
     ) {
-      return getThreadButton(item.threadId)
+      return (
+        <>
+          {getShareButton()}
+          {getThreadButton(item.threadId)}
+        </>
+      )
     }
   }
 
