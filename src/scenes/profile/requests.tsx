@@ -38,7 +38,9 @@ export const MyRequests: FunctionComponent<Props> = ({
     return (
       <Empty
         kind="request"
-        message={"You haven't created any requests yet.\nGood on you!"}
+        message={`You haven't ${
+          helpling ? 'accepted' : 'created'
+        } any requests yet.\n${helpling ? 'Good on you!' : 'Care to help?'}`}
       />
     )
   }

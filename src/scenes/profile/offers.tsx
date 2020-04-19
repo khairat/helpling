@@ -38,7 +38,9 @@ export const MyOffers: FunctionComponent<Props> = ({
     return (
       <Empty
         kind="offer"
-        message={"You haven't created any offers yet.\nGood on you!"}
+        message={`You haven't ${
+          helpling ? 'accepted' : 'created'
+        } any offers yet.\n${helpling ? 'Good on you!' : 'Care to help?'}`}
       />
     )
   }
