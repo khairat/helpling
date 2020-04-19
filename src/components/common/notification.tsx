@@ -1,13 +1,6 @@
 import messaging from '@react-native-firebase/messaging'
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import {
-  LayoutAnimation,
-  Platform,
-  StyleSheet,
-  Text,
-  UIManager,
-  View
-} from 'react-native'
+import { LayoutAnimation, StyleSheet, Text, View } from 'react-native'
 import Image from 'react-native-fast-image'
 import { useSafeArea } from 'react-native-safe-area-context'
 
@@ -16,12 +9,6 @@ import { mitter, nav } from '../../lib'
 import { colors, layout, typography } from '../../styles'
 import { NotificationType } from '../../types'
 import { Touchable } from './touchable'
-
-if (Platform.OS === 'android') {
-  if (UIManager.setLayoutAnimationEnabledExperimental) {
-    UIManager.setLayoutAnimationEnabledExperimental(true)
-  }
-}
 
 export const Notification: FunctionComponent = () => {
   const { top } = useSafeArea()
