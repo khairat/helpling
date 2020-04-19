@@ -28,6 +28,7 @@ import { default as img_ui_about } from './img/ui/about.png'
 import { default as img_ui_accept } from './img/ui/accept.png'
 import { default as img_ui_add } from './img/ui/add.png'
 import { default as img_ui_back } from './img/ui/back.png'
+import { default as img_ui_check } from './img/ui/check.png'
 import { default as img_ui_close } from './img/ui/close.png'
 import { default as img_ui_complete } from './img/ui/complete.png'
 import { default as img_ui_edit } from './img/ui/edit.png'
@@ -85,6 +86,7 @@ export {
   img_ui_accept,
   img_ui_add,
   img_ui_back,
+  img_ui_check,
   img_ui_close,
   img_ui_complete,
   img_ui_edit,

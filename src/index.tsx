@@ -17,7 +17,7 @@ import { useAuth, useRequests, useThreads, useUser } from './store'
 import { NavigatorTheme } from './styles'
 
 const Helpling: FunctionComponent = () => {
-  const [{ initialising }, { cleanUpAuth, initialise }] = useAuth()
+  const [{ initialising, signedIn }, { cleanUpAuth, initialise }] = useAuth()
   const [{ loading, user }, { cleanUpUser, fetchUser }] = useUser()
   const [, { cleanUpRequests }] = useRequests()
   const [, { cleanUpThreads }] = useThreads()
@@ -63,7 +63,7 @@ const Helpling: FunctionComponent = () => {
         <KeyboardView>
           {initialising || loading ? (
             <Spinner />
-          ) : user ? (
+          ) : signedIn && user ? (
             <MainNavigator />
           ) : (
             <OnboardingNavigator />
