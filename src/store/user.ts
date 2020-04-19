@@ -211,7 +211,7 @@ const actions = {
       .collection('users')
       .doc(uid)
       .onSnapshot((doc) => {
-        if (doc) {
+        if (doc?.exists) {
           const user = {
             ...doc.data(),
             id: uid
