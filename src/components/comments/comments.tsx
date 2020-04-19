@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   list: {
     flexGrow: 1,
-    paddingVertical: layout.padding
+    paddingTop: layout.padding
   },
   main: {
     backgroundColor: colors.backgroundDark
