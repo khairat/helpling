@@ -58,7 +58,10 @@ const Helpling: FunctionComponent = () => {
   }, [])
 
   return (
-    <NavigationContainer ref={navRef} theme={NavigatorTheme}>
+    <NavigationContainer
+      onStateChange={(state) => nav.onStateChange(state)}
+      ref={navRef}
+      theme={NavigatorTheme}>
       <SafeAreaProvider>
         <KeyboardView>
           {initialising || loading ? (

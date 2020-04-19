@@ -1,9 +1,15 @@
-import { NavigationContainerRef } from '@react-navigation/native'
+import {
+  NavigationContainerRef,
+  NavigationState,
+  PartialState
+} from '@react-navigation/native'
 import { createRef } from 'react'
 
 export const navRef = createRef<NavigationContainerRef>()
 
 class Nav {
+  current?: string
+
   async handleDeepLink(link: string | null | undefined): Promise<void> {
     if (!link) {
       return
@@ -72,10 +78,36 @@ class Nav {
   }
 
   navigateAway(route: string, screen: string, params?: object): void {
-    navRef.current?.navigate(route)
+    if (this.current !== screen) {
+      navRef.current?.navigate(route)
+    }
 
     // TODO: fix hack
     setTimeout(() => navRef.current?.navigate(screen, params))
+  }
+
+  onStateChange(state: NavigationState | undefined) {
+    if (state) {
+      const next = this.getCurrent(state)
+
+      if (next) {
+        this.current = next
+      }
+    }
+  }
+
+  private getCurrent(
+    state: NavigationState | PartialState<NavigationState>
+  ): string | undefined {
+    if (state.index !== undefined) {
+      const route = state.routes[state.index]
+
+      if (route.state) {
+        return this.getCurrent(route.state)
+      }
+
+      return route.name
+    }
   }
 
   private wait() {
