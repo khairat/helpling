@@ -135,7 +135,7 @@ const actions = {
 
     const doc = await firestore().collection('offers').doc(id).get()
 
-    if (doc.exists) {
+    if (doc) {
       await helpers.fetchUsers([doc])
 
       const offer = helpers.createRequest(doc)
@@ -188,7 +188,7 @@ const actions = {
 
     const doc = await firestore().collection('requests').doc(id).get()
 
-    if (doc.exists) {
+    if (doc) {
       await helpers.fetchUsers([doc])
 
       const request = helpers.createRequest(doc)
