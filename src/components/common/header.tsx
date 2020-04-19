@@ -85,7 +85,11 @@ export const HeaderButtonGroup: FunctionComponent = ({ children }) => {
             setVisible(!visible)
           }}
         />
-        <View style={[styles.menu, visible && styles.menuVisible]}>
+        <View
+          style={[
+            styles.menu,
+            visible ? styles.menuVisible : styles.menuHidden
+          ]}>
           {buttons.map((button, index) => (
             <View key={index} style={styles.menuItem}>
               {cloneElement(button as ReactElement<HeaderButtonProps>, {
@@ -127,7 +131,7 @@ export const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
   showLabel
 }) => (
   <Touchable onPress={onPress} style={styles.button}>
-    {!!label && showLabel && <Text style={styles.label}>{label}</Text>}
+    {!!label && showLabel && <Text style={styles.menuLabel}>{label}</Text>}
     <Image source={icon} style={styles.icon} />
   </Touchable>
 )
@@ -147,12 +151,6 @@ const styles = StyleSheet.create({
     margin: layout.margin,
     width: layout.icon
   },
-  label: {
-    ...typography.regular,
-    ...typography.medium,
-    color: colors.foreground,
-    marginLeft: layout.margin
-  },
   left: {
     bottom: 0,
     flexDirection: 'row',
@@ -169,17 +167,24 @@ const styles = StyleSheet.create({
   menu: {
     backgroundColor: colors.backgroundLight,
     borderBottomLeftRadius: layout.radius,
-    left: '100%',
     marginTop: layout.icon + layout.margin * 2,
     position: 'absolute',
     top: 0
+  },
+  menuHidden: {
+    left: '100%'
   },
   menuItem: {
     borderTopColor: colors.background,
     borderTopWidth: layout.border
   },
+  menuLabel: {
+    ...typography.regular,
+    ...typography.medium,
+    color: colors.foreground,
+    marginLeft: layout.margin
+  },
   menuVisible: {
-    left: 'auto',
     right: 0
   },
   right: {
