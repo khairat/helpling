@@ -48,7 +48,7 @@ export const ProfileNavigator: FunctionComponent = () => {
         }) => ({
           header: (props) => <Header {...props} />,
           headerStyle,
-          title: `My${helpling ? ' accepted' : ''} offers`
+          title: helpling ? "Offers I've accepted" : 'My offers to help'
         })}
       />
       <Screen
@@ -61,7 +61,7 @@ export const ProfileNavigator: FunctionComponent = () => {
         }) => ({
           header: (props) => <Header {...props} />,
           headerStyle,
-          title: `My${helpling ? ' accepted' : ''} requests`
+          title: helpling ? "Requests I've accepted" : 'My requests for help'
         })}
       />
     </Navigator>

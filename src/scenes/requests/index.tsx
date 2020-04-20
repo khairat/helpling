@@ -48,7 +48,7 @@ export const RequestsNavigator: FunctionComponent = () => {
             />
           ),
           headerStyle,
-          title: 'Requests'
+          title: 'Requests for help'
         })}
       />
       <Screen

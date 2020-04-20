@@ -48,7 +48,7 @@ export const OffersNavigator: FunctionComponent = () => {
             />
           ),
           headerStyle,
-          title: 'Offers'
+          title: 'Offers to help'
         })}
       />
       <Screen

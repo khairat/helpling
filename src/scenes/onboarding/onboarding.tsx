@@ -66,7 +66,7 @@ export const Onboarding: FunctionComponent<Props> = ({
       contentContainerStyle={styles.main}
       keyboardShouldPersistTaps="always">
       <Text style={styles.label}>
-        Helpling doesn't reveal your real name to anyone.{'\n'}Pick a username.
+        Helpling doesn't reveal your real name to anyone. Pick a username.
       </Text>
       <TextBox
         autoCapitalize="none"

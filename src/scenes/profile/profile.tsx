@@ -29,7 +29,7 @@ export const Profile: FunctionComponent<Props> = ({
       data: [
         {
           icon: img_profile.requests,
-          label: "Requests I've created",
+          label: 'My requests for help',
           onPress: () =>
             navigate('MyRequests', {
               helpling: false
@@ -44,13 +44,13 @@ export const Profile: FunctionComponent<Props> = ({
             })
         }
       ],
-      title: 'Requests'
+      title: 'Requests for help'
     },
     {
       data: [
         {
           icon: img_profile.offers,
-          label: "Offers I've created",
+          label: 'My offers to help',
           onPress: () =>
             navigate('MyOffers', {
               helpling: false
@@ -65,7 +65,7 @@ export const Profile: FunctionComponent<Props> = ({
             })
         }
       ],
-      title: 'Offers'
+      title: 'Offers to help'
     },
     {
       data: [

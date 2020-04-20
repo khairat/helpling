@@ -38,7 +38,9 @@ import { default as img_ui_link } from './img/ui/link.png'
 import { default as img_ui_menu } from './img/ui/menu.png'
 import { default as img_ui_messages } from './img/ui/messages.png'
 import { default as img_ui_notification } from './img/ui/notification.png'
+import { default as img_ui_offer } from './img/ui/offer.png'
 import { default as img_ui_remove } from './img/ui/remove.png'
+import { default as img_ui_request } from './img/ui/request.png'
 import { default as img_ui_save } from './img/ui/save.png'
 import { default as img_ui_search } from './img/ui/search.png'
 import { default as img_ui_send } from './img/ui/send.png'
@@ -98,7 +100,9 @@ export {
   img_ui_menu,
   img_ui_messages,
   img_ui_notification,
+  img_ui_offer,
   img_ui_remove,
+  img_ui_request,
   img_ui_save,
   img_ui_search,
   img_ui_send,

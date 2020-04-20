@@ -40,7 +40,9 @@ export const MyRequests: FunctionComponent<Props> = ({
         kind="request"
         message={`You haven't ${
           helpling ? 'accepted' : 'created'
-        } any requests yet.\n${helpling ? 'Good on you!' : 'Care to help?'}`}
+        } any requests for help yet.\n${
+          helpling ? 'Good on you!' : 'Care to help?'
+        }`}
       />
     )
   }

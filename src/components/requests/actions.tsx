@@ -1,13 +1,14 @@
 import { useNavigation } from '@react-navigation/native'
 import { StackHeaderProps } from '@react-navigation/stack'
-import { startCase } from 'lodash'
 import React, { FunctionComponent } from 'react'
 
 import {
   img_ui_accept,
   img_ui_edit,
   img_ui_messages,
+  img_ui_offer,
   img_ui_remove,
+  img_ui_request,
   img_ui_share
 } from '../../assets'
 import { dialog, nav, sharing } from '../../lib'
@@ -107,6 +108,13 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
     }
 
     if (item && item.status !== 'completed' && item.user.id !== user?.id) {
+      const title =
+        item.status === 'pending'
+          ? kind === 'offer'
+            ? 'Accept offer'
+            : 'Offer to help'
+          : `Finish ${kind}`
+
       return (
         <HeaderButtonGroup>
           {getShareButton()}
@@ -114,14 +122,14 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
             item.threadId &&
             getThreadButton(item.threadId)}
           <HeaderButton
-            icon={img_ui_accept}
-            label={
+            icon={
               item.status === 'pending'
-                ? 'Accept'
-                : item.status === 'accepted'
-                ? 'Complete'
-                : ''
+                ? kind === 'offer'
+                  ? img_ui_offer
+                  : img_ui_request
+                : img_ui_accept
             }
+            label={title}
             onPress={async () => {
               const action =
                 item.status === 'pending'
@@ -135,8 +143,12 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
               }
 
               const yes = await dialog.confirm(
-                `Are you sure you want to ${action} this ${kind}?`,
-                `${startCase(action)} ${kind}`
+                item.status === 'pending'
+                  ? kind === 'offer'
+                    ? `Are you sure you want to accept ${item.user.name}'s offer for help?`
+                    : `Are you sure you want to offer help to ${item.user.name}?`
+                  : `Are you sure you want to finish this ${kind}?`,
+                title
               )
 
               if (yes) {

@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
 import { StackHeaderProps } from '@react-navigation/stack'
-import { startCase } from 'lodash'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import {
   ActivityIndicator,
@@ -118,37 +117,59 @@ export const Form: FunctionComponent<Props> = ({
   const cities = country ? data_countries[country.value] : []
 
   if (!type) {
+    const types: {
+      label: string
+      value: RequestTypeType
+    }[] = [
+      {
+        label: 'Food',
+        value: 'food'
+      },
+      {
+        label: 'Invites',
+        value: 'invite'
+      },
+      {
+        label: 'Money',
+        value: 'money'
+      },
+      {
+        label: 'Things',
+        value: 'physical'
+      }
+    ]
+
     return (
       <FlatList
-        data={['food', 'invite', 'money', 'physical']}
+        data={types}
         ItemSeparatorComponent={Separator}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item.value}
         ListHeaderComponent={
           <Text style={styles.header}>
             What type of {kind} do you want to create?
           </Text>
         }
-        renderItem={({ item }: { item: RequestTypeType }) => (
+        renderItem={({ item }) => (
           <Touchable
             onPress={() => {
               LayoutAnimation.configureNext(
                 LayoutAnimation.Presets.easeInEaseOut
               )
 
-              setType(item)
+              setType(item.value)
             }}
             style={styles.item}>
-            <Image source={img_types[item]} style={styles.icon} />
+            <Image source={img_types[item.value]} style={styles.icon} />
             <View style={styles.details}>
-              <Text style={styles.type}>{startCase(item)}</Text>
+              <Text style={styles.type}>{item.label}</Text>
               <Text style={styles.description}>
-                Example:{' '}
-                {item === 'food'
+                Examples:{' '}
+                {item.value === 'food'
                   ? "Haven't received your salary yet or unexpected expenses prevent you from buying food or groceries?"
-                  : item === 'invite'
+                  : item.value === 'invite'
                   ? "Need help getting a job interview? Or just moved to a new city and don't know anyone?"
-                  : item === 'money'
-                  ? 'Need financial help for an unexpected expense?'
+                  : item.value === 'money'
+                  ? 'Need financial help?'
                   : 'Moved to a new apartment and need some furniture?'}
               </Text>
             </View>
