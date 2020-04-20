@@ -1,5 +1,7 @@
 import { TextStyle } from 'react-native'
 
+import { layout } from './layout'
+
 export const typography: Record<string, TextStyle> = {
   bold: {
     fontFamily: 'Inter-SemiBold'
@@ -7,7 +9,7 @@ export const typography: Record<string, TextStyle> = {
   footnote: {
     fontFamily: 'Inter-Regular',
     fontSize: 12,
-    lineHeight: 12 * 1.5
+    lineHeight: 12 * layout.lineHeight
   },
   medium: {
     fontFamily: 'Inter-Medium'
@@ -15,7 +17,7 @@ export const typography: Record<string, TextStyle> = {
   paragraph: {
     fontFamily: 'Inter-Regular',
     fontSize: 16,
-    lineHeight: 16 * 1.5
+    lineHeight: 16 * layout.lineHeight
   },
   regular: {
     fontFamily: 'Inter-Regular',

@@ -25,7 +25,11 @@ export const Thread: FunctionComponent<Props> = ({ thread, user }) => {
       />
       <View style={styles.details}>
         <Text style={styles.user}>{other?.name}</Text>
-        {!!thread.last && <Text style={styles.last}>{thread.last}</Text>}
+        {!!thread.last && (
+          <View style={styles.last}>
+            <Text style={styles.message}>{thread.last}</Text>
+          </View>
+        )}
         <Timestamp style={styles.time} time={thread.updatedAt} />
       </View>
     </View>
@@ -44,14 +48,21 @@ const styles = StyleSheet.create({
     marginLeft: layout.margin
   },
   last: {
-    ...typography.paragraph,
-    color: colors.foreground,
-    marginTop: layout.padding
+    alignSelf: 'flex-start',
+    backgroundColor: colors.backgroundLight,
+    borderRadius: layout.radius * 5,
+    marginTop: layout.padding,
+    paddingHorizontal: layout.padding * layout.lineHeight,
+    paddingVertical: layout.padding
   },
   main: {
     alignItems: 'center',
     flexDirection: 'row',
     padding: layout.margin
+  },
+  message: {
+    ...typography.footnote,
+    color: colors.foreground
   },
   time: {
     ...typography.small,

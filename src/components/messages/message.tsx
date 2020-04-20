@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundLight,
     borderRadius: layout.radius * 5,
     maxWidth: width * 0.7,
-    paddingHorizontal: layout.padding * 1.4,
+    paddingHorizontal: layout.padding * layout.lineHeight,
     paddingVertical: layout.padding
   },
   bodyText: {

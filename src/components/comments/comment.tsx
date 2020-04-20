@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     backgroundColor: colors.backgroundLight,
     borderRadius: layout.radius * 5,
-    padding: layout.padding
+    paddingHorizontal: layout.padding * layout.lineHeight,
+    paddingVertical: layout.padding
   },
   bodyText: {
     ...typography.footnote,
