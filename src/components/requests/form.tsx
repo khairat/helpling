@@ -146,7 +146,9 @@ export const Form: FunctionComponent<Props> = ({
         keyExtractor={(item) => item.value}
         ListHeaderComponent={
           <Text style={styles.header}>
-            What type of {kind} do you want to create?
+            You're creating{' '}
+            {kind === 'offer' ? 'an offer for help' : 'a request for help'}.
+            Choose a type.
           </Text>
         }
         renderItem={({ item }) => (
