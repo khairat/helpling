@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import functions from '@react-native-firebase/functions'
+import { cloneDeep } from 'lodash'
 import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 
 import { helpers, mitter } from '../lib'
@@ -144,7 +145,7 @@ const actions = {
 
       setState({
         otherOffers: {
-          ...otherOffers,
+          ...cloneDeep(otherOffers),
           [id]: offer
         }
       })
@@ -197,7 +198,7 @@ const actions = {
 
       setState({
         otherRequests: {
-          ...otherRequests,
+          ...cloneDeep(otherRequests),
           [id]: request
         }
       })
@@ -265,7 +266,7 @@ const actions = {
     kind: KindPluralType,
     id: string,
     description: string
-  ) => async ({ setState }: StoreApi) => {
+  ) => async ({ dispatch, setState }: StoreApi) => {
     const user = auth().currentUser
 
     if (!user) {
@@ -288,6 +289,12 @@ const actions = {
       description,
       updatedAt: new Date()
     })
+
+    if (kind === 'offers') {
+      dispatch(actions.fetchOffer(id))
+    } else {
+      dispatch(actions.fetchRequest(id))
+    }
 
     setState({
       updating: false
