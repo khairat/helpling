@@ -35,9 +35,11 @@ export const Offer: FunctionComponent<Props> = ({
   }, [fetchOffer, id, otherOffers])
 
   useEffect(() => {
-    setOptions({
-      header: (props) => <Actions header={props} item={offer} kind="offer" />
-    })
+    if (offer) {
+      setOptions({
+        header: (props) => <Actions header={props} item={offer} kind="offer" />
+      })
+    }
   }, [offer, setOptions])
 
   if (fetchingOne) {

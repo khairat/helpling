@@ -23,7 +23,7 @@ import {
 
 interface Props {
   header: StackHeaderProps
-  item?: RequestType
+  item: RequestType
   kind: 'offer' | 'request'
 
   onPress?: () => void
@@ -44,13 +44,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
       <HeaderButton
         icon={img_ui_share}
         label="Share"
-        onPress={() => {
-          if (!item) {
-            return
-          }
-
-          sharing.share(kind, item)
-        }}
+        onPress={() => sharing.share(kind, item)}
       />
     )
 
@@ -70,7 +64,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
       return <HeaderSpinner />
     }
 
-    if (item && item.status === 'pending' && item.user.id === user?.id) {
+    if (item.status === 'pending' && item.user.id === user?.id) {
       return (
         <HeaderButtonGroup>
           {getShareButton()}
@@ -107,7 +101,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
       )
     }
 
-    if (item && item.status !== 'completed' && item.user.id !== user?.id) {
+    if (item.status !== 'completed' && item.user.id !== user?.id) {
       const title =
         item.status === 'pending'
           ? kind === 'offer'
@@ -180,7 +174,6 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
     }
 
     if (
-      item &&
       (item.user.id === user?.id || item.helpling?.id === user?.id) &&
       item.threadId
     ) {

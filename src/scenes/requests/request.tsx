@@ -35,11 +35,13 @@ export const Request: FunctionComponent<Props> = ({
   }, [fetchRequest, id, otherRequests])
 
   useEffect(() => {
-    setOptions({
-      header: (props) => (
-        <Actions header={props} item={request} kind="request" />
-      )
-    })
+    if (request) {
+      setOptions({
+        header: (props) => (
+          <Actions header={props} item={request} kind="request" />
+        )
+      })
+    }
   }, [request, setOptions])
 
   if (fetchingOne) {
