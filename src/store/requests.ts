@@ -155,7 +155,10 @@ const actions = {
       fetchingOne: false
     })
   },
-  fetchOffers: () => ({ getState, setState }: StoreApi) => {
+  fetchOffers: (city: string, country: string) => ({
+    getState,
+    setState
+  }: StoreApi) => {
     getState().unsubscribeFetchOffers()
 
     setState({
@@ -164,6 +167,8 @@ const actions = {
 
     const unsubscribeFetchOffers = firestore()
       .collection('offers')
+      .where('city', '==', city)
+      .where('country', '==', country)
       .where('status', '==', 'pending')
       .orderBy('createdAt', 'desc')
       .limit(100)
@@ -208,7 +213,10 @@ const actions = {
       fetchingOne: false
     })
   },
-  fetchRequests: () => ({ getState, setState }: StoreApi) => {
+  fetchRequests: (city: string, country: string) => ({
+    getState,
+    setState
+  }: StoreApi) => {
     getState().unsubscribeFetchRequests()
 
     setState({
@@ -217,6 +225,8 @@ const actions = {
 
     const unsubscribeFetchRequests = firestore()
       .collection('requests')
+      .where('city', '==', city)
+      .where('country', '==', country)
       .where('status', '==', 'pending')
       .orderBy('createdAt', 'desc')
       .limit(100)

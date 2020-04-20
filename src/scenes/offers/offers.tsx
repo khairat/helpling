@@ -2,18 +2,21 @@ import React, { FunctionComponent, useEffect } from 'react'
 
 import { Spinner } from '../../components/common'
 import { List } from '../../components/requests'
-import { useRequests } from '../../store'
+import { useRequests, useUser } from '../../store'
 
 export const Offers: FunctionComponent = () => {
   const [{ fetching, offers }, { fetchOffers }] = useRequests()
+  const [{ user }] = useUser()
 
   useEffect(() => {
-    fetchOffers()
-  }, [fetchOffers])
+    if (user) {
+      fetchOffers(user.city, user.country)
+    }
+  }, [fetchOffers, user])
 
   if (fetching) {
     return <Spinner />
   }
 
-  return <List items={offers} kind="offer" showHeader />
+  return <List items={offers} kind="offer" showMeta />
 }
