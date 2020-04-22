@@ -13,13 +13,14 @@ import {
 } from './components/common'
 import { nav, navRef, notifications } from './lib'
 import { MainNavigator, OnboardingNavigator } from './scenes'
-import { useAuth, useRequests, useThreads, useUser } from './store'
+import { useAuth, useMessages, useRequests, useThreads, useUser } from './store'
 import { NavigatorTheme } from './styles'
 
 const Helpling: FunctionComponent = () => {
   const [{ initialising, signedIn }, { cleanUpAuth, initialise }] = useAuth()
   const [{ loading, user }, { cleanUpUser, fetchUser }] = useUser()
   const [, { cleanUpRequests }] = useRequests()
+  const [, { cleanUpMessages }] = useMessages()
   const [, { cleanUpThreads }] = useThreads()
 
   useEffect(() => {
@@ -31,11 +32,13 @@ const Helpling: FunctionComponent = () => {
     return () => {
       cleanUpAuth()
       cleanUpUser()
+      cleanUpMessages()
       cleanUpRequests()
       cleanUpThreads()
     }
   }, [
     cleanUpAuth,
+    cleanUpMessages,
     cleanUpRequests,
     cleanUpThreads,
     cleanUpUser,

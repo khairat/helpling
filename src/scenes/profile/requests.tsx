@@ -24,9 +24,9 @@ export const MyRequests: FunctionComponent<Props> = ({
 
   useEffect(() => {
     if (helpling) {
-      fetchAcceptedRequests()
+      fetchAcceptedRequests('requests')
     } else {
-      fetchRequests()
+      fetchRequests('requests')
     }
   }, [fetchAcceptedRequests, fetchRequests, helpling])
 

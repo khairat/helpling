@@ -19,16 +19,16 @@ export const MyOffers: FunctionComponent<Props> = ({
 }) => {
   const [
     { acceptedOffers, fetching, offers },
-    { fetchAcceptedOffers, fetchOffers }
+    { fetchAcceptedRequests, fetchRequests }
   ] = useUser()
 
   useEffect(() => {
     if (helpling) {
-      fetchAcceptedOffers()
+      fetchAcceptedRequests('offers')
     } else {
-      fetchOffers()
+      fetchRequests('offers')
     }
-  }, [fetchAcceptedOffers, fetchOffers, helpling])
+  }, [fetchAcceptedRequests, fetchRequests, helpling])
 
   if (fetching) {
     return <Spinner />

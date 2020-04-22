@@ -109,6 +109,9 @@ export const useOnboarding = () => {
     } else {
       const doc = await firestore().collection('users').doc(uid).get()
 
+      setSigningInWithApple(false)
+      setSigningInWithGoogle(false)
+
       if (doc?.exists) {
         fetchUser()
       } else {
@@ -117,9 +120,6 @@ export const useOnboarding = () => {
         })
       }
     }
-
-    setSigningInWithApple(false)
-    setSigningInWithGoogle(false)
   }
 
   return {

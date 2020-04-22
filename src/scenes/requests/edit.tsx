@@ -18,22 +18,19 @@ export const EditRequest: FunctionComponent<Props> = ({
     params: { id }
   }
 }) => {
-  const [
-    { fetching, otherRequests, updating },
-    { fetchRequest, updateRequest }
-  ] = useRequests()
+  const [{ fetching, others, updating }, { fetchOne, update }] = useRequests()
 
   const [request, setRequest] = useState<RequestType>()
 
   useEffect(() => {
-    const request = otherRequests[id]
+    const request = others[id]
 
     if (request) {
       setRequest(request)
     } else {
-      fetchRequest(id)
+      fetchOne('request', id)
     }
-  }, [fetchRequest, id, otherRequests])
+  }, [fetchOne, id, others])
 
   if (fetching) {
     return <Spinner />
@@ -48,7 +45,7 @@ export const EditRequest: FunctionComponent<Props> = ({
       item={request}
       kind="request"
       loading={updating}
-      onUpdate={(id, description) => updateRequest('requests', id, description)}
+      onUpdate={(id, description) => update('requests', id, description)}
     />
   )
 }

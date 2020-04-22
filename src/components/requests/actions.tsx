@@ -36,7 +36,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
 
   const [
     { accepting, completing, creating, removing, updating },
-    { acceptRequest, completeRequest, removeRequest }
+    { accept, complete, remove }
   ] = useRequests()
 
   const right = () => {
@@ -51,7 +51,9 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
     const getThreadButton = (id: string) => (
       <HeaderButton
         icon={img_ui_messages}
-        label="Go to messages"
+        label={`Talk to ${
+          item.user.id === user?.id ? item.helpling?.name : item.user.name
+        }`}
         onPress={() =>
           nav.navigateAway('Messages', 'Thread', {
             id
@@ -88,10 +90,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
               )
 
               if (yes) {
-                await removeRequest(
-                  kind === 'offer' ? 'offers' : 'requests',
-                  item.id
-                )
+                await remove(kind === 'offer' ? 'offers' : 'requests', item.id)
 
                 goBack()
               }
@@ -146,9 +145,10 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
               )
 
               if (yes) {
-                const success = await (action === 'accept'
-                  ? acceptRequest
-                  : completeRequest)(kind, item.id)
+                const success = await (action === 'accept' ? accept : complete)(
+                  kind,
+                  item.id
+                )
 
                 if (!success) {
                   return

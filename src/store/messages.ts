@@ -3,32 +3,34 @@ import firestore from '@react-native-firebase/firestore'
 import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 
 import { helpers } from '../lib'
-import { ThreadType } from '../types'
+import { MessageType } from '../types'
 
 interface State {
-  threads: ThreadType[]
   fetching: boolean
+  messages: MessageType[]
+  replying: boolean
 
   unsubscribeFetch: () => void
 }
 
 const initialState: State = {
   fetching: false,
-  threads: [],
+  messages: [],
+  replying: false,
   unsubscribeFetch: () => {}
 }
 
 type StoreApi = StoreActionApi<State>
 
 const actions = {
-  cleanUpThreads: () => ({ getState, setState }: StoreApi) => {
+  cleanUpMessages: () => ({ getState, setState }: StoreApi) => {
     const { unsubscribeFetch } = getState()
 
     unsubscribeFetch()
 
     setState(initialState)
   },
-  fetch: () => ({ getState, setState }: StoreApi) => {
+  fetch: (threadId: string) => ({ getState, setState }: StoreApi) => {
     getState().unsubscribeFetch()
 
     const user = auth().currentUser
@@ -42,22 +44,44 @@ const actions = {
     })
 
     const unsubscribeFetch = firestore()
-      .collection('threads')
-      .where('userIds', 'array-contains', user.uid)
-      .orderBy('updatedAt', 'desc')
+      .collection('messages')
+      .where('threadId', '==', threadId)
+      .orderBy('createdAt', 'desc')
       .onSnapshot(async ({ docs }) => {
         await helpers.fetchUsers(docs)
 
-        const threads = docs.map((doc) => helpers.createThread(doc))
+        const messages = docs.map((doc) => helpers.createMessage(doc))
 
         setState({
           fetching: false,
-          threads
+          messages
         })
       })
 
     setState({
       unsubscribeFetch
+    })
+  },
+  reply: (threadId: string, body: string) => async ({ setState }: StoreApi) => {
+    const user = auth().currentUser
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    setState({
+      replying: true
+    })
+
+    await firestore().collection('messages').add({
+      body,
+      createdAt: new Date(),
+      threadId,
+      userId: user.uid
+    })
+
+    setState({
+      replying: false
     })
   }
 }
@@ -67,7 +91,7 @@ type Actions = typeof actions
 const Store = createStore<State, Actions>({
   actions,
   initialState,
-  name: 'threads'
+  name: 'messages'
 })
 
-export const useThreads = createHook(Store)
+export const useMessages = createHook(Store)

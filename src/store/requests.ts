@@ -19,14 +19,12 @@ interface State {
   fetching: boolean
   fetchingOne: boolean
   offers: RequestType[]
-  otherOffers: Record<string, RequestType>
-  otherRequests: Record<string, RequestType>
+  others: Record<string, RequestType>
   removing: boolean
   requests: RequestType[]
   updating: boolean
 
-  unsubscribeFetchOffers: () => void
-  unsubscribeFetchRequests: () => void
+  unsubscribeFetchAll: () => void
 }
 
 const initialState: State = {
@@ -36,19 +34,18 @@ const initialState: State = {
   fetching: false,
   fetchingOne: false,
   offers: [],
-  otherOffers: {},
-  otherRequests: {},
+  others: {},
   removing: false,
   requests: [],
-  unsubscribeFetchOffers: () => {},
-  unsubscribeFetchRequests: () => {},
+  unsubscribeFetchAll: () => {},
   updating: false
 }
 
 type StoreApi = StoreActionApi<State>
 
 const actions = {
-  acceptRequest: (kind: KindType, id: string) => async ({
+  accept: (kind: KindType, id: string) => async ({
+    dispatch,
     setState
   }: StoreApi) => {
     setState({
@@ -63,6 +60,8 @@ const actions = {
         kind
       })
 
+      await dispatch(actions.fetchOne(kind, id))
+
       return threadId
     } catch ({ message }) {
       mitter.error(message)
@@ -73,14 +72,14 @@ const actions = {
     }
   },
   cleanUpRequests: () => ({ getState, setState }: StoreApi) => {
-    const { unsubscribeFetchOffers, unsubscribeFetchRequests } = getState()
+    const { unsubscribeFetchAll } = getState()
 
-    unsubscribeFetchOffers()
-    unsubscribeFetchRequests()
+    unsubscribeFetchAll()
 
     setState(initialState)
   },
-  completeRequest: (kind: KindType, id: string) => async ({
+  complete: (kind: KindType, id: string) => async ({
+    dispatch,
     setState
   }: StoreApi) => {
     setState({
@@ -92,6 +91,8 @@ const actions = {
         id,
         kind
       })
+
+      await dispatch(actions.fetchOne(kind, id))
     } catch ({ message }) {
       mitter.error(message)
     } finally {
@@ -100,7 +101,7 @@ const actions = {
       })
     }
   },
-  createRequest: (kind: KindPluralType, data: RequestInputType) => async ({
+  create: (kind: KindPluralType, data: RequestInputType) => async ({
     setState
   }: StoreApi) => {
     const user = auth().currentUser
@@ -129,102 +130,18 @@ const actions = {
 
     return id
   },
-  fetchOffer: (id: string) => async ({ getState, setState }: StoreApi) => {
-    setState({
-      fetchingOne: true
-    })
-
-    const doc = await firestore().collection('offers').doc(id).get()
-
-    if (doc?.exists) {
-      await helpers.fetchUsers([doc])
-
-      const offer = helpers.createRequest(doc)
-
-      const { otherOffers } = getState()
-
-      setState({
-        otherOffers: {
-          ...cloneDeep(otherOffers),
-          [id]: offer
-        }
-      })
-    }
-
-    setState({
-      fetchingOne: false
-    })
-  },
-  fetchOffers: (city: string, country: string) => ({
+  fetchAll: (kind: KindPluralType, city: string, country: string) => ({
     getState,
     setState
   }: StoreApi) => {
-    getState().unsubscribeFetchOffers()
+    getState().unsubscribeFetchAll()
 
     setState({
       fetching: true
     })
 
-    const unsubscribeFetchOffers = firestore()
-      .collection('offers')
-      .where('city', '==', city)
-      .where('country', '==', country)
-      .where('status', '==', 'pending')
-      .orderBy('createdAt', 'desc')
-      .limit(100)
-      .onSnapshot(async ({ docs }) => {
-        await helpers.fetchUsers(docs)
-
-        const offers = docs.map((doc) => helpers.createRequest(doc))
-
-        setState({
-          fetching: false,
-          offers
-        })
-      })
-
-    setState({
-      unsubscribeFetchOffers
-    })
-  },
-  fetchRequest: (id: string) => async ({ getState, setState }: StoreApi) => {
-    setState({
-      fetchingOne: true
-    })
-
-    const doc = await firestore().collection('requests').doc(id).get()
-
-    if (doc?.exists) {
-      await helpers.fetchUsers([doc])
-
-      const request = helpers.createRequest(doc)
-
-      const { otherRequests } = getState()
-
-      setState({
-        otherRequests: {
-          ...cloneDeep(otherRequests),
-          [id]: request
-        }
-      })
-    }
-
-    setState({
-      fetchingOne: false
-    })
-  },
-  fetchRequests: (city: string, country: string) => ({
-    getState,
-    setState
-  }: StoreApi) => {
-    getState().unsubscribeFetchRequests()
-
-    setState({
-      fetching: true
-    })
-
-    const unsubscribeFetchRequests = firestore()
-      .collection('requests')
+    const unsubscribeFetchAll = firestore()
+      .collection(kind)
       .where('city', '==', city)
       .where('country', '==', country)
       .where('status', '==', 'pending')
@@ -237,15 +154,47 @@ const actions = {
 
         setState({
           fetching: false,
-          requests
+          [kind]: requests
         })
       })
 
     setState({
-      unsubscribeFetchRequests
+      unsubscribeFetchAll
     })
   },
-  removeRequest: (kind: KindPluralType, id: string) => async ({
+  fetchOne: (kind: KindType, id: string) => async ({
+    getState,
+    setState
+  }: StoreApi) => {
+    setState({
+      fetchingOne: true
+    })
+
+    const doc = await firestore()
+      .collection(kind === 'offer' ? 'offers' : 'requests')
+      .doc(id)
+      .get()
+
+    if (doc?.exists) {
+      await helpers.fetchUsers([doc])
+
+      const request = helpers.createRequest(doc)
+
+      const { others } = getState()
+
+      setState({
+        others: {
+          ...cloneDeep(others),
+          [id]: request
+        }
+      })
+    }
+
+    setState({
+      fetchingOne: false
+    })
+  },
+  remove: (kind: KindPluralType, id: string) => async ({
     setState
   }: StoreApi) => {
     const user = auth().currentUser
@@ -272,11 +221,10 @@ const actions = {
       removing: false
     })
   },
-  updateRequest: (
-    kind: KindPluralType,
-    id: string,
-    description: string
-  ) => async ({ dispatch, setState }: StoreApi) => {
+  update: (kind: KindPluralType, id: string, description: string) => async ({
+    dispatch,
+    setState
+  }: StoreApi) => {
     const user = auth().currentUser
 
     if (!user) {
@@ -300,11 +248,9 @@ const actions = {
       updatedAt: new Date()
     })
 
-    if (kind === 'offers') {
-      dispatch(actions.fetchOffer(id))
-    } else {
-      dispatch(actions.fetchRequest(id))
-    }
+    await dispatch(
+      actions.fetchOne(kind === 'offers' ? 'offer' : 'request', id)
+    )
 
     setState({
       updating: false

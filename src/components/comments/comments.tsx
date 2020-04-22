@@ -15,16 +15,22 @@ interface Props {
 export const Comments: FunctionComponent<Props> = ({ itemId, kind }) => {
   const {
     comments,
-    createComment,
+    create,
     creating,
-    loading,
+    fetch,
+    fetching,
     unsubscribe
-  } = useComments(itemId)
+  } = useComments()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => () => unsubscribe(), [])
+  useEffect(() => {
+    fetch(itemId)
 
-  if (loading) {
+    return () => {
+      unsubscribe()
+    }
+  }, [fetch, itemId, unsubscribe])
+
+  if (fetching) {
     return <Spinner style={styles.main} />
   }
 
@@ -48,7 +54,7 @@ export const Comments: FunctionComponent<Props> = ({ itemId, kind }) => {
       />
       <Reply
         loading={creating}
-        onReply={(body) => createComment(kind, itemId, body)}
+        onReply={(body) => create(kind, itemId, body)}
       />
     </>
   )

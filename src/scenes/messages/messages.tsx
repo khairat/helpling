@@ -13,11 +13,11 @@ interface Props {
 }
 
 export const Messages: FunctionComponent<Props> = () => {
-  const [{ fetching, threads }, { fetchThreads }] = useThreads()
+  const [{ fetching, threads }, { fetch }] = useThreads()
 
   useEffect(() => {
-    fetchThreads()
-  }, [fetchThreads])
+    fetch()
+  }, [fetch])
 
   if (fetching) {
     return <Spinner />

@@ -5,14 +5,14 @@ import { List } from '../../components/requests'
 import { useRequests, useUser } from '../../store'
 
 export const Requests: FunctionComponent = () => {
-  const [{ fetching, requests }, { fetchRequests }] = useRequests()
+  const [{ fetching, requests }, { fetchAll }] = useRequests()
   const [{ user }] = useUser()
 
   useEffect(() => {
     if (user) {
-      fetchRequests(user.city, user.country)
+      fetchAll('requests', user.city, user.country)
     }
-  }, [fetchRequests, user])
+  }, [fetchAll, user])
 
   if (fetching) {
     return <Spinner />

@@ -37,7 +37,7 @@ export const Picker: FunctionComponent<Props> = ({
         style={[styles.textBox, style]}>
         <Text
           style={[styles.textBoxLabel, selected && styles.textBoxLabelActive]}>
-          {selected?.label ?? placeholder}
+          {selected ? selected.label : placeholder}
         </Text>
         <Image source={img_ui_expand} style={styles.icon} />
       </Touchable>

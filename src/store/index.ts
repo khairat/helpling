@@ -1,4 +1,5 @@
 export { useAuth } from './auth'
+export { useMessages } from './messages'
 export { useRequests } from './requests'
 export { useThreads } from './threads'
 export { useUser } from './user'

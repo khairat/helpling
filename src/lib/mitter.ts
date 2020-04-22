@@ -35,6 +35,14 @@ class Mitter {
   onLoading(handler: Handler) {
     this.mitter.on('loading', handler)
   }
+
+  signOut() {
+    this.mitter.emit('signOut')
+  }
+
+  onSignOut(handler: Handler) {
+    this.mitter.on('signOut', handler)
+  }
 }
 
 export const mitter = new Mitter()

@@ -14,14 +14,14 @@ interface Props {
 export const CreateRequest: FunctionComponent<Props> = ({
   navigation: { replace }
 }) => {
-  const [{ creating }, { createRequest }] = useRequests()
+  const [{ creating }, { create }] = useRequests()
 
   return (
     <Form
       kind="request"
       loading={creating}
       onCreate={async (data) => {
-        const id = await createRequest('requests', data)
+        const id = await create('requests', data)
 
         replace('Request', {
           id

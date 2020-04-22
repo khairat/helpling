@@ -54,10 +54,7 @@ export const List: FunctionComponent<Props> = ({ items, kind, showMeta }) => {
         showMeta && user ? (
           <View style={styles.header}>
             <Text style={styles.location}>
-              {kind === 'offer' ? 'Offers' : 'Requests'} in{' '}
-              <Text style={styles.link}>
-                {user.city}, {user.country}
-              </Text>
+              {user.city}, {user.country}
             </Text>
           </View>
         ) : null
@@ -100,7 +97,7 @@ const styles = StyleSheet.create({
   location: {
     ...typography.regular,
     ...typography.medium,
-    color: colors.foreground,
+    color: colors.accent,
     textAlign: 'center'
   },
   message: {

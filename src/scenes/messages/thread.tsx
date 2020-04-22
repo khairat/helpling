@@ -6,9 +6,8 @@ import React, { FunctionComponent, useEffect } from 'react'
 import { img_ui_about } from '../../assets'
 import { Header, HeaderButton, Spinner } from '../../components/common'
 import { Messages } from '../../components/messages'
-import { useMessages } from '../../hooks'
 import { nav } from '../../lib'
-import { useThreads, useUser } from '../../store'
+import { useMessages, useThreads, useUser } from '../../store'
 import { MessagesParamList } from '.'
 
 interface Props {
@@ -22,13 +21,20 @@ export const Thread: FunctionComponent<Props> = ({
     params: { id }
   }
 }) => {
+  const [
+    { fetching, messages, replying },
+    { cleanUpMessages, fetch, reply }
+  ] = useMessages()
   const [{ threads }] = useThreads()
   const [{ user }] = useUser()
 
-  const { loading, messages, reply, replying, unsubscribe } = useMessages(id)
+  useEffect(() => {
+    fetch(id)
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => () => unsubscribe(), [])
+    return () => {
+      cleanUpMessages()
+    }
+  }, [cleanUpMessages, fetch, id])
 
   useEffect(() => {
     const thread = threads.find((thread) => thread.id === id)
@@ -69,14 +75,14 @@ export const Thread: FunctionComponent<Props> = ({
     })
   }, [id, setOptions, threads, user])
 
-  if (loading) {
+  if (fetching) {
     return <Spinner />
   }
 
   return (
     <Messages
       messages={messages}
-      onReply={(body) => reply(body)}
+      onReply={(body) => reply(id, body)}
       replying={replying}
     />
   )

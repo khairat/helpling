@@ -3,7 +3,7 @@ import firestore from '@react-native-firebase/firestore'
 import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 
 import { helpers } from '../lib'
-import { RequestType, UserType } from '../types'
+import { KindPluralType, RequestType, UserType } from '../types'
 
 interface State {
   acceptedOffers: RequestType[]
@@ -14,10 +14,8 @@ interface State {
   requests: RequestType[]
   user?: UserType
 
-  unsubscribeFetchAcceptedOffers: () => void
-  unsubscribeFetchAcceptedRequests: () => void
-  unsubscribeFetchOffers: () => void
   unsubscribeFetchRequests: () => void
+  unsubscribeFetchAcceptedRequests: () => void
   unsubscribeFetchUser: () => void
 }
 
@@ -28,9 +26,7 @@ const initialState: State = {
   loading: false,
   offers: [],
   requests: [],
-  unsubscribeFetchAcceptedOffers: () => {},
   unsubscribeFetchAcceptedRequests: () => {},
-  unsubscribeFetchOffers: () => {},
   unsubscribeFetchRequests: () => {},
   unsubscribeFetchUser: () => {},
   user: undefined
@@ -41,56 +37,21 @@ type StoreApi = StoreActionApi<State>
 const actions = {
   cleanUpUser: () => ({ getState, setState }: StoreApi) => {
     const {
-      unsubscribeFetchAcceptedOffers,
       unsubscribeFetchAcceptedRequests,
-      unsubscribeFetchOffers,
       unsubscribeFetchRequests,
       unsubscribeFetchUser
     } = getState()
 
-    unsubscribeFetchAcceptedOffers()
     unsubscribeFetchAcceptedRequests()
-    unsubscribeFetchOffers()
     unsubscribeFetchRequests()
     unsubscribeFetchUser()
 
     setState(initialState)
   },
-  fetchAcceptedOffers: () => ({ getState, setState }: StoreApi) => {
-    getState().unsubscribeFetchAcceptedOffers()
-
-    const user = auth().currentUser
-
-    if (!user) {
-      throw new Error('User not found')
-    }
-
-    setState({
-      fetching: true
-    })
-
-    const { uid } = user
-
-    const unsubscribeFetchAcceptedOffers = firestore()
-      .collection('offers')
-      .where('helplingId', '==', uid)
-      .orderBy('createdAt', 'desc')
-      .onSnapshot(async ({ docs }) => {
-        await helpers.fetchUsers(docs)
-
-        const acceptedOffers = docs.map((doc) => helpers.createRequest(doc))
-
-        setState({
-          acceptedOffers,
-          fetching: false
-        })
-      })
-
-    setState({
-      unsubscribeFetchAcceptedOffers
-    })
-  },
-  fetchAcceptedRequests: () => ({ getState, setState }: StoreApi) => {
+  fetchAcceptedRequests: (kind: KindPluralType) => ({
+    getState,
+    setState
+  }: StoreApi) => {
     getState().unsubscribeFetchAcceptedRequests()
 
     const user = auth().currentUser
@@ -106,16 +67,16 @@ const actions = {
     const { uid } = user
 
     const unsubscribeFetchAcceptedRequests = firestore()
-      .collection('requests')
+      .collection(kind)
       .where('helplingId', '==', uid)
       .orderBy('createdAt', 'desc')
       .onSnapshot(async ({ docs }) => {
         await helpers.fetchUsers(docs)
 
-        const acceptedRequests = docs.map((doc) => helpers.createRequest(doc))
+        const requests = docs.map((doc) => helpers.createRequest(doc))
 
         setState({
-          acceptedRequests,
+          [kind === 'offers' ? 'acceptedOffers' : 'acceptetRequests']: requests,
           fetching: false
         })
       })
@@ -124,41 +85,10 @@ const actions = {
       unsubscribeFetchAcceptedRequests
     })
   },
-  fetchOffers: () => ({ getState, setState }: StoreApi) => {
-    getState().unsubscribeFetchOffers()
-
-    const user = auth().currentUser
-
-    if (!user) {
-      throw new Error('User not found')
-    }
-
-    setState({
-      fetching: true
-    })
-
-    const { uid } = user
-
-    const unsubscribeFetchOffers = firestore()
-      .collection('offers')
-      .where('userId', '==', uid)
-      .orderBy('createdAt', 'desc')
-      .onSnapshot(async ({ docs }) => {
-        await helpers.fetchUsers(docs)
-
-        const offers = docs.map((doc) => helpers.createRequest(doc))
-
-        setState({
-          fetching: false,
-          offers
-        })
-      })
-
-    setState({
-      unsubscribeFetchOffers
-    })
-  },
-  fetchRequests: () => ({ getState, setState }: StoreApi) => {
+  fetchRequests: (kind: KindPluralType) => ({
+    getState,
+    setState
+  }: StoreApi) => {
     getState().unsubscribeFetchRequests()
 
     const user = auth().currentUser
@@ -174,7 +104,7 @@ const actions = {
     const { uid } = user
 
     const unsubscribeFetchRequests = firestore()
-      .collection('requests')
+      .collection(kind)
       .where('userId', '==', uid)
       .orderBy('createdAt', 'desc')
       .onSnapshot(async ({ docs }) => {
@@ -184,7 +114,7 @@ const actions = {
 
         setState({
           fetching: false,
-          requests
+          [kind]: requests
         })
       })
 

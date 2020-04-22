@@ -20,19 +20,21 @@ export const Offer: FunctionComponent<Props> = ({
     params: { id }
   }
 }) => {
-  const [{ fetchingOne, otherOffers }, { fetchOffer }] = useRequests()
+  const [{ fetchingOne, others }, { fetchOne }] = useRequests()
 
   const [offer, setOffer] = useState<RequestType>()
 
   useEffect(() => {
-    const offer = otherOffers[id]
+    fetchOne('offer', id)
+  }, [fetchOne, id])
+
+  useEffect(() => {
+    const offer = others[id]
 
     if (offer) {
       setOffer(offer)
-    } else {
-      fetchOffer(id)
     }
-  }, [fetchOffer, id, otherOffers])
+  }, [fetchOne, id, others])
 
   useEffect(() => {
     if (offer) {

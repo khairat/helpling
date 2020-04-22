@@ -1,26 +1,32 @@
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { helpers } from '../lib'
+import { helpers, mitter } from '../lib'
 import { CommentType, KindType } from '../types'
 
-export const useComments = (id: string) => {
+export const useComments = () => {
   const unsubscribe = useRef(() => {})
 
   const [creating, setCreating] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [fetching, setFetching] = useState(true)
 
   const [comments, setComments] = useState<CommentType[]>([])
 
   useEffect(() => {
+    mitter.onSignOut(() => {
+      unsubscribe.current()
+    })
+  }, [])
+
+  const fetch = useCallback((id: string) => {
     const user = auth().currentUser
 
     if (!user) {
       throw new Error('User not found')
     }
 
-    setLoading(true)
+    setFetching(true)
 
     unsubscribe.current = firestore()
       .collection('comments')
@@ -32,15 +38,11 @@ export const useComments = (id: string) => {
         const comments = docs.map((doc) => helpers.createComment(doc))
 
         setComments(comments)
-        setLoading(false)
+        setFetching(false)
       })
-  }, [id])
+  }, [])
 
-  const createComment = async (
-    itemType: KindType,
-    itemId: string,
-    body: string
-  ) => {
+  const create = async (itemType: KindType, itemId: string, body: string) => {
     const user = auth().currentUser
 
     if (!user) {
@@ -62,9 +64,10 @@ export const useComments = (id: string) => {
 
   return {
     comments,
-    createComment,
+    create,
     creating,
-    loading,
+    fetch,
+    fetching,
     unsubscribe: unsubscribe.current
   }
 }

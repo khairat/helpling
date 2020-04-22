@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth'
 import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 
-import { notifications } from '../lib'
+import { mitter, notifications } from '../lib'
 
 interface State {
   initialising: boolean
@@ -58,6 +58,8 @@ const actions = {
     if (user) {
       notifications.unsubscribeFromTopic(user.uid)
     }
+
+    mitter.signOut()
 
     await auth().signOut()
 
