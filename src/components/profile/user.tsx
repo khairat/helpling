@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import Image from 'react-native-fast-image'
 
 import { colors, layout, typography } from '../../styles'
 import { UserType } from '../../types'
+import { Avatar } from '../common'
 
 interface Props {
   user: UserType
@@ -11,12 +11,7 @@ interface Props {
 
 export const User: FunctionComponent<Props> = ({ user }) => (
   <View style={styles.main}>
-    <Image
-      source={{
-        uri: `https://api.adorable.io/avatar/${user.id}`
-      }}
-      style={styles.avatar}
-    />
+    <Avatar seed={user.id} size="large" />
     <View style={styles.details}>
       <Text style={styles.name}>{user.name}</Text>
       <Text style={styles.location}>
@@ -27,12 +22,6 @@ export const User: FunctionComponent<Props> = ({ user }) => (
 )
 
 const styles = StyleSheet.create({
-  avatar: {
-    backgroundColor: colors.backgroundLight,
-    borderRadius: layout.icon * 2,
-    height: layout.icon * 2,
-    width: layout.icon * 2
-  },
   details: {
     flex: 1,
     marginLeft: layout.margin

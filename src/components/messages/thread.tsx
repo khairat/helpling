@@ -1,11 +1,10 @@
 import { differenceBy } from 'lodash'
 import React, { FunctionComponent } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import Image from 'react-native-fast-image'
 
 import { colors, layout, typography } from '../../styles'
 import { ThreadType, UserType } from '../../types'
-import { Timestamp } from '../common'
+import { Avatar, Timestamp } from '../common'
 
 interface Props {
   thread: ThreadType
@@ -17,12 +16,7 @@ export const Thread: FunctionComponent<Props> = ({ thread, user }) => {
 
   return (
     <View style={styles.main}>
-      <Image
-        source={{
-          uri: `https://api.adorable.io/avatar/${other?.id}`
-        }}
-        style={styles.avatar}
-      />
+      <Avatar seed={`${other?.id}`} size="large" />
       <View style={styles.details}>
         <Text style={styles.user}>{other?.name}</Text>
         {!!thread.last && (
@@ -37,12 +31,6 @@ export const Thread: FunctionComponent<Props> = ({ thread, user }) => {
 }
 
 const styles = StyleSheet.create({
-  avatar: {
-    backgroundColor: colors.backgroundLight,
-    borderRadius: layout.icon * 2,
-    height: layout.icon * 2,
-    width: layout.icon * 2
-  },
   details: {
     flex: 1,
     marginLeft: layout.margin

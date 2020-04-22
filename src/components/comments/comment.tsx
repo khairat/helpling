@@ -1,11 +1,10 @@
 import React, { FunctionComponent } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import Image from 'react-native-fast-image'
 
 import { useUser } from '../../store'
 import { colors, layout, typography } from '../../styles'
 import { CommentType } from '../../types'
-import { Timestamp } from '../common'
+import { Avatar, Timestamp } from '../common'
 
 interface Props {
   item: CommentType
@@ -16,12 +15,7 @@ export const Comment: FunctionComponent<Props> = ({ item }) => {
 
   return (
     <View style={styles.main}>
-      <Image
-        source={{
-          uri: `https://api.adorable.io/avatar/${item.user.id}`
-        }}
-        style={styles.avatar}
-      />
+      <Avatar seed={item.user.id} />
       <View style={styles.details}>
         <View style={styles.body}>
           <Text style={styles.bodyText}>{item.body}</Text>
@@ -38,12 +32,6 @@ export const Comment: FunctionComponent<Props> = ({ item }) => {
 }
 
 const styles = StyleSheet.create({
-  avatar: {
-    backgroundColor: colors.backgroundLight,
-    borderRadius: layout.icon,
-    height: layout.icon,
-    width: layout.icon
-  },
   body: {
     alignSelf: 'flex-start',
     backgroundColor: colors.backgroundLight,

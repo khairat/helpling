@@ -1,10 +1,10 @@
 import moment from 'moment'
 import React, { FunctionComponent } from 'react'
 import { Dimensions, StyleSheet, Text, View } from 'react-native'
-import Image from 'react-native-fast-image'
 
 import { colors, layout, typography } from '../../styles'
 import { MessageType, UserType } from '../../types'
+import { Avatar } from '../common'
 
 interface Props {
   message: MessageType
@@ -21,12 +21,7 @@ export const Message: FunctionComponent<Props> = ({ message, user }) => {
   return (
     <View style={styles.main}>
       {!mine && (
-        <Image
-          source={{
-            uri: `https://api.adorable.io/avatar/${message.user.id}`
-          }}
-          style={styles.avatar}
-        />
+        <Avatar seed={message.user.id} size="large" style={styles.avatar} />
       )}
       <View style={[styles.message, mine && styles.right]}>
         <View style={styles.body}>
@@ -50,11 +45,7 @@ const { width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   avatar: {
-    backgroundColor: colors.backgroundLight,
-    borderRadius: layout.icon * 2,
-    height: layout.icon * 2,
-    marginRight: layout.margin,
-    width: layout.icon * 2
+    marginRight: layout.margin
   },
   body: {
     backgroundColor: colors.backgroundLight,
