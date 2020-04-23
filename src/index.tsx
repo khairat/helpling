@@ -94,6 +94,6 @@ export default codePush({
 
 codePush.getUpdateMetadata().then((update) => {
   if (update) {
-    Sentry.setRelease(update.appVersion + '-codepush:' + update.label)
+    Sentry.setRelease(`${update.appVersion}-codepush:${update.label}`)
   }
 })
