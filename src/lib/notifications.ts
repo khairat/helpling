@@ -4,7 +4,6 @@ import { nav } from './nav'
 
 class Notifications {
   async init(): Promise<void> {
-    await messaging().registerDeviceForRemoteMessages()
     await messaging().requestPermission()
 
     messaging().onNotificationOpenedApp((message) =>
