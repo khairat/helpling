@@ -1,4 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native'
+import * as Sentry from '@sentry/react-native'
 import React, { FunctionComponent, useEffect } from 'react'
 import { Linking, Platform } from 'react-native'
 import codePush from 'react-native-code-push'
@@ -90,3 +91,9 @@ export default codePush({
   }),
   installMode: codePush.InstallMode.ON_NEXT_RESUME
 })(Helpling)
+
+codePush.getUpdateMetadata().then((update) => {
+  if (update) {
+    Sentry.setRelease(update.appVersion + '-codepush:' + update.label)
+  }
+})
