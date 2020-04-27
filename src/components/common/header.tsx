@@ -94,15 +94,17 @@ export const HeaderButtonGroup: FunctionComponent = ({ children }) => {
             <View key={index} style={styles.menuItem}>
               {cloneElement(button as ReactElement<HeaderButtonProps>, {
                 onPress: () => {
-                  if (isValidElement(button)) {
-                    button.props.onPress()
-                  }
-
                   LayoutAnimation.configureNext(
                     LayoutAnimation.Presets.easeInEaseOut
                   )
 
                   setVisible(false)
+
+                  setTimeout(() => {
+                    if (isValidElement(button)) {
+                      button.props.onPress()
+                    }
+                  })
                 },
                 showLabel: true
               })}
