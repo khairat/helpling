@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { FunctionComponent } from 'react'
 import {
   FlatList,
@@ -22,6 +22,7 @@ interface Props {
 
 export const List: FunctionComponent<Props> = ({ items, kind, showMeta }) => {
   const { navigate } = useNavigation()
+  const { name } = useRoute()
 
   const [{ user }] = useUser()
 
@@ -63,11 +64,21 @@ export const List: FunctionComponent<Props> = ({ items, kind, showMeta }) => {
       }
       renderItem={({ item }) => (
         <Touchable
-          onPress={() =>
-            navigate(kind === 'offer' ? 'Offer' : 'Request', {
-              id: item.id
-            })
-          }>
+          onPress={() => {
+            if (name.indexOf('My') === 0) {
+              navigate(kind === 'offer' ? 'Offers' : 'Requests', {
+                initial: false,
+                params: {
+                  id: item.id
+                },
+                screen: kind === 'offer' ? 'Offer' : 'Request'
+              })
+            } else {
+              navigate(kind === 'offer' ? 'Offer' : 'Request', {
+                id: item.id
+              })
+            }
+          }}>
           <ListItem item={item} />
         </Touchable>
       )}
