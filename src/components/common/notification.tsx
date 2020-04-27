@@ -4,7 +4,7 @@ import { LayoutAnimation, StyleSheet, Text, View } from 'react-native'
 import Image from 'react-native-fast-image'
 import { useSafeArea } from 'react-native-safe-area-context'
 
-import { img_ui_close, img_ui_error, img_ui_notification } from '../../assets'
+import { img_ui_close, img_ui_notification } from '../../assets'
 import { mitter, nav } from '../../lib'
 import { colors, layout, typography } from '../../styles'
 import { NotificationType } from '../../types'
@@ -51,8 +51,7 @@ export const Notification: FunctionComponent = () => {
           setNotification({
             body,
             deeplink: message?.data?.deeplink,
-            title,
-            type: 'notification'
+            title
           })
         }
       }
@@ -82,33 +81,16 @@ export const Notification: FunctionComponent = () => {
         {
           paddingTop: top + layout.margin
         },
-        visible ? styles.visible : styles.hidden,
-        notification?.type === 'notification'
-          ? styles.notification
-          : notification?.type === 'error'
-          ? styles.error
-          : null
+        visible ? styles.visible : styles.hidden
       ]}>
-      <Image
-        source={
-          notification?.type === 'error' ? img_ui_error : img_ui_notification
-        }
-        style={styles.icon}
-      />
-      <Details
-        onPress={onPress}
-        style={[
-          styles.details,
-          notification?.type === 'error' && styles.detailsOnly
-        ]}>
+      <Image source={img_ui_notification} style={styles.icon} />
+      <Details onPress={onPress} style={styles.details}>
         <Text style={styles.title}>{notification?.title}</Text>
         <Text style={styles.body}>{notification?.body}</Text>
       </Details>
-      {notification?.type === 'notification' && (
-        <Touchable onPress={onPress}>
-          <Image source={img_ui_close} style={styles.icon} />
-        </Touchable>
-      )}
+      <Touchable onPress={onPress}>
+        <Image source={img_ui_close} style={styles.icon} />
+      </Touchable>
     </View>
   )
 }
@@ -122,13 +104,6 @@ const styles = StyleSheet.create({
   details: {
     flex: 1
   },
-  detailsOnly: {
-    marginRight: layout.margin
-  },
-  error: {
-    backgroundColor: colors.state.warning,
-    borderBottomColor: colors.state.error
-  },
   hidden: {
     bottom: '100%'
   },
@@ -139,15 +114,12 @@ const styles = StyleSheet.create({
   },
   main: {
     alignItems: 'center',
-    backgroundColor: colors.background,
+    backgroundColor: colors.state.message,
+    borderBottomColor: colors.state.success,
     flexDirection: 'row',
     paddingVertical: layout.margin,
     position: 'absolute',
     width: '100%'
-  },
-  notification: {
-    backgroundColor: colors.state.message,
-    borderBottomColor: colors.state.success
   },
   title: {
     ...typography.subtitle,
