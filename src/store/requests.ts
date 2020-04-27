@@ -6,7 +6,7 @@ import firestore from '@react-native-firebase/firestore'
 import { cloneDeep } from 'lodash'
 import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 
-import { dialog, helpers } from '../lib'
+import { config, dialog, helpers } from '../lib'
 import {
   KindPluralType,
   KindType,
@@ -29,7 +29,8 @@ interface State {
   requests: RequestType[]
   updating: boolean
 
-  unsubscribeFetchAll: () => void
+  unsubscribeFetchOffers: () => void
+  unsubscribeFetchRequests: () => void
 }
 
 const initialState: State = {
@@ -42,7 +43,8 @@ const initialState: State = {
   others: {},
   removing: false,
   requests: [],
-  unsubscribeFetchAll: () => {},
+  unsubscribeFetchOffers: () => {},
+  unsubscribeFetchRequests: () => {},
   updating: false
 }
 
@@ -77,9 +79,10 @@ const actions = {
     }
   },
   cleanUpRequests: () => ({ getState, setState }: StoreApi) => {
-    const { unsubscribeFetchAll } = getState()
+    const { unsubscribeFetchOffers, unsubscribeFetchRequests } = getState()
 
-    unsubscribeFetchAll()
+    unsubscribeFetchOffers()
+    unsubscribeFetchRequests()
 
     setState(initialState)
   },
@@ -139,32 +142,47 @@ const actions = {
     getState,
     setState
   }: StoreApi) => {
-    getState().unsubscribeFetchAll()
+    if (kind === 'offers') {
+      getState().unsubscribeFetchOffers()
+    } else {
+      getState().unsubscribeFetchRequests()
+    }
 
     setState({
       fetching: true
     })
 
-    const unsubscribeFetchAll = firestore()
+    const onlyShowNearby = config.fetch('only_show_nearby') === 'enabled'
+    const onlyShowPending = config.fetch('only_show_pending') === 'enabled'
+
+    let query = firestore()
       .collection(kind)
-      .where('city', '==', city)
-      .where('country', '==', country)
-      .where('status', '==', 'pending')
       .orderBy('createdAt', 'desc')
       .limit(100)
-      .onSnapshot(async ({ docs }) => {
-        await helpers.fetchUsers(docs)
 
-        const requests = docs.map((doc) => helpers.createRequest(doc))
+    if (onlyShowNearby) {
+      query = query.where('city', '==', city).where('country', '==', country)
+    }
 
-        setState({
-          fetching: false,
-          [kind]: requests
-        })
+    if (onlyShowPending) {
+      query = query.where('status', '==', 'pending')
+    }
+
+    const unsubscribe = query.onSnapshot(async ({ docs }) => {
+      await helpers.fetchUsers(docs)
+
+      const requests = docs.map((doc) => helpers.createRequest(doc))
+
+      setState({
+        fetching: false,
+        [kind]: requests
       })
+    })
 
     setState({
-      unsubscribeFetchAll
+      [kind === 'offers'
+        ? 'unsubscribeFetchOffers'
+        : 'unsubscribeFetchRequests']: unsubscribe
     })
   },
   fetchOne: (kind: KindType, id: string) => async ({

@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth'
 import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 
-import { mitter, notifications } from '../lib'
+import { config, mitter, notifications } from '../lib'
 
 interface State {
   initialising: boolean
@@ -28,7 +28,9 @@ const actions = {
 
     setState(initialState)
   },
-  initialise: () => ({ getState, setState }: StoreApi) => {
+  initialise: () => async ({ getState, setState }: StoreApi) => {
+    await config.init()
+
     getState().unsubscribe()
 
     const unsubscribe = auth().onAuthStateChanged(async (user) => {

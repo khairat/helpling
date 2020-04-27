@@ -1,4 +1,5 @@
 export { browser } from './browser'
+export { config } from './config'
 export { dialog } from './dialog'
 export { helpers } from './helpers'
 export { mitter } from './mitter'

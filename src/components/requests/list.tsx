@@ -17,10 +17,16 @@ import { ListItem } from './list-item'
 interface Props {
   items: RequestType[]
   kind: KindType
-  showMeta?: boolean
+  showFooter?: boolean
+  showHeader?: boolean
 }
 
-export const List: FunctionComponent<Props> = ({ items, kind, showMeta }) => {
+export const List: FunctionComponent<Props> = ({
+  items,
+  kind,
+  showFooter,
+  showHeader
+}) => {
   const { navigate } = useNavigation()
   const { name } = useRoute()
 
@@ -42,7 +48,7 @@ export const List: FunctionComponent<Props> = ({ items, kind, showMeta }) => {
         />
       }
       ListFooterComponent={
-        showMeta ? (
+        showFooter ? (
           <TouchableWithoutFeedback onPress={() => navigate('Profile')}>
             <View style={styles.footer}>
               <Text style={styles.message}>
@@ -54,7 +60,7 @@ export const List: FunctionComponent<Props> = ({ items, kind, showMeta }) => {
         ) : null
       }
       ListHeaderComponent={
-        showMeta && user ? (
+        showHeader && user ? (
           <View style={styles.header}>
             <Text style={styles.location}>
               {user.city}, {user.country}
