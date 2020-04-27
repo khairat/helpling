@@ -1,16 +1,21 @@
+import '@react-native-firebase/functions'
+
+import firebase from '@react-native-firebase/app'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
-import functions from '@react-native-firebase/functions'
 import { cloneDeep } from 'lodash'
 import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 
-import { helpers, mitter } from '../lib'
+import { dialog, helpers } from '../lib'
 import {
   KindPluralType,
   KindType,
   RequestInputType,
   RequestType
 } from '../types'
+
+const callable = (name: string) =>
+  firebase.app().functions('europe-west2').httpsCallable(name)
 
 interface State {
   accepting: boolean
@@ -55,7 +60,7 @@ const actions = {
     try {
       const {
         data: { threadId }
-      } = await functions().httpsCallable('acceptRequest')({
+      } = await callable('acceptRequest')({
         id,
         kind
       })
@@ -64,7 +69,7 @@ const actions = {
 
       return threadId
     } catch ({ message }) {
-      mitter.error(message)
+      dialog.error(message)
     } finally {
       setState({
         accepting: false
@@ -87,14 +92,14 @@ const actions = {
     })
 
     try {
-      await functions().httpsCallable('completeRequest')({
+      await callable('completeRequest')({
         id,
         kind
       })
 
       await dispatch(actions.fetchOne(kind, id))
     } catch ({ message }) {
-      mitter.error(message)
+      dialog.error(message)
     } finally {
       setState({
         completing: false
