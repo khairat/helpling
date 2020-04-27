@@ -95,7 +95,12 @@ export const Notification: FunctionComponent = () => {
         }
         style={styles.icon}
       />
-      <Details onPress={onPress} style={styles.details}>
+      <Details
+        onPress={onPress}
+        style={[
+          styles.details,
+          notification?.type === 'error' && styles.detailsOnly
+        ]}>
         <Text style={styles.title}>{notification?.title}</Text>
         <Text style={styles.body}>{notification?.body}</Text>
       </Details>
@@ -116,6 +121,9 @@ const styles = StyleSheet.create({
   },
   details: {
     flex: 1
+  },
+  detailsOnly: {
+    marginRight: layout.margin
   },
   error: {
     backgroundColor: colors.state.warning,
