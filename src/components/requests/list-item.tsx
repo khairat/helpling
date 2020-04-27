@@ -1,4 +1,3 @@
-import { startCase } from 'lodash'
 import React, { FunctionComponent } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Image from 'react-native-fast-image'
@@ -37,7 +36,8 @@ export const ListItem: FunctionComponent<Props> = ({ item }) => {
               item.status === 'completed' && styles.completed,
               item.status === 'pending' && styles.pending
             ]}>
-            {startCase(item.status)}
+            {item.status}
+            {item.status !== 'pending' && ` by ${item.helpling?.name}`}
           </Text>
         </View>
       </View>
