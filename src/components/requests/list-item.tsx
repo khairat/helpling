@@ -36,8 +36,7 @@ export const ListItem: FunctionComponent<Props> = ({ item }) => {
               item.status === 'completed' && styles.completed,
               item.status === 'pending' && styles.pending
             ]}>
-            {item.status}
-            {item.status !== 'pending' && ` by ${item.helpling?.name}`}
+            {item.status.toUpperCase()}
           </Text>
         </View>
       </View>
