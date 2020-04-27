@@ -7,7 +7,8 @@ import Helpling from './src'
 
 Sentry.init({
   dsn: SENTRY_DSN,
-  enabled: !__DEV__
+  enabled: !__DEV__,
+  environment: __DEV__ ? 'dev' : 'production'
 })
 
 if (Platform.OS === 'android') {
