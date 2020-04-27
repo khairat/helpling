@@ -1,4 +1,4 @@
-import { RouteProp } from '@react-navigation/native'
+import { RouteProp, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { differenceBy } from 'lodash'
 import React, { FunctionComponent, useEffect } from 'react'
@@ -6,7 +6,6 @@ import React, { FunctionComponent, useEffect } from 'react'
 import { img_ui_about } from '../../assets'
 import { Header, HeaderButton, Spinner } from '../../components/common'
 import { Messages } from '../../components/messages'
-import { nav } from '../../lib'
 import { useMessages, useThreads, useUser } from '../../store'
 import { MessagesParamList } from '.'
 
@@ -21,6 +20,8 @@ export const Thread: FunctionComponent<Props> = ({
     params: { id }
   }
 }) => {
+  const { navigate } = useNavigation()
+
   const [
     { fetching, messages, replying },
     { cleanUpMessages, fetch, reply }
@@ -59,13 +60,13 @@ export const Thread: FunctionComponent<Props> = ({
             <HeaderButton
               icon={img_ui_about}
               onPress={() =>
-                nav.navigateAway(
-                  itemType === 'offer' ? 'Offers' : 'Requests',
-                  itemType === 'offer' ? 'Offer' : 'Request',
-                  {
+                navigate(itemType === 'offer' ? 'Offers' : 'Requests', {
+                  initial: false,
+                  params: {
                     id: itemId
-                  }
-                )
+                  },
+                  screen: itemType === 'offer' ? 'Offer' : 'Request'
+                })
               }
             />
           }
@@ -73,7 +74,7 @@ export const Thread: FunctionComponent<Props> = ({
       ),
       title: other.name
     })
-  }, [id, setOptions, threads, user])
+  }, [id, navigate, setOptions, threads, user])
 
   if (fetching) {
     return <Spinner />

@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import React, { FunctionComponent } from 'react'
 import {
   FlatList,
@@ -8,7 +9,6 @@ import {
 } from 'react-native'
 
 import { Empty, Separator, Touchable } from '../../components/common'
-import { nav } from '../../lib'
 import { useUser } from '../../store'
 import { colors, layout, typography } from '../../styles'
 import { KindType, RequestType } from '../../types'
@@ -21,6 +21,8 @@ interface Props {
 }
 
 export const List: FunctionComponent<Props> = ({ items, kind, showMeta }) => {
+  const { navigate } = useNavigation()
+
   const [{ user }] = useUser()
 
   return (
@@ -40,7 +42,7 @@ export const List: FunctionComponent<Props> = ({ items, kind, showMeta }) => {
       }
       ListFooterComponent={
         showMeta ? (
-          <TouchableWithoutFeedback onPress={() => nav.navigate('Profile')}>
+          <TouchableWithoutFeedback onPress={() => navigate('Profile')}>
             <View style={styles.footer}>
               <Text style={styles.message}>
                 Can't find your {kind}s? Check your{' '}
@@ -62,13 +64,9 @@ export const List: FunctionComponent<Props> = ({ items, kind, showMeta }) => {
       renderItem={({ item }) => (
         <Touchable
           onPress={() =>
-            nav.navigateAway(
-              kind === 'offer' ? 'Offers' : 'Requests',
-              kind === 'offer' ? 'Offer' : 'Request',
-              {
-                id: item.id
-              }
-            )
+            navigate(kind === 'offer' ? 'Offer' : 'Request', {
+              id: item.id
+            })
           }>
           <ListItem item={item} />
         </Touchable>

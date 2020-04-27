@@ -12,7 +12,7 @@ import {
   Notification,
   Spinner
 } from './components/common'
-import { nav, navRef, notifications } from './lib'
+import { nav, notifications } from './lib'
 import { MainNavigator, OnboardingNavigator } from './scenes'
 import { useAuth, useMessages, useRequests, useThreads, useUser } from './store'
 import { NavigatorTheme } from './styles'
@@ -50,9 +50,11 @@ const Helpling: FunctionComponent = () => {
   useEffect(() => {
     notifications
       .getInitial()
-      .then((notification) => nav.handleDeepLink(notification?.data?.deeplink))
+      .then((notification) =>
+        nav.handleDeepLink(notification?.data?.deeplink, true)
+      )
 
-    Linking.getInitialURL().then((url) => nav.handleDeepLink(url))
+    Linking.getInitialURL().then((url) => nav.handleDeepLink(url, true))
 
     Linking.addEventListener('url', ({ url }) => nav.handleDeepLink(url))
 
@@ -62,10 +64,7 @@ const Helpling: FunctionComponent = () => {
   }, [])
 
   return (
-    <NavigationContainer
-      onStateChange={(state) => nav.onStateChange(state)}
-      ref={navRef}
-      theme={NavigatorTheme}>
+    <NavigationContainer ref={nav.ref} theme={NavigatorTheme}>
       <SafeAreaProvider>
         <KeyboardView>
           {initialising || loading ? (

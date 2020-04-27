@@ -1,22 +1,18 @@
-import {
-  NavigationContainerRef,
-  NavigationState,
-  PartialState
-} from '@react-navigation/native'
+import { NavigationContainerRef } from '@react-navigation/native'
 import { createRef } from 'react'
 
-export const navRef = createRef<NavigationContainerRef>()
-
 class Nav {
-  current?: string
+  ref = createRef<NavigationContainerRef>()
 
-  async handleDeepLink(link: string | null | undefined): Promise<void> {
+  async handleDeepLink(link?: string | null, initial?: boolean): Promise<void> {
     if (!link) {
       return
     }
 
-    // TODO: fix hack
-    await this.wait()
+    if (initial) {
+      // TODO: fix hack
+      await this.wait()
+    }
 
     if (link.indexOf('helpling') === 0) {
       link = link.slice(11)
@@ -26,88 +22,51 @@ class Nav {
 
     const [route, param] = link.split('/')
 
-    if (route === 'requests') {
-      if (param) {
-        this.navigateAway('Requests', 'Request', {
-          id: param
-        })
-      } else {
-        this.navigate('Requests')
-      }
-    } else if (route === 'offers') {
-      if (param) {
-        this.navigateAway('Offers', 'Offer', {
-          id: param
-        })
-      } else {
-        this.navigate('Offers')
-      }
-    } else if (route === 'messages') {
-      if (param) {
-        this.navigateAway('Messages', 'Thread', {
-          id: param
-        })
-      } else {
-        this.navigate('Messages')
-      }
-    } else if (route === 'profile') {
-      if (param === 'my_requests') {
-        this.navigateAway('Profile', 'MyRequests', {
-          helpling: false
-        })
-      } else if (param === 'my_accepted_requests') {
-        this.navigateAway('Profile', 'MyRequests', {
-          helpling: true
-        })
-      } else if (param === 'my_offers') {
-        this.navigateAway('Profile', 'MyOffers', {
-          helpling: false
-        })
-      } else if (param === 'my_accepted_offers') {
-        this.navigateAway('Profile', 'MyOffers', {
-          helpling: true
-        })
-      } else {
-        this.navigate('Profile')
-      }
-    }
-  }
-
-  navigate(route: string, params?: object): void {
-    navRef.current?.navigate(route, params)
-  }
-
-  navigateAway(route: string, screen: string, params?: object): void {
-    if (this.current !== screen) {
-      navRef.current?.navigate(route)
+    if (!['requests', 'offers', 'messages', 'profile'].includes(route)) {
+      return
     }
 
-    // TODO: fix hack
-    setTimeout(() => navRef.current?.navigate(screen, params))
-  }
+    const navigator =
+      route === 'requests'
+        ? 'Requests'
+        : route === 'offers'
+        ? 'Offers'
+        : route === 'messages'
+        ? 'Messages'
+        : route === 'profile'
+        ? 'Profile'
+        : null
 
-  onStateChange(state: NavigationState | undefined) {
-    if (state) {
-      const next = this.getCurrent(state)
-
-      if (next) {
-        this.current = next
-      }
+    if (!navigator) {
+      return
     }
-  }
 
-  private getCurrent(
-    state: NavigationState | PartialState<NavigationState>
-  ): string | undefined {
-    if (state.index !== undefined) {
-      const route = state.routes[state.index]
+    if (!param) {
+      this.ref.current?.navigate(navigator)
 
-      if (route.state) {
-        return this.getCurrent(route.state)
-      }
-
-      return route.name
+      return
     }
+
+    const screen =
+      route === 'requests'
+        ? 'Request'
+        : route === 'offers'
+        ? 'Offer'
+        : route === 'messages'
+        ? 'Thread'
+        : null
+
+    if (!screen) {
+      return
+    }
+
+    this.ref.current?.navigate(navigator, {
+      initial: false,
+      params: {
+        id: param
+      },
+      screen
+    })
   }
 
   private wait() {

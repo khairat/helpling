@@ -11,7 +11,7 @@ import {
   img_ui_request,
   img_ui_share
 } from '../../assets'
-import { dialog, nav, sharing } from '../../lib'
+import { dialog, sharing } from '../../lib'
 import { useRequests, useUser } from '../../store'
 import { RequestType } from '../../types'
 import {
@@ -30,7 +30,7 @@ interface Props {
 }
 
 export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
-  const { goBack, setParams } = useNavigation()
+  const { goBack, navigate, setParams } = useNavigation()
 
   const [{ user }] = useUser()
 
@@ -55,8 +55,12 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
           item.user.id === user?.id ? item.helpling?.name : item.user.name
         }`}
         onPress={() =>
-          nav.navigateAway('Messages', 'Thread', {
-            id
+          navigate('Messages', {
+            initial: false,
+            params: {
+              id
+            },
+            screen: 'Thread'
           })
         }
       />
@@ -74,7 +78,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
             icon={img_ui_edit}
             label="Edit"
             onPress={() =>
-              nav.navigate(kind === 'offer' ? 'EditOffer' : 'EditRequest', {
+              navigate(kind === 'offer' ? 'EditOffer' : 'EditRequest', {
                 id: item.id
               })
             }
@@ -162,8 +166,12 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
                 })
 
                 if (action === 'accept') {
-                  nav.navigateAway('Messages', 'Thread', {
-                    id: success
+                  navigate('Messages', {
+                    initial: false,
+                    params: {
+                      id: success
+                    },
+                    screen: 'Thread'
                   })
                 }
               }

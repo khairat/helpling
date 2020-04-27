@@ -38,8 +38,8 @@
     "react-native-inappbrowser-reborn": "^3.4.0",
     "react-native-reanimated": "^1.8.0",
     "react-native-safe-area-context": "^0.7.3",
-    "react-native-screens": "^2.5.0",
-    "react-native-share": "^3.2.0",
+    "react-native-screens": "^2.7.0",
+    "react-native-share": "^3.3.0",
     "react-sweet-state": "^2.1.1"
   },
   "devDependencies": {
@@ -48,7 +48,7 @@
     "@react-native-community/eslint-config": "^1.1.0",
     "@react-native-community/eslint-plugin": "^1.1.0",
     "@types/lodash": "^4.14.150",
-    "@types/react-native": "^0.62.3",
+    "@types/react-native": "^0.62.4",
     "@types/react-native-dotenv": "^0.2.0",
     "@types/react-native-share": "^3.1.0",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
