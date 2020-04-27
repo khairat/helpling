@@ -104,11 +104,7 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
       )
     }
 
-    if (
-      item.status !== 'completed' && kind === 'offer'
-        ? item.user.id !== user?.id
-        : item.helpling?.id !== user?.id
-    ) {
+    if (item.status !== 'completed') {
       const title =
         item.status === 'pending'
           ? kind === 'offer'
@@ -122,7 +118,9 @@ export const Actions: FunctionComponent<Props> = ({ header, item, kind }) => {
           {(item.user.id === user?.id || item.helpling?.id === user?.id) &&
             item.threadId &&
             getThreadButton(item.threadId)}
-          {item.status !== 'completed' && (
+          {(item.status === 'pending' ||
+            item.user.id === user?.id ||
+            item.helpling?.id === user?.id) && (
             <HeaderButton
               icon={
                 item.status === 'pending'
