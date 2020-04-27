@@ -55,7 +55,7 @@ const actions = {
     try {
       const {
         data: { threadId }
-      } = await functions().httpsCallable('accept')({
+      } = await functions().httpsCallable('acceptRequest')({
         id,
         kind
       })
@@ -87,7 +87,7 @@ const actions = {
     })
 
     try {
-      await functions().httpsCallable('accept')({
+      await functions().httpsCallable('completeRequest')({
         id,
         kind
       })
